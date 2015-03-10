@@ -4,51 +4,18 @@ namespace MaciejSzUt\NbpPhp;
 use MaciejSz\NbpPhp\Exc\ENbpEntryNotFound;
 use MaciejSz\NbpPhp\Exc\EWrongNbpDateFormat;
 use MaciejSz\NbpPhp\NbpRepository;
+use MaciejSz\NbpPhp\Service\NbpCache;
 
 class NbpRepositoryTest extends \PHPUnit_Framework_TestCase
 {
-    public function testValidGenerateDateString()
-    {
-        $test_data = [
-            '2015-01-01' => '150101',
-            '2010-02-03' => '100203',
-            '2010-12-23' => '101223',
-        ];
-
-        foreach ( $test_data as $fix => $expected ) {
-            $actual = NbpRepository::generateDateStr($fix);
-            $this->assertEquals(
-                $expected,
-                $actual,
-                "{$expected} != {$actual}"
-            );
-        }
-    }
-
-    public function testFailGenerateDateString()
-    {
-        $test_data = [
-            '2015-01-012' => EWrongNbpDateFormat::class,
-            '2010-02-0' => EWrongNbpDateFormat::class,
-        ];
-
-        foreach ( $test_data as $fix => $expected ) {
-            $Exc = null;
-            try {
-                NbpRepository::generateDateStr($fix);
-            }
-            catch ( \Exception $Exc ) {
-            }
-
-            $this->assertNotNull($Exc);
-            $this->assertInstanceOf($expected, $Exc);
-        }
-
-    }
+    /**
+     * @var null|NbpCache
+     */
+    protected static $_NbpCache = null;
 
     public function testValidGetFileName()
     {
-        $Repo = new NbpRepository();
+        $Repo = new NbpRepository(self::$_NbpCache);
 
         $test_data = [
             [['2015-01-02', 'c'], 'c001z150102'],
@@ -79,7 +46,7 @@ class NbpRepositoryTest extends \PHPUnit_Framework_TestCase
 
     public function testFailGetFileName()
     {
-        $Repo = new NbpRepository();
+        $Repo = new NbpRepository(self::$_NbpCache);
 
         $test_data = [
             [['150102', 'a'], EWrongNbpDateFormat::class],
@@ -105,7 +72,7 @@ class NbpRepositoryTest extends \PHPUnit_Framework_TestCase
 
     public function testValidGetFileNameBefore()
     {
-        $Repo = new NbpRepository();
+        $Repo = new NbpRepository(self::$_NbpCache);
 
         $test_data = [
             [['2010-02-03', 'c'], 'c022z100202'],
@@ -138,7 +105,7 @@ class NbpRepositoryTest extends \PHPUnit_Framework_TestCase
 
     public function testFailGetFileNameBefore()
     {
-        $Repo = new NbpRepository();
+        $Repo = new NbpRepository(self::$_NbpCache);
 
         $test_data = [
             [['2002-01-02', 'a'], ENbpEntryNotFound::class], // first date in directory
@@ -148,7 +115,7 @@ class NbpRepositoryTest extends \PHPUnit_Framework_TestCase
         foreach ( $test_data as $data ) {
             $Exc = null;
             try {
-                $name = $Repo->getFileNameBefore($data[0][0], $data[0][1]);
+                $Repo->getFileNameBefore($data[0][0], $data[0][1]);
             }
             catch ( \Exception $Exc ) {
             }

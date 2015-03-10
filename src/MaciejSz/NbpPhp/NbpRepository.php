@@ -1,8 +1,8 @@
 <?php
 namespace MaciejSz\NbpPhp;
 
+use MaciejSz\NbpPhp\Service\NbpFileLoader;
 use stdClass as StdClass;
-use Doctrine\Common\Cache\Cache;
 
 class NbpRepository
 {
@@ -11,48 +11,21 @@ class NbpRepository
     const XML_URL_PATTERN = 'http://www.nbp.pl/kursy/xml/%s.xml';
 
     /**
-     * @var array
+     * @var Service\NbpCache
      */
-    protected $_dir = [];
+    protected $_NbpCache = null;
 
     /**
-     * @var array
+     * @var null|NbpFileLoader
      */
-    protected $_loaded_rates = [];
+    private $_NbpFileLoader = null;
 
     /**
-     * @var Cache
+     * @param Service\NbpCache $NboCache
      */
-    protected $_Cache = null;
-
-    /**
-     * @param Cache $Cache
-     */
-    public final function __construct(Cache $Cache = null)
+    public final function __construct(Service\NbpCache $NboCache = null)
     {
-        $this->_Cache = $Cache;
-    }
-
-    /**
-     *
-     * @param string $date_str Date in format rrrr-mm-dd
-     * @throws Exc\EWrongNbpDateFormat
-     * @return string Date in format rrmmdd
-     */
-    public static function generateDateStr($date_str)
-    {
-        if ( 10 != strlen($date_str) ) {
-            throw new Exc\EWrongNbpDateFormat(
-                "Wrong date format: {$date_str}. Should be rrrr-mm-dd."
-            );
-        }
-
-        $dStr =
-            substr($date_str, 2, 2)
-            . substr($date_str, 5, 2)
-            . substr($date_str, 8, 2);
-
-        return $dStr;
+        $this->_NbpCache = Service\NbpCache::ensureInstance($NboCache);
     }
 
     /**
@@ -62,9 +35,7 @@ class NbpRepository
      */
     public function getFileName($date_str, $type = 'a')
     {
-        $dStr = self::generateDateStr($date_str);
-        $this->_ensureLoadDir();
-
+        $dStr = Service\NbpDateStringFormatter::format($date_str);
         $entry = $this->_doGetFileName($dStr, $type);
         return $entry;
     }
@@ -77,11 +48,11 @@ class NbpRepository
      */
     public function getFileNameBefore($date_str, $type = 'a')
     {
-        $dStr = self::generateDateStr($date_str);
-        $this->_ensureLoadDir();
+        $dStr = Service\NbpDateStringFormatter::format($date_str);
+        $dir = $this->getDir();
 
         $prev = null;
-        foreach ( $this->_dir as $key => $it ) {
+        foreach ( $dir as $key => $it ) {
             if ( $key >= $dStr ) {
                 if ( null === $prev ) {
                     throw new Exc\ENbpEntryNotFound();
@@ -183,6 +154,21 @@ class NbpRepository
     }
 
     /**
+     * @return array
+     */
+    public function getDir()
+    {
+        $url = self::DIR_URL;
+        $dir = $this->_NbpCache->tryGet($url);
+        if ( empty($dir) ) {
+            $DirLoader = new Service\NbpDirLoader($url);
+            $dir = $DirLoader->load($url);
+            $this->_NbpCache->set($url, $dir);
+        }
+        return $dir;
+    }
+
+    /**
      * @param string $file_name
      * @return NbpRateTuple[]
      */
@@ -190,49 +176,12 @@ class NbpRepository
     {
         $file_path = $this->makeFilePath($file_name);
 
-        if ( ! isset($this->_loaded_rates[$file_name]) ) {
-            $txt = file_get_contents($file_path);
-            $Xml = new \SimpleXMLElement($txt);
-            /** @var NbpRateTuple[] $rates */
-            $rates = [];
-            foreach ( $Xml->pozycja as $SxPos ) {
-                $Item = NbpRateTuple::fromNbpXml($SxPos, $Xml);
-                $rates[$Item->currency_code] = $Item;
-            }
-
-            $Item = NbpRateTuple::factory('pln', 'PLN', 1.0, $Xml);
-            $rates[$Item->currency_code] = $Item;
-
-            $this->_loaded_rates[$file_name] = $rates;
+        $rates = $this->_NbpCache->tryGet($file_path);
+        if ( empty($rates) ) {
+            $rates = $this->_getNbpFileLoader()->load($file_path);
+            $this->_NbpCache->set($file_path, $rates);
         }
-
-        return $this->_loaded_rates[$file_name];
-    }
-
-    /**
-     * @return void
-     */
-    protected function _ensureLoadDir()
-    {
-        if ( empty($this->_dir) ) {
-            $txt = file_get_contents(self::DIR_URL);
-            $dates = explode("\n", $txt);
-            foreach ( $dates as $date ) {
-                $date = trim($date);
-                if ( empty($date) ) {
-                    continue;
-                }
-                $start = strlen($date) - 6;
-                $index = substr($date, $start, 6);
-                $exttype = substr($date, 0, 1);
-                if ( ! isset($this->_dir[$index]) ) {
-                    $this->_dir[$index] = array();
-                }
-
-                $this->_dir[$index][$exttype] = $date;
-            }
-            ksort($this->_dir);
-        }
+        return $rates;
     }
 
     /**
@@ -243,9 +192,21 @@ class NbpRepository
      */
     protected function _doGetFileName($dStr, $type)
     {
-        if( !isset($this->_dir[$dStr][$type]) ) {
+        $dir = $this->getDir();
+        if( !isset($dir[$dStr][$type]) ) {
             throw new Exc\ENbpEntryNotFound();
         }
-        return $this->_dir[$dStr][$type];
+        return $dir[$dStr][$type];
+    }
+
+    /**
+     * @return NbpFileLoader
+     */
+    protected function _getNbpFileLoader()
+    {
+        if ( null === $this->_NbpFileLoader ) {
+            $this->_NbpFileLoader = new NbpFileLoader();
+        }
+        return $this->_NbpFileLoader;
     }
 }
