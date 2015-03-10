@@ -41,7 +41,7 @@ class NbpRepository
      */
     public static function generateDateStr($date_str)
     {
-        if ( 10 > strlen($date_str) ) {
+        if ( 10 != strlen($date_str) ) {
             throw new Exc\EWrongNbpDateFormat(
                 "Wrong date format: {$date_str}. Should be rrrr-mm-dd."
             );
@@ -75,7 +75,7 @@ class NbpRepository
      * @throws Exc\ENbpEntryNotFound
      * @return string
      */
-    public function getFileNameWorkDayBefore($date_str, $type = 'a')
+    public function getFileNameBefore($date_str, $type = 'a')
     {
         $dStr = self::generateDateStr($date_str);
         $this->_ensureLoadDir();
@@ -83,9 +83,14 @@ class NbpRepository
         $prev = null;
         foreach ( $this->_dir as $key => $it ) {
             if ( $key >= $dStr ) {
+                if ( null === $prev ) {
+                    throw new Exc\ENbpEntryNotFound();
+                }
                 return $prev;
             }
-            $prev = $it[$type];
+            if ( isset($it[$type]) ) {
+                $prev = $it[$type];
+            }
         }
 
         throw new Exc\ENbpEntryNotFound();
@@ -118,9 +123,9 @@ class NbpRepository
      * @param string $type
      * @return string
      */
-    public function getFilePathWorkDayBefore($date_str, $type = 'a')
+    public function getFilePathBefore($date_str, $type = 'a')
     {
-        $file_name = $this->getFileNameWorkDayBefore($date_str, $type);
+        $file_name = $this->getFileNameBefore($date_str, $type);
         $path = $this->makeFilePath($file_name);
         return $path;
     }
@@ -140,9 +145,9 @@ class NbpRepository
      * @param string $date_str
      * @return NbpRateTuple[]
      */
-    public function getAvgRatesWorkDayBefore($date_str)
+    public function getAvgRatesBefore($date_str)
     {
-        $file_name = $this->getFileNameWorkDayBefore($date_str);
+        $file_name = $this->getFileNameBefore($date_str);
         $rates = $this->_doGetAvgRates($file_name);
         return $rates;
     }
@@ -168,9 +173,9 @@ class NbpRepository
      * @return NbpRateTuple
      * @throws Exc\ENbpEntryNotFound
      */
-    public function getAvgRateWorkDayBefore($date_str, $cur_code)
+    public function getAvgRateBefore($date_str, $cur_code)
     {
-        $rates = $this->getAvgRatesWorkDayBefore($date_str);
+        $rates = $this->getAvgRatesBefore($date_str);
         if ( !isset($rates[$cur_code]) ) {
             throw new Exc\ENbpEntryNotFound();
         }
