@@ -14,12 +14,13 @@
         "psr-0": {
             "MaciejSz\\NbpPhp\\": "src/",
             "MaciejSzUt\\NbpPhp\\": "tests/php-unit/",
-            "MaciejSzAt\\NbpPhp\\": "tests/behat/features/bootstrap/"
+            "MaciejSzAt\\NbpPhp\\": "tests/behat/src/"
         }
     },
     "require-dev": {
         "behat/behat": "~3.0.0",
         "behat/mink": "~1.6.0",
+        "doctrine/cache": "~1.4.0",
         "guzzlehttp/guzzle": ">=5.2.0",
         "phpunit/phpunit": "~4.5.0"
     },

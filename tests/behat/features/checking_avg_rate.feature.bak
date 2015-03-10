@@ -1,9 +1,0 @@
-Feature: Average rate
-  In order to check average rate
-  As a programmer
-  I need to be able to get the rate
-
-  Scenario: Getting the rate of table "a"
-    Given the NbpRepository object
-    When I input the date "2015-01-02"
-    Then I should get the rate

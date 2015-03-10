@@ -1,12 +1,25 @@
 <?php
 namespace MaciejSzUt\NbpPhp;
- 
-use MaciejSz\NbpPhp\NbpDate;
+
 use MaciejSz\NbpPhp\NbpRepository;
-use MaciejSz\NbpPhp\NbpUrl;
 
 class NbpRepositoryTest extends \PHPUnit_Framework_TestCase
 {
+    public function testGenerateDateString()
+    {
+        $this->markTestIncomplete();
+
+        $test_data = [
+            '2015-01-01' => '150101',
+            '2010-02-03' => '100203',
+            '2010-12-23' => '101213',
+        ];
+
+        foreach ( $test_data as $fix => $expected ) {
+            $this->assertEquals($expected, NbpRepository::generateDateStr($fix));
+        }
+    }
+
     public function testBaseUsageOffline()
     {
         $this->markTestIncomplete();
@@ -19,28 +32,7 @@ class NbpRepositoryTest extends \PHPUnit_Framework_TestCase
 
     public function testBaseUsageOnline()
     {
-        $this->markTestIncomplete();
 
-        $Repo = new NbpRepository();
-        $NbpDate = NbpDate::fromDateString('2015-02-22');
-        $Url = NbpUrl::factory($NbpDate);
-        $Repo->getAvgRate($Url);
-
-
-        $this->markTestIncomplete();
-    }
-
-    public function testWorkDayBeforeOnline()
-    {
-        $this->markTestIncomplete();
-
-        $Repo = new NbpRepository();
-        $NbpDate = NbpDate::fromDateString('2015-02-22');
-        $Url = NbpUrl::factoryWorkDayBefore($NbpDate);
-        $Repo->getAvgRate($Url);
-
-
-        $this->markTestIncomplete();
     }
 }
  

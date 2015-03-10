@@ -1,5 +1,5 @@
 default:
   suites:
-    default:
-      paths: [ %paths.base%/tests/behat/features ]
-      contexts: [ MaciejSzAt\NbpPhp\FeatureContext ]
+    main:
+      paths: [ %paths.base%/tests/behat/features/main ]
+      contexts: [ MaciejSzAt\NbpPhp\MainFeatureContext ]

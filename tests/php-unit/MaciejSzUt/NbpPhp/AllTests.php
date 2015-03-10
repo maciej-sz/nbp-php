@@ -7,8 +7,6 @@ class AllTests extends \PHPUnit_Framework_TestSuite
     {
         $Suite = new self();
 
-        $Suite->addTestSuite(NbpDateTest::class);
-        $Suite->addTestSuite(NbpDirLoaderTest::class);
         $Suite->addTestSuite(NbpRepositoryTest::class);
 
         return $Suite;
