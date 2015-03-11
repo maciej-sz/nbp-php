@@ -200,7 +200,7 @@ class NbpRepositoryTest extends \PHPUnit_Framework_TestCase
         }
     }
 
-    public function testValidGetAvgRate()
+    public function testValidGetRate()
     {
         $Repo = new NbpRepository(self::$_NbpCache);
 
@@ -215,7 +215,7 @@ class NbpRepositoryTest extends \PHPUnit_Framework_TestCase
             $date = $data[0][0];
             $currency = $data[0][1];
 
-            $Tuple = $Repo->getAvgRate($date, $currency);
+            $Tuple = $Repo->getRate($date, $currency);
 
             $this->assertEquals(
                 $data[1],
@@ -228,7 +228,7 @@ class NbpRepositoryTest extends \PHPUnit_Framework_TestCase
         }
     }
 
-    public function testFailGetAvgRate()
+    public function testFailGetRate()
     {
         $Repo = new NbpRepository(self::$_NbpCache);
 
@@ -243,7 +243,7 @@ class NbpRepositoryTest extends \PHPUnit_Framework_TestCase
             $Exc = null;
 
             try {
-                $Repo->getAvgRate($date, $currency);
+                $Repo->getRate($date, $currency);
             }
             catch ( \Exception $Exc ) {
             }
@@ -253,7 +253,7 @@ class NbpRepositoryTest extends \PHPUnit_Framework_TestCase
         }
     }
 
-    public function testValidGetAvgRateBefore()
+    public function testValidGetRateBefore()
     {
         $Repo = new NbpRepository(self::$_NbpCache);
 
@@ -273,7 +273,7 @@ class NbpRepositoryTest extends \PHPUnit_Framework_TestCase
             $expected_avg = $data[1][0];
             $expected_date = $data[1][1];
 
-            $Tuple = $Repo->getAvgRateBefore($date, $currency_code);
+            $Tuple = $Repo->getRateBefore($date, $currency_code);
 
             $this->assertEquals(
                 $expected_avg,
@@ -287,7 +287,7 @@ class NbpRepositoryTest extends \PHPUnit_Framework_TestCase
         }
     }
 
-    public function testFailGetAvgRateBefore()
+    public function testFailGetRateBefore()
     {
         $Repo = new NbpRepository(self::$_NbpCache);
 
@@ -304,7 +304,7 @@ class NbpRepositoryTest extends \PHPUnit_Framework_TestCase
             $Exc = null;
 
             try {
-                $Repo->getAvgRateBefore($date, $currency);
+                $Repo->getRateBefore($date, $currency);
             }
             catch ( \Exception $Exc ) {
             }

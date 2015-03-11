@@ -125,10 +125,10 @@ class NbpRepository
      * @param string $date_str
      * @return NbpRateTuple[]
      */
-    public function getAvgRates($date_str)
+    public function getRates($date_str)
     {
         $file_name = $this->getFileName($date_str, 'a');
-        $rates = $this->_doGetAvgRates($file_name);
+        $rates = $this->_doGetRates($file_name);
         return $rates;
     }
 
@@ -136,10 +136,10 @@ class NbpRepository
      * @param string $date_str
      * @return NbpRateTuple[]
      */
-    public function getAvgRatesBefore($date_str)
+    public function getRatesBefore($date_str)
     {
         $file_name = $this->getFileNameBefore($date_str);
-        $rates = $this->_doGetAvgRates($file_name);
+        $rates = $this->_doGetRates($file_name);
         return $rates;
     }
 
@@ -149,9 +149,9 @@ class NbpRepository
      * @return NbpRateTuple
      * @throws Exc\ENbpEntryNotFound
      */
-    public function getAvgRate($date_str, $cur_code)
+    public function getRate($date_str, $cur_code)
     {
-        $rates = $this->getAvgRates($date_str);
+        $rates = $this->getRates($date_str);
         if ( !isset($rates[$cur_code]) ) {
             throw new Exc\ENbpEntryNotFound();
         }
@@ -164,9 +164,9 @@ class NbpRepository
      * @return NbpRateTuple
      * @throws Exc\ENbpEntryNotFound
      */
-    public function getAvgRateBefore($date_str, $cur_code)
+    public function getRateBefore($date_str, $cur_code)
     {
-        $rates = $this->getAvgRatesBefore($date_str);
+        $rates = $this->getRatesBefore($date_str);
         if ( !isset($rates[$cur_code]) ) {
             throw new Exc\ENbpEntryNotFound();
         }
@@ -192,7 +192,7 @@ class NbpRepository
      * @param string $file_name
      * @return NbpRateTuple[]
      */
-    protected function _doGetAvgRates($file_name)
+    protected function _doGetRates($file_name)
     {
         $file_path = $this->makeFilePath($file_name);
 

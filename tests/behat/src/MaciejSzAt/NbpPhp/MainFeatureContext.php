@@ -96,13 +96,13 @@ class MainFeatureContext extends FeatureContext
             $requested_currency = current($this->_requested_currencies);
             $Rate = null;
             if ( $this->_work_day_before ) {
-                $Rate = $this->_NbpRepo->getAvgRateBefore(
+                $Rate = $this->_NbpRepo->getRateBefore(
                     $this->_inputDate,
                     $requested_currency
                 );
             }
             else {
-                $Rate = $this->_NbpRepo->getAvgRate(
+                $Rate = $this->_NbpRepo->getRate(
                     $this->_inputDate,
                     $requested_currency
                 );
