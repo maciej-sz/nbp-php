@@ -64,7 +64,7 @@ class MainFeatureContext extends FeatureContext
      */
     public function iHaveTheNbpRepositoryObjectForTable($table)
     {
-        $this->_NbpRepo = new NbpRepository();
+        $this->_NbpRepo = NbpRepository::defaultCacheInstance();
     }
 
     /**

@@ -13,6 +13,15 @@ class NbpRepositoryTest extends \PHPUnit_Framework_TestCase
      */
     protected static $_NbpCache = null;
 
+    public function testDefaultCacheInstance()
+    {
+        $Instance1 = NbpRepository::defaultCacheInstance();
+        $this->assertInstanceOf(NbpRepository::class, $Instance1);
+
+        $Instance2 = NbpRepository::defaultCacheInstance();
+        $this->assertSame($Instance1, $Instance2);
+    }
+
     public function testValidGetFileName()
     {
         $Repo = new NbpRepository(self::$_NbpCache);

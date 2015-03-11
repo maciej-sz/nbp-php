@@ -1,6 +1,8 @@
 <?php
 namespace MaciejSz\NbpPhp;
 
+use Doctrine\Common\Cache\FilesystemCache;
+use MaciejSz\NbpPhp\Service\NbpCache;
 use MaciejSz\NbpPhp\Service\NbpFileLoader;
 use stdClass as StdClass;
 
@@ -21,11 +23,29 @@ class NbpRepository
     private $_NbpFileLoader = null;
 
     /**
-     * @param Service\NbpCache $NboCache
+     * @var null|NbpRepository
      */
-    public final function __construct(Service\NbpCache $NboCache = null)
+    private static $_DefaultCacheInstance = null;
+
+    /**
+     * @param Service\NbpCache $NbpCache
+     */
+    public final function __construct(Service\NbpCache $NbpCache = null)
     {
-        $this->_NbpCache = Service\NbpCache::ensureInstance($NboCache);
+        $this->_NbpCache = Service\NbpCache::ensureInstance($NbpCache);
+    }
+
+    /**
+     * @return NbpRepository
+     */
+    public static function defaultCacheInstance()
+    {
+        if ( null === self::$_DefaultCacheInstance ) {
+            $CacheBackend = new FilesystemCache(sys_get_temp_dir() . "/nbp-php");
+            $NbpCache = new NbpCache($CacheBackend);
+            self::$_DefaultCacheInstance = new self($NbpCache);
+        }
+        return self::$_DefaultCacheInstance;
     }
 
     /**
