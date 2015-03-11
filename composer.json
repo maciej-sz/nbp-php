@@ -13,7 +13,7 @@
     "autoload": {
         "psr-0": {
             "MaciejSz\\NbpPhp\\": "src/",
-            "MaciejSzUt\\NbpPhp\\": "tests/php-unit/",
+            "MaciejSzUt\\NbpPhp\\": "tests/php-unit/src/",
             "MaciejSzAt\\NbpPhp\\": "tests/behat/src/"
         }
     },

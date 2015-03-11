@@ -4,6 +4,7 @@
         backupGlobals="false"
         backupStaticAttributes="false"
         colors="true"
+        verbose="false"
         convertErrorsToExceptions="true"
         convertNoticesToExceptions="true"
         convertWarningsToExceptions="true"
@@ -13,23 +14,28 @@
         beStrictAboutTestsThatDoNotTestAnything="true"
         beStrictAboutOutputDuringTests="true"
         beStrictAboutTestSize="true"
-        bootstrap="tests/php-unit/bootstrap.php">
+        bootstrap="tests/php-unit/src/bootstrap.php">
     <php>
         <env name="APPLICATION_DEBUG_MODE" value="1"/>
     </php>
 
+    <logging>
+        <log
+            type="coverage-html"
+            target="./tests/php-unit/reports/html/"
+            lowUpperBound="35"
+            highLowerBound="70"/>
+    </logging>
+
     <testsuites>
         <testsuite name="maciej-sz/nbp-php">
-            <directory suffix="Test.php">tests/php-unit</directory>
+            <directory suffix="Test.php">tests/php-unit/</directory>
         </testsuite>
     </testsuites>
 
     <filter>
         <whitelist>
-            <directory>.</directory>
-            <exclude>
-                <directory>Tests</directory>
-            </exclude>
+            <directory>src/</directory>
         </whitelist>
     </filter>
 </phpunit>
