@@ -7,6 +7,7 @@ Note: currently only average rate is retrieved.
 ```php
 $nbp = new NbpRepository();
 $currencyData = $nbp->getRate('2015-01-02', 'USD');
+
 var_dump($currencyData->avg);
 var_dump($currencyData->date);
 ```
@@ -20,6 +21,7 @@ This is usefull when you need to retrieve last available currency rate from work
 ```php
 $nbp = new NbpRepository();
 $currencyData = $nbp->getRateBefore('2015-01-02', 'USD');
+
 var_dump($currencyData->avg);
 var_dump($currencyData->date);
 ```
