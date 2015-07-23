@@ -84,6 +84,10 @@ class NbpRepository
             }
         }
 
+        if ( null !== $prev ) {
+            return $prev;
+        }
+
         throw new Exc\ENbpEntryNotFound();
     }
 

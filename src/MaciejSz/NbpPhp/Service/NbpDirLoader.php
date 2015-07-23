@@ -9,7 +9,7 @@ class NbpDirLoader
         $txt = file_get_contents($url);
         $dates = explode("\n", $txt);
         foreach ( $dates as $date ) {
-            $date = trim($date);
+            $date = ltrim(trim($date), "\xef\xbb\xbf");
             if ( empty($date) ) {
                 continue;
             }
