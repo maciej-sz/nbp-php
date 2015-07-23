@@ -36,7 +36,7 @@ When using cache the amount of HTTP requests to NBP server is minimized.
 <?php
 use Doctrine\Common\Cache\FilesystemCache;
 use MaciejSz\NbpPhp\Service\NbpCache;
-use MaciejSz\NbpPhp\Service\NbpRepository;
+use MaciejSz\NbpPhp\NbpRepository;
 
 $cacheBackend = new FilesystemCache(sys_get_temp_dir() . "/nbp-php");
 $nbpCache = new NbpCache($cacheBackend);
