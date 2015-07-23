@@ -7,7 +7,7 @@ class AllTests extends \PHPUnit_Framework_TestSuite
     {
         $Suite = new self();
 
-        $Suite->addTestSuite(Service\NbpDateStringFormatterTest::class);
+        $Suite->addTestSuite(Service\AllTests::class);
         $Suite->addTestSuite(NbpRepositoryTest::class);
         $Suite->addTestSuite(NbpRepositoryWithCacheTest::class);
 

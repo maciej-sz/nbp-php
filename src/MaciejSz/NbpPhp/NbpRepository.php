@@ -8,8 +8,6 @@ use stdClass as StdClass;
 
 class NbpRepository
 {
-    const DIR_URL = 'http://www.nbp.pl/kursy/xml/dir.txt';
-
     const XML_URL_PATTERN = 'http://www.nbp.pl/kursy/xml/%s.xml';
 
     /**
@@ -68,27 +66,84 @@ class NbpRepository
      */
     public function getFileNameBefore($date_str, $type = 'a')
     {
+        $file_name = null;
+        try {
+            $file_name = $this->_doGetFileNameBefore($date_str, $type);
+        }
+        catch ( Exc\ECouldNotLoadDir $Exc ) {
+            throw new Exc\ENbpEntryNotFound(
+                "Before: {$date_str}",
+                0,
+                $Exc
+            );
+        }
+
+        if ( empty($file_name) ) {
+            throw new Exc\ENbpEntryNotFound("Before: {$date_str}");
+        }
+
+        return $file_name;
+
+//        $prev_el = null;
+//        foreach ( $dir as $key => $it ) {
+//            if ( $key >= $dStr ) {
+//                if ( null === $prev_el ) {
+//                    $decrement = (int)substr($date_str, 0, 4) - 1;
+//                    $dir = $this->getDir($decrement);
+//                    $other_it = end($dir);
+//
+//                }
+////                break;
+//                return $prev_el;
+//            }
+//            if ( isset($it[$type]) ) {
+//                $prev_el = $it[$type];
+//            }
+////            break;
+//        }
+//
+//        if ( !empty($prev_el) ) {
+//            return $prev_el;
+//        }
+
+
+//        var_dump($dir);die;
+//
+//        throw new Exc\ENbpEntryNotFound();
+    }
+
+    protected function _doGetFileNameBefore($date_str, $type = 'a')
+    {
         $dStr = Service\NbpDateStringFormatter::format($date_str);
-        $dir = $this->getDir();
+        $dir = $this->getDir($date_str);
 
-        $prev = null;
-        foreach ( $dir as $key => $it ) {
+        $item = $this->_doIterateDir($dir, $dStr, $type);
+        if ( null === $item ) {
+            // try year before:
+            $decrement = (int)substr($date_str, 0, 4) - 1;
+            $prev_dir = $this->getDir($decrement);
+            $dir = $prev_dir + $dir;
+            $item = $this->_doIterateDir($dir, $dStr, $type);
+        }
+
+        if ( !empty($item) ) {
+            return $item;
+        }
+        return null;
+    }
+
+    protected function _doIterateDir(array $dir, $dStr, $type)
+    {
+        $prev_item = null;
+        foreach ( $dir as $key => $el ) {
             if ( $key >= $dStr ) {
-                if ( null === $prev ) {
-                    throw new Exc\ENbpEntryNotFound();
-                }
-                return $prev;
+                return $prev_item;
             }
-            if ( isset($it[$type]) ) {
-                $prev = $it[$type];
+            if ( isset($el[$type]) ) {
+                $prev_item = $el[$type];
             }
         }
-
-        if ( null !== $prev ) {
-            return $prev;
-        }
-
-        throw new Exc\ENbpEntryNotFound();
+        return $prev_item;
     }
 
     /**
@@ -178,16 +233,17 @@ class NbpRepository
     }
 
     /**
+     * @param null|string $date
      * @return array
      */
-    public function getDir()
+    public function getDir($date = null)
     {
-        $url = self::DIR_URL;
-        $dir = $this->_NbpCache->tryGet($url);
+        $year = substr($date, 0, 4);
+        $dir = $this->_NbpCache->tryGet($year);
         if ( empty($dir) ) {
-            $DirLoader = new Service\NbpDirLoader($url);
-            $dir = $DirLoader->load($url);
-            $this->_NbpCache->set($url, $dir);
+            $DirLoader = new Service\NbpDirLoader();
+            $dir = $DirLoader->load($year);
+            $this->_NbpCache->set($year, $dir);
         }
         return $dir;
     }
@@ -216,7 +272,13 @@ class NbpRepository
      */
     protected function _doGetFileName($dStr, $type)
     {
-        $dir = $this->getDir();
+        $year = "20" . substr($dStr, 0, 2);
+        try {
+            $dir = $this->getDir($year);
+        }
+        catch (Exc\ECouldNotLoadDir $Exc) {
+            throw new Exc\ENbpEntryNotFound("", 0, $Exc);
+        }
         if( !isset($dir[$dStr][$type]) ) {
             throw new Exc\ENbpEntryNotFound();
         }

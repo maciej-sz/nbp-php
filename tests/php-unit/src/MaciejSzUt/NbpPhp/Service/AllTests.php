@@ -8,6 +8,7 @@ class AllTests extends \PHPUnit_Framework_TestSuite
         $Suite = new self();
 
         $Suite->addTestSuite(NbpDateStringFormatterTest::class);
+        $Suite->addTestSuite(NbpDirLoaderTest::class);
 
         return $Suite;
     }

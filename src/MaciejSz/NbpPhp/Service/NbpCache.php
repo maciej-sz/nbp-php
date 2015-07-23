@@ -61,35 +61,46 @@ class NbpCache
     }
 
     /**
-     * @param string $url
+     * @param string $year
+     * @return string
+     */
+    public function buildCacheKey($year)
+    {
+        return self::class . "\\{$year}";
+    }
+
+    /**
+     * @param string $year
      * @return null|array
      */
-    public function tryGet($url)
+    public function tryGet($year)
     {
-        if ( isset(self::$_front_cache[$url]) ) {
-            return self::$_front_cache[$url];
+        $key = $this->buildCacheKey($year);
+        if ( isset(self::$_front_cache[$key]) ) {
+            return self::$_front_cache[$key];
         }
         if ( !$this->_Cache ) {
             return null;
         }
-        $dir = $this->_Cache->fetch($url);
+        $dir = $this->_Cache->fetch($key);
         if ( false === $dir ) {
             return null;
         }
-        self::$_front_cache[$url] = $dir;
+        self::$_front_cache[$key] = $dir;
         return $dir;
     }
 
     /**
-     * @param string $url
+     * @param string $year
      * @param array $data
      * @return $this
      */
-    public function set($url, array $data)
+    public function set($year, array $data)
     {
-        self::$_front_cache[$url] = $data;
+        $key = $this->buildCacheKey($year);
+        self::$_front_cache[$key] = $data;
         if ( $this->_Cache ) {
-            $this->_Cache->save($url, $data, $this->getLifeTime());
+            $this->_Cache->save($key, $data, $this->getLifeTime());
         }
         return $this;
     }
