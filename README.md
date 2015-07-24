@@ -1,9 +1,9 @@
 # nbp-php
 
+API for accessing NBP (Narodowy Bank Polski) currecy rates in PHP
+
 [![Latest Version on Packagist][ico-version]][link-packagist]
 [![Build Status][ico-travis]][link-travis]
-
-API for accessing NBP (Narodowy Bank Polski) currecy rates in PHP
 
 ## Usage
 Note: currently only average rate is retrieved.
