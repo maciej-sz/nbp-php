@@ -58,4 +58,4 @@ $nbp = new NbpRepository($nbpCache);
 [ico-travis]:https://img.shields.io/travis/maciej-sz/nbp-php/master.svg?style=plastic
 
 [link-packagist]:https://packagist.org/packages/maciej-sz/nbp-php
-[link-travis]:https://travis-ci.org/maciej-sz/nbp-php.svg?branch=master
+[link-travis]:https://travis-ci.org/maciej-sz/nbp-php
