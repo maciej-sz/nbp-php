@@ -5,6 +5,7 @@ API for accessing NBP (Narodowy Bank Polski) currecy rates in PHP
 [![Latest Version on Packagist][ico-version]][link-packagist]
 [![Build Status][ico-travis]][link-travis]
 [![No dependencies][ico-no-deps]][link-packagist]
+[![MIT License][ico-license]][link-license]
 
 ## Usage
 Note: currently only average rate is retrieved.
@@ -58,6 +59,8 @@ $nbp = new NbpRepository($nbpCache);
 [ico-version]:https://img.shields.io/packagist/v/maciej-sz/nbp-php.svg?style=plastic
 [ico-travis]:https://img.shields.io/travis/maciej-sz/nbp-php/master.svg?style=plastic
 [ico-no-deps]:https://img.shields.io/badge/dependencies-none-brightgreen.svg?style=plastic
+[ico-license]:https://img.shields.io/badge/license-MIT-blue.svg?style=plastic
 
 [link-packagist]:https://packagist.org/packages/maciej-sz/nbp-php
 [link-travis]:https://travis-ci.org/maciej-sz/nbp-php
+[link-license]:https://github.com/maciej-sz/nbp-php/blob/master/LICENSE
