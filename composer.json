@@ -1,6 +1,6 @@
 {
     "name": "maciej-sz/nbp-php",
-    "description": "API for accessing NBP (Narodowy Bank Polski) currecy rates in PHP",
+    "description": "API for accessing NBP (Narodowy Bank Polski) currency rates in PHP",
     "keywords": ["nbp", "currency", "money"],
     "type": "library",
     "license": "MIT",
