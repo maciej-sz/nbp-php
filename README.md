@@ -9,7 +9,7 @@ API for accessing NBP (Narodowy Bank Polski) currecy rates in PHP
 
 ## Usage
 Note: currently only average rate is retrieved.
-#### Getting the average rate from specific day example
+#### Example: getting the average rate from specific day
 ```php
 $nbp = new NbpRepository();
 $currencyData = $nbp->getRate('2015-01-02', 'USD');
@@ -24,7 +24,7 @@ double(3.5725)
 string(10) "2015-01-02"
 ```
 
-#### Getting the average rate from first date before specified date example
+#### Example: getting the average rate from first date before specified date
 This is usefull when you need to retrieve last available currency rate from working day before specified date.
 ```php
 $nbp = new NbpRepository();
@@ -39,7 +39,7 @@ Outputs:
 double(3.5072)
 string(10) "2014-12-31"
 ```
-#### Using cache example
+#### Example: using cache
 
 When using cache the amount of HTTP requests to NBP server is minimized.
 
