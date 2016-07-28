@@ -83,33 +83,6 @@ class NbpRepository
         }
 
         return $file_name;
-
-//        $prev_el = null;
-//        foreach ( $dir as $key => $it ) {
-//            if ( $key >= $dStr ) {
-//                if ( null === $prev_el ) {
-//                    $decrement = (int)substr($date_str, 0, 4) - 1;
-//                    $dir = $this->getDir($decrement);
-//                    $other_it = end($dir);
-//
-//                }
-////                break;
-//                return $prev_el;
-//            }
-//            if ( isset($it[$type]) ) {
-//                $prev_el = $it[$type];
-//            }
-////            break;
-//        }
-//
-//        if ( !empty($prev_el) ) {
-//            return $prev_el;
-//        }
-
-
-//        var_dump($dir);die;
-//
-//        throw new Exc\ENbpEntryNotFound();
     }
 
     protected function _doGetFileNameBefore($date_str, $type = 'a')
