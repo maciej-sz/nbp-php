@@ -9,7 +9,7 @@ class NbpDirLoaderTest extends \PHPUnit_Framework_TestCase
     {
         $Loader = new NbpDirLoader();
         $data_set = [
-            "2015" => "http://www.nbp.pl/kursy/xml/dir.txt",
+            "2015" => "http://www.nbp.pl/kursy/xml/dir2015.txt",
             ""     => "http://www.nbp.pl/kursy/xml/dir.txt",
             "2014" => "http://www.nbp.pl/kursy/xml/dir2014.txt",
             "2013" => "http://www.nbp.pl/kursy/xml/dir2013.txt",
