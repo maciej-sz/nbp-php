@@ -3,8 +3,9 @@ namespace MaciejSzUt\NbpPhp\Service;
  
 use MaciejSz\NbpPhp\Exc\EWrongNbpDateFormat;
 use MaciejSz\NbpPhp\Service\NbpDateStringFormatter;
+use PHPUnit\Framework\TestCase;
 
-class NbpDateStringFormatterTest extends \PHPUnit_Framework_TestCase
+class NbpDateStringFormatterTest extends TestCase
 {
     public function testValidGenerateDateString()
     {

@@ -18,11 +18,11 @@
         }
     },
     "require-dev": {
-        "behat/behat": "~3.0.0",
-        "behat/mink": "~1.6.0",
-        "doctrine/cache": "~1.4.0",
-        "guzzlehttp/guzzle": ">=5.2.0",
-        "phpunit/phpunit": "~4.5.0"
+        "behat/behat": "^3.4",
+        "behat/mink": "^1.7",
+        "doctrine/cache": "^1.7",
+        "guzzlehttp/guzzle": "^6.3",
+        "phpunit/phpunit": "^6.4"
     },
     "require": {
         "php": ">=5.5.0"

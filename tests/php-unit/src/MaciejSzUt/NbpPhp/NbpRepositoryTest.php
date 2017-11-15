@@ -5,8 +5,9 @@ use MaciejSz\NbpPhp\Exc\ENbpEntryNotFound;
 use MaciejSz\NbpPhp\Exc\EWrongNbpDateFormat;
 use MaciejSz\NbpPhp\NbpRepository;
 use MaciejSz\NbpPhp\Service\NbpCache;
+use PHPUnit\Framework\TestCase;
 
-class NbpRepositoryTest extends \PHPUnit_Framework_TestCase
+class NbpRepositoryTest extends TestCase
 {
     /**
      * @var null|NbpCache

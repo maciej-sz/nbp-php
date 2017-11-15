@@ -1,8 +1,8 @@
 <?php
 namespace MaciejSzAt\NbpPhp;
  
-use Behat\Behat\Tester\Exception\PendingException;
 use MaciejSz\NbpPhp\NbpRepository;
+use PHPUnit\Framework\TestCase;
 
 class MainFeatureContext extends FeatureContext
 {
@@ -90,7 +90,7 @@ class MainFeatureContext extends FeatureContext
      */
     public function iShouldGetTheRates(array $rates)
     {
-        \PHPUnit_Framework_TestCase::assertGreaterThan(0, count($rates));
+        TestCase::assertGreaterThan(0, count($rates));
         reset($this->_requested_currencies);
         foreach ( $rates as $expected ) {
             $requested_currency = current($this->_requested_currencies);
@@ -107,7 +107,7 @@ class MainFeatureContext extends FeatureContext
                     $requested_currency
                 );
             }
-            \PHPUnit_Framework_TestCase::assertEquals($expected, $Rate->avg, "", 0.00001);
+            TestCase::assertEquals($expected, $Rate->avg, "", 0.00001);
             next($this->_requested_currencies);
         }
     }

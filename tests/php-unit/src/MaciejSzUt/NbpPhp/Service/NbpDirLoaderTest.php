@@ -2,8 +2,9 @@
 namespace MaciejSzUt\NbpPhp\Service;
  
 use MaciejSz\NbpPhp\Service\NbpDirLoader;
+use PHPUnit\Framework\TestCase;
 
-class NbpDirLoaderTest extends \PHPUnit_Framework_TestCase
+class NbpDirLoaderTest extends TestCase
 {
     public function testGetUrl()
     {
