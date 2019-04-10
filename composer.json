@@ -18,7 +18,7 @@
         }
     },
     "require-dev": {
-        "php": ">=7.1",
+        "php": ">=7.2",
         "behat/behat": "^3.4",
         "behat/mink": "^1.7",
         "doctrine/cache": "~1.6.2",
