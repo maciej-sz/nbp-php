@@ -63,8 +63,8 @@ class NbpDirLoader
      */
     private function _getLoadStreamErrorHandler($url)
     {
-        return function() use ($url) {
-            throw new ECouldNotLoadDir($url);
+        return function($no, $str) use ($url) {
+            throw new ECouldNotLoadDir("{$url} : {$str}");
         };
     }
 

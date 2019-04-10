@@ -21,6 +21,21 @@ class NbpDirLoaderTest extends TestCase
         }
     }
 
+
+    public function testFailConnection()
+    {
+        $Loader = new NbpDirLoader();
+
+        $Exc = null;
+        try {
+            $Loader->load(3999);
+        }
+        catch (\Exception $Exc) {}
+
+        $this->assertNotNull($Exc);
+        $this->assertStringContainsString("404 Not Found", $Exc->getMessage());
+    }
+
     public function testLoad()
     {
 

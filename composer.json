@@ -23,10 +23,10 @@
         "behat/mink": "^1.7",
         "doctrine/cache": "~1.6.2",
         "guzzlehttp/guzzle": "^6.3",
-        "phpunit/phpunit": "^5.7"
+        "phpunit/phpunit": "^8.1"
     },
     "require": {
-        "php": ">=5.5.0"
+        "php": ">=7.0.0"
     },
     "suggest": {
         "doctrine/cache": "Allows local cache"

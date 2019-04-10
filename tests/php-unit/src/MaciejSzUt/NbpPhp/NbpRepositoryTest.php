@@ -46,9 +46,10 @@ class NbpRepositoryTest extends TestCase
             $date = $data[0][0];
             $table = $data[0][1];
             $actual = $Repo->getFileName($date, $table);
-            $this->assertEquals(
+            $this->assertEqualsWithDelta(
                 $data[1],
                 $actual,
+                0,
                 "Failed with (${date}, ${table})"
             );
         }
@@ -159,9 +160,10 @@ class NbpRepositoryTest extends TestCase
             $table = $data[0][1];
             $expected = "http://www.nbp.pl/kursy/xml/${data[1]}.xml";
             $actual = $Repo->getFilePath($date, $table);
-            $this->assertEquals(
+            $this->assertEqualsWithDelta(
                 $expected,
                 $actual,
+                0,
                 "Failed with (${date}, ${table})"
             );
         }
@@ -193,9 +195,10 @@ class NbpRepositoryTest extends TestCase
             $table = $data[0][1];
             $expected = "http://www.nbp.pl/kursy/xml/${data[1]}.xml";
             $actual = $Repo->getFilePathBefore($date, $table);
-            $this->assertEquals(
+            $this->assertEqualsWithDelta(
                 $expected,
                 $actual,
+                0,
                 "Failed with (${date}, ${table})"
             );
         }
@@ -218,14 +221,15 @@ class NbpRepositoryTest extends TestCase
 
             $Tuple = $Repo->getRate($date, $currency);
 
-            $this->assertEquals(
+            $this->assertEqualsWithDelta(
                 $data[1],
                 $Tuple->avg,
+                0,
                 "Failed with (${date}, ${currency})"
             );
 
-            $this->assertEquals($date, $Tuple->date);
-            $this->assertEquals($currency, $Tuple->currency_code);
+            $this->assertEqualsWithDelta($date, $Tuple->date, 0);
+            $this->assertEqualsWithDelta($currency, $Tuple->currency_code, 0);
         }
     }
 
@@ -276,15 +280,15 @@ class NbpRepositoryTest extends TestCase
 
             $Tuple = $Repo->getRateBefore($date, $currency_code);
 
-            $this->assertEquals(
+            $this->assertEqualsWithDelta(
                 $expected_avg,
                 $Tuple->avg,
-                "Failed with (${date}, ${currency_code})",
-                0.00001
+                0.00001,
+                "Failed with (${date}, ${currency_code})"
             );
 
-            $this->assertEquals($expected_date, $Tuple->date);
-            $this->assertEquals($currency_code, $Tuple->currency_code);
+            $this->assertEqualsWithDelta($expected_date, $Tuple->date, 0);
+            $this->assertEqualsWithDelta($currency_code, $Tuple->currency_code, 0);
         }
     }
 
