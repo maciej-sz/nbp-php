@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace MaciejSz\Nbp\Shared\Infrastructure\Repository\Web;
+namespace MaciejSz\Nbp\Shared\Infrastructure\Repository;
 
 use MaciejSz\Nbp\CurrencyAverageRates\Infrastructure\Mapper\CurrencyAveragesTableMapper;
 use MaciejSz\Nbp\CurrencyTradingRates\Infrastructure\Mapper\CurrencyTradingTableMapper;
@@ -10,7 +10,6 @@ use MaciejSz\Nbp\GoldRates\Infrastructure\Mapper\GoldRatesMapper;
 use MaciejSz\Nbp\Service\NbpCache;
 use MaciejSz\Nbp\Shared\Domain\DateFormatter;
 use MaciejSz\Nbp\Shared\Infrastructure\Client\NbpClient;
-use MaciejSz\Nbp\Shared\Infrastructure\Repository\NbpRepository;
 
 final class NbpWebRepository implements NbpRepository
 {

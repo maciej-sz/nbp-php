@@ -15,8 +15,8 @@ class NbpWebClientTest extends TestCase
     {
         $webClient = new NbpWebClient($this->getTransportMock());
         $this->assertSame(
-            ['/api/exchangerates/tables/A/2022-01-02/2022-01-03'],
-            $webClient->getCurrencyAveragesTableA('2022-01-02', '2022-01-03')
+            ['/api/exchangerates/tables/A/2022-03-02/2022-03-02'],
+            $webClient->getCurrencyAveragesTableA('2022-03-02', '2022-03-02')
         );
     }
 
@@ -24,8 +24,8 @@ class NbpWebClientTest extends TestCase
     {
         $webClient = new NbpWebClient($this->getTransportMock());
         $this->assertSame(
-            ['/api/exchangerates/tables/B/2022-01-02/2022-01-03'],
-            $webClient->getCurrencyAveragesTableB('2022-01-02', '2022-01-03')
+            ['/api/exchangerates/tables/B/2022-03-02/2022-03-02'],
+            $webClient->getCurrencyAveragesTableB('2022-03-02', '2022-03-02')
         );
     }
 
@@ -33,8 +33,8 @@ class NbpWebClientTest extends TestCase
     {
         $webClient = new NbpWebClient($this->getTransportMock());
         $this->assertSame(
-            ['/api/exchangerates/tables/C/2022-01-02/2022-01-03'],
-            $webClient->getCurrencyTradingTables('2022-01-02', '2022-01-03')
+            ['/api/exchangerates/tables/C/2022-03-02/2022-03-02'],
+            $webClient->getCurrencyTradingTables('2022-03-02', '2022-03-02')
         );
     }
 
@@ -42,8 +42,8 @@ class NbpWebClientTest extends TestCase
     {
         $webClient = new NbpWebClient($this->getTransportMock());
         $this->assertSame(
-            ['/api/cenyzlota/2022-01-02/2022-01-03'],
-            $webClient->getGoldRates('2022-01-02', '2022-01-03')
+            ['/api/cenyzlota/2022-03-02/2022-03-02'],
+            $webClient->getGoldRates('2022-03-02', '2022-03-02')
         );
     }
 
