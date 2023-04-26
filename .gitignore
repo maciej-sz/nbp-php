@@ -1,3 +1,7 @@
 vendor/
+var/
 .idea
 tests/php-unit/reports/
+.phpunit.result.cache
+.deptrac.cache
+.php-cs-fixer.cache

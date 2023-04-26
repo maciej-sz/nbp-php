@@ -3,6 +3,10 @@ language: php
 php:
   - 7.2
   - 7.3
+  - 7.4
+  - 8.0
+  - 8.1
+  - nightly
 
 install:
   - composer install
@@ -11,5 +15,6 @@ before_script:
   - composer update --lock
 
 script:
-  - ./vendor/bin/behat
+  - ./vendor/bin/php-cs-fixer --config=./.php-cs-fixer.dist.php fix --dry-run --diff --allow-risky=yes
+  - ./vendor/bin/phpstan
   - ./vendor/bin/phpunit
