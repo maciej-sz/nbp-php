@@ -8,8 +8,13 @@ use MaciejSz\Nbp\CurrencyAverageRates\Infrastructure\Mapper\CurrencyAveragesTabl
 use MaciejSz\Nbp\CurrencyTradingRates\Infrastructure\Mapper\CurrencyTradingTableMapper;
 use MaciejSz\Nbp\GoldRates\Infrastructure\Mapper\GoldRatesMapper;
 use MaciejSz\Nbp\Service\NbpCache;
-use MaciejSz\Nbp\Shared\Domain\DateFormatter;
 use MaciejSz\Nbp\Shared\Infrastructure\Client\NbpClient;
+use MaciejSz\Nbp\Shared\Infrastructure\Client\Request\CurrencyAveragesTableARequest;
+use MaciejSz\Nbp\Shared\Infrastructure\Client\Request\CurrencyAveragesTableBRequest;
+use MaciejSz\Nbp\Shared\Infrastructure\Client\Request\CurrencyTradingTableRequest;
+use MaciejSz\Nbp\Shared\Infrastructure\Client\Request\GoldRatesRequest;
+use MaciejSz\Nbp\Shared\Infrastructure\Mapper\TableMapper;
+use function MaciejSz\Nbp\Shared\Domain\DateFormatter\month_range;
 
 final class NbpWebRepository implements NbpRepository
 {
@@ -52,7 +57,10 @@ final class NbpWebRepository implements NbpRepository
      */
     public function getCurrencyAveragesTableA(int $year, int $month): iterable
     {
-        // TODO: Implement getCurrencyAveragesTableA() method.
+        $request = new CurrencyAveragesTableARequest(...month_range($year, $month));
+        $results = $this->client->send($request);
+
+        yield from $this->hydrate($results, $this->currencyAveragesTableMapper);
     }
 
     /**
@@ -60,7 +68,10 @@ final class NbpWebRepository implements NbpRepository
      */
     public function getCurrencyAveragesTableB(int $year, int $month): iterable
     {
-        // TODO: Implement getCurrencyAveragesTableB() method.
+        $request = new CurrencyAveragesTableBRequest(...month_range($year, $month));
+        $results = $this->client->send($request);
+
+        yield from $this->hydrate($results, $this->currencyAveragesTableMapper);
     }
 
     /**
@@ -68,15 +79,10 @@ final class NbpWebRepository implements NbpRepository
      */
     public function getCurrencyTradingTables(int $year, int $month): iterable
     {
-        $dateFormatter = new DateFormatter();
+        $request = new CurrencyTradingTableRequest(...month_range($year, $month));
+        $results = $this->client->send($request);
 
-        $startDate = $dateFormatter->firstDayOfMonth($year, $month);
-        $endDate = $dateFormatter->lastDayOfMonth($year, $month);
-
-        $tradingTables = $this->client->getCurrencyTradingTables($startDate, $endDate);
-        foreach ($tradingTables as $tradingTableData) {
-            yield $this->currencyTradingTableMapper->mapRawDataToDomainObject($tradingTableData);
-        }
+        yield from $this->hydrate($results, $this->currencyTradingTableMapper);
     }
 
     /**
@@ -84,11 +90,21 @@ final class NbpWebRepository implements NbpRepository
      */
     public function getGoldRates(int $year, int $month): iterable
     {
-        // TODO: Implement getGoldRates() method.
+        $request = new GoldRatesRequest(...month_range($year, $month));
+        $results = $this->client->send($request);
+
+        yield from $this->hydrate($results, $this->goldRatesMapper);
     }
 
-    private function getTradingTablesHydrator(array $tradingTables): \Generator
+    /**
+     * @param iterable<array<mixed>> $results
+     * @param TableMapper $mapper
+     * @return iterable
+     */
+    private function hydrate(iterable $results, TableMapper $mapper): iterable
     {
-        // TODO:
+        foreach ($results as $result) {
+            yield $mapper->rawDataToDomainObject($result);
+        }
     }
 }

@@ -5,11 +5,15 @@ declare(strict_types=1);
 namespace MaciejSz\Nbp\GoldRates\Infrastructure\Mapper;
 
 use MaciejSz\Nbp\GoldRates\Domain\GoldRate;
+use MaciejSz\Nbp\Shared\Infrastructure\Mapper\TableMapper;
 use MaciejSz\Nbp\Shared\Infrastructure\Serializer\ArrayDataAccess;
 use MaciejSz\Nbp\Shared\Infrastructure\Validator\NbpNumericRateValidator;
 use MaciejSz\Nbp\Shared\Infrastructure\Validator\Validator;
 
-class GoldRatesMapper
+/**
+ * @implements TableMapper<array<GoldRate>>
+ */
+class GoldRatesMapper implements TableMapper
 {
     /** @var Validator<mixed> */
     private $rateValidator;
@@ -29,7 +33,7 @@ class GoldRatesMapper
      * @param array<mixed> $goldRates
      * @return array<GoldRate>
      */
-    public function mapRawDataToDomainObjectCollection(array $goldRates): array
+    public function rawDataToDomainObject(array $goldRates): array
     {
         $domainObjects = [];
 

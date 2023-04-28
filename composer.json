@@ -13,7 +13,10 @@
     "autoload": {
         "psr-4": {
             "MaciejSz\\Nbp\\": "src/"
-        }
+        },
+        "files": [
+            "src/Shared/Domain/DateFormatter/functions.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {

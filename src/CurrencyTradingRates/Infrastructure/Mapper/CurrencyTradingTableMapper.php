@@ -5,9 +5,13 @@ declare(strict_types=1);
 namespace MaciejSz\Nbp\CurrencyTradingRates\Infrastructure\Mapper;
 
 use MaciejSz\Nbp\CurrencyTradingRates\Domain\CurrencyTradingTable;
+use MaciejSz\Nbp\Shared\Infrastructure\Mapper\TableMapper;
 use MaciejSz\Nbp\Shared\Infrastructure\Serializer\ArrayDataAccess;
 
-class CurrencyTradingTableMapper
+/**
+ * @implements TableMapper<CurrencyTradingTable>
+ */
+class CurrencyTradingTableMapper implements TableMapper
 {
     /** @var CurrencyTradingRatesMapper */
     private $ratesMapper;
@@ -23,7 +27,7 @@ class CurrencyTradingTableMapper
     /**
      * @param array<mixed> $tableData
      */
-    public function mapRawDataToDomainObject(array $tableData): CurrencyTradingTable
+    public function rawDataToDomainObject(array $tableData): CurrencyTradingTable
     {
         $dataAccess = new ArrayDataAccess($tableData);
 

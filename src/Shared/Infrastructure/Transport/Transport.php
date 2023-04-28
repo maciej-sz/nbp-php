@@ -6,5 +6,5 @@ namespace MaciejSz\Nbp\Shared\Infrastructure\Transport;
 
 interface Transport
 {
-    public function request(string $path): array;
+    public function fetch(string $path): array;
 }

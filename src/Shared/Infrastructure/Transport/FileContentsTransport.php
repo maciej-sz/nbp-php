@@ -16,7 +16,7 @@ class FileContentsTransport implements Transport
         $this->baseUri = $baseUri;
     }
 
-    public function request(string $path): array
+    public function fetch(string $path): array
     {
         $path = trim($path, '/');
         $uri = "{$this->baseUri}/{$path}?format=json";

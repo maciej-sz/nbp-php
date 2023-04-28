@@ -5,9 +5,13 @@ declare(strict_types=1);
 namespace MaciejSz\Nbp\CurrencyAverageRates\Infrastructure\Mapper;
 
 use MaciejSz\Nbp\CurrencyAverageRates\Domain\CurrencyAveragesTable;
+use MaciejSz\Nbp\Shared\Infrastructure\Mapper\TableMapper;
 use MaciejSz\Nbp\Shared\Infrastructure\Serializer\ArrayDataAccess;
 
-class CurrencyAveragesTableMapper
+/**
+ * @implements TableMapper<CurrencyAveragesTable>
+ */
+class CurrencyAveragesTableMapper implements TableMapper
 {
     /** @var CurrencyAverageRatesMapper */
     private $ratesMapper;

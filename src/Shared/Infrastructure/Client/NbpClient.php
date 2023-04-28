@@ -4,25 +4,12 @@ declare(strict_types=1);
 
 namespace MaciejSz\Nbp\Shared\Infrastructure\Client;
 
+use MaciejSz\Nbp\Shared\Infrastructure\Client\Request\NbpClientRequest;
+
 interface NbpClient
 {
     /**
      * @return array<mixed>
      */
-    public function getCurrencyAveragesTableA(string $startDate, string $endDate): array;
-
-    /**
-     * @return array<mixed>
-     */
-    public function getCurrencyAveragesTableB(string $startDate, string $endDate): array;
-
-    /**
-     * @return array<mixed>
-     */
-    public function getCurrencyTradingTables(string $startDate, string $endDate): array;
-
-    /**
-     * @return array<mixed>
-     */
-    public function getGoldRates(string $startDate, string $endDate): array;
+    public function send(NbpClientRequest $request): array;
 }
