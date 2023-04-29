@@ -7,17 +7,17 @@ namespace MaciejSz\Nbp\CurrencyAverageRates\Infrastructure\Mapper;
 use MaciejSz\Nbp\CurrencyAverageRates\Domain\CurrencyAverageRate;
 use MaciejSz\Nbp\Shared\Infrastructure\Serializer\ArrayDataAccess;
 use MaciejSz\Nbp\Shared\Infrastructure\Validator\NbpNumericRateValidator;
-use MaciejSz\Nbp\Shared\Infrastructure\Validator\Validator;
+use MaciejSz\Nbp\Shared\Infrastructure\Validator\ThrowableValidator;
 
 class CurrencyAverageRatesMapper
 {
-    /** @var Validator<mixed> */
+    /** @var ThrowableValidator<mixed> */
     private $rateValidator;
 
     /**
-     * @param Validator<mixed>|null $rateValidator
+     * @param ThrowableValidator<mixed>|null $rateValidator
      */
-    public function __construct(?Validator $rateValidator = null)
+    public function __construct(?ThrowableValidator $rateValidator = null)
     {
         if (null === $rateValidator) {
             $rateValidator = new NbpNumericRateValidator();

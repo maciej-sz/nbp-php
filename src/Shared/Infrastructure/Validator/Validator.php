@@ -6,17 +6,9 @@ namespace MaciejSz\Nbp\Shared\Infrastructure\Validator;
 
 /**
  * @template T
+ * @implements BoolValidator<T>
+ * @implements ThrowableValidator<T>
  */
-interface Validator
+interface Validator extends BoolValidator, ThrowableValidator
 {
-    /**
-     * @param T $value
-     */
-    public function isValid($value): bool;
-
-    /**
-     * @param T $value
-     * @throws \Throwable
-     */
-    public function validate($value): void;
 }

@@ -11,19 +11,19 @@ class CurrencyAverageRate
     /** @var string */
     private $currencyCode;
     /** @var float */
-    private $rate;
+    private $value;
     /** @var \DateTimeInterface */
     private $effectiveDate;
 
     public function __construct(
         string $currencyName,
         string $currencyCode,
-        float $rate,
+        float $value,
         \DateTimeInterface $effectiveDate
     ) {
         $this->currencyName = $currencyName;
         $this->currencyCode = $currencyCode;
-        $this->rate = $rate;
+        $this->value = $value;
         $this->effectiveDate = $effectiveDate;
     }
 
@@ -37,9 +37,9 @@ class CurrencyAverageRate
         return $this->currencyCode;
     }
 
-    public function getRate(): float
+    public function getValue(): float
     {
-        return $this->rate;
+        return $this->value;
     }
 
     public function getEffectiveDate(): \DateTimeInterface
