@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace MaciejSz\Nbp\Shared\Infrastructure\Transport;
 
+use MaciejSz\Nbp\Shared\Infrastructure\Client\NbpWebClient;
 use MaciejSz\Nbp\Shared\Infrastructure\Transport\Exception\TransportException;
 
 class FileContentsTransport implements Transport
@@ -11,7 +12,7 @@ class FileContentsTransport implements Transport
     /** @var string */
     private $baseUri;
 
-    public function __construct(string $baseUri)
+    public function __construct(string $baseUri = NbpWebClient::BASE_URL)
     {
         $this->baseUri = $baseUri;
     }
