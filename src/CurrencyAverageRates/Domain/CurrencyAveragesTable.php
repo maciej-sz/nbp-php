@@ -7,9 +7,9 @@ namespace MaciejSz\Nbp\CurrencyAverageRates\Domain;
 class CurrencyAveragesTable
 {
     /** @var string */
-    private $tableLetter;
+    private $letter;
     /** @var string */
-    private $tableNumber;
+    private $number;
     /** @var \DateTimeInterface */
     private $effectiveDate;
     /** @var array<CurrencyAverageRate> */
@@ -19,25 +19,25 @@ class CurrencyAveragesTable
      * @param array<CurrencyAverageRate> $rates
      */
     public function __construct(
-        string $tableLetter,
-        string $tableNumber,
+        string $letter,
+        string $number,
         \DateTimeInterface $effectiveDate,
         array $rates
     ) {
-        $this->tableLetter = $tableLetter;
-        $this->tableNumber = $tableNumber;
+        $this->letter = $letter;
+        $this->number = $number;
         $this->effectiveDate = $effectiveDate;
         $this->rates = $rates;
     }
 
-    public function getTableLetter(): string
+    public function getLetter(): string
     {
-        return $this->tableLetter;
+        return $this->letter;
     }
 
-    public function getTableNumber(): string
+    public function getNumber(): string
     {
-        return $this->tableNumber;
+        return $this->number;
     }
 
     public function getEffectiveDate(): \DateTimeInterface
