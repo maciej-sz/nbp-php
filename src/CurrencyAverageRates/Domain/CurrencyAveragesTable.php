@@ -9,7 +9,7 @@ class CurrencyAveragesTable
     /** @var string */
     private $letter;
     /** @var string */
-    private $number;
+    private $no;
     /** @var \DateTimeInterface */
     private $effectiveDate;
     /** @var array<CurrencyAverageRate> */
@@ -20,12 +20,12 @@ class CurrencyAveragesTable
      */
     public function __construct(
         string $letter,
-        string $number,
+        string $no,
         \DateTimeInterface $effectiveDate,
         array $rates
     ) {
         $this->letter = $letter;
-        $this->number = $number;
+        $this->no = $no;
         $this->effectiveDate = $effectiveDate;
         $this->rates = $rates;
     }
@@ -35,9 +35,9 @@ class CurrencyAveragesTable
         return $this->letter;
     }
 
-    public function getNumber(): string
+    public function getNo(): string
     {
-        return $this->number;
+        return $this->no;
     }
 
     public function getEffectiveDate(): \DateTimeInterface

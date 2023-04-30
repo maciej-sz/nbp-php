@@ -7,9 +7,9 @@ namespace MaciejSz\Nbp\CurrencyTradingRates\Domain;
 class CurrencyTradingTable
 {
     /** @var string */
-    private $tableLetter;
+    private $letter;
     /** @var string */
-    private $tableNumber;
+    private $no;
     /** @var \DateTimeInterface */
     private $tradingDate;
     /** @var \DateTimeInterface */
@@ -22,13 +22,13 @@ class CurrencyTradingTable
      */
     public function __construct(
         string $tableLetter,
-        string $tableNumber,
+        string $tableNo,
         \DateTimeInterface $tradingDate,
         \DateTimeInterface $effectiveDate,
         array $rates
     ) {
-        $this->tableLetter = $tableLetter;
-        $this->tableNumber = $tableNumber;
+        $this->letter = $tableLetter;
+        $this->no = $tableNo;
         $this->tradingDate = $tradingDate;
         $this->effectiveDate = $effectiveDate;
         $this->rates = $rates;
@@ -36,12 +36,12 @@ class CurrencyTradingTable
 
     public function getLetter(): string
     {
-        return $this->tableLetter;
+        return $this->letter;
     }
 
-    public function getNumber(): string
+    public function getNo(): string
     {
-        return $this->tableNumber;
+        return $this->no;
     }
 
     public function getTradingDate(): \DateTimeInterface
@@ -62,7 +62,7 @@ class CurrencyTradingTable
     public function getRate(string $code): CurrencyTradingRate
     {
         if (!isset($this->rates[$code])) {
-            throw new \OutOfRangeException("Currency code: '{$code}' not found in table '{$this->tableNumber}'");
+            throw new \OutOfRangeException("Currency code: '{$code}' not found in table '{$this->no}'");
         }
 
         return $this->rates[$code];

@@ -26,7 +26,7 @@ class CurrencyTradingTableMapperTest extends TestCase
         $tableC = $tableMapper->rawDataToDomainObject($tables[0]);
 
         self::assertSame('C', $tableC->getLetter());
-        self::assertSame('042/C/NBP/2023', $tableC->getNumber());
+        self::assertSame('042/C/NBP/2023', $tableC->getNo());
         self::assertSame('2023-02-28T00:00:00+01:00', $tableC->getTradingDate()->format('c'));
         self::assertSame('2023-03-01T00:00:00+01:00', $tableC->getEffectiveDate()->format('c'));
         self::assertSame([], $tableC->getRates());

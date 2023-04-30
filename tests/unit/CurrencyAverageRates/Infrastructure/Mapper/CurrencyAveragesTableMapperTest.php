@@ -24,7 +24,7 @@ class CurrencyAveragesTableMapperTest extends TestCase
         $tableA = $tableMapper->rawDataToDomainObject($tables[0]);
 
         self::assertSame('A', $tableA->getLetter());
-        self::assertSame('042/A/NBP/2023', $tableA->getNumber());
+        self::assertSame('042/A/NBP/2023', $tableA->getNo());
         self::assertSame('2023-03-01T00:00:00+01:00', $tableA->getEffectiveDate()->format('c'));
         self::assertSame([], $tableA->getRates());
     }
