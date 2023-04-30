@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace MaciejSz\Nbp\CurrencyTradingRates\Domain;
 
-class CurrencyTradingRates
+class CurrencyTradingRate
 {
     /** @var string */
     private $currencyName;

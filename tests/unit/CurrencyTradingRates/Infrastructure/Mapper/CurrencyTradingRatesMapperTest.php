@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace MaciejSz\Nbp\Test\Unit\CurrencyTradingRates\Infrastructure\Mapper;
 
-use MaciejSz\Nbp\CurrencyTradingRates\Domain\CurrencyTradingRates;
+use MaciejSz\Nbp\CurrencyTradingRates\Domain\CurrencyTradingRate;
 use MaciejSz\Nbp\CurrencyTradingRates\Infrastructure\Mapper\CurrencyTradingRatesMapper;
 use MaciejSz\Nbp\Shared\Infrastructure\Validator\Exception\ValidationException;
 use MaciejSz\Nbp\Shared\Infrastructure\Validator\ThrowableValidator;
@@ -34,10 +34,11 @@ class CurrencyTradingRatesMapperTest extends TestCase
         $rates = $mapper->rawDataToDomainObjectCollection($tables[0], $tables[0]['rates']);
 
         self::assertCount(3, $rates);
-        self::assertContainsOnly(CurrencyTradingRates::class, $rates);
-        self::assertSame('USD', $rates[0]->getCurrencyCode());
-        self::assertSame('EUR', $rates[1]->getCurrencyCode());
-        self::assertSame('CHF', $rates[2]->getCurrencyCode());
+        self::assertContainsOnly(CurrencyTradingRate::class, $rates);
+        self::assertEquals(['USD', 'EUR', 'CHF'], array_keys($rates));
+        self::assertSame(4.3, $rates['USD']->getBid());
+        self::assertSame(4.6, $rates['EUR']->getBid());
+        self::assertSame(4.8, $rates['CHF']->getBid());
     }
 
     public function testValidatorFailure()

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace MaciejSz\Nbp\CurrencyTradingRates\Infrastructure\Mapper;
 
-use MaciejSz\Nbp\CurrencyTradingRates\Domain\CurrencyTradingRates;
+use MaciejSz\Nbp\CurrencyTradingRates\Domain\CurrencyTradingRate;
 use MaciejSz\Nbp\Shared\Infrastructure\Serializer\ArrayDataAccess;
 use MaciejSz\Nbp\Shared\Infrastructure\Validator\NbpNumericRateValidator;
 use MaciejSz\Nbp\Shared\Infrastructure\Validator\ThrowableValidator;
@@ -28,13 +28,14 @@ class CurrencyTradingRatesMapper
     /**
      * @param array<mixed> $tableData
      * @param array<mixed> $ratesData
-     * @return array<CurrencyTradingRates>
+     * @return array<CurrencyTradingRate>
      */
     public function rawDataToDomainObjectCollection(array $tableData, array $ratesData): array
     {
         $collection = [];
         foreach ($ratesData as $rateData) {
-            $collection[] = $this->rawDataToDomainObject($tableData, $rateData);
+            $currencyTradingRate = $this->rawDataToDomainObject($tableData, $rateData);
+            $collection[$currencyTradingRate->getCurrencyCode()] = $currencyTradingRate;
         }
 
         return $collection;
@@ -44,7 +45,7 @@ class CurrencyTradingRatesMapper
      * @param array<mixed> $tableData
      * @param array<mixed> $ratesData
      */
-    public function rawDataToDomainObject(array $tableData, array $ratesData): CurrencyTradingRates
+    public function rawDataToDomainObject(array $tableData, array $ratesData): CurrencyTradingRate
     {
         $tableDataAccess = new ArrayDataAccess($tableData);
         $ratesDataAccess = new ArrayDataAccess($ratesData);
@@ -59,7 +60,7 @@ class CurrencyTradingRatesMapper
         $this->rateValidator->validate($bid);
         $this->rateValidator->validate($ask);
 
-        return new CurrencyTradingRates(
+        return new CurrencyTradingRate(
             $currencyName,
             $currencyCode,
             $bid,

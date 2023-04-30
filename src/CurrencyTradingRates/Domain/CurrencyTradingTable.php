@@ -14,11 +14,11 @@ class CurrencyTradingTable
     private $tradingDate;
     /** @var \DateTimeInterface */
     private $effectiveDate;
-    /** @var array<CurrencyTradingRates> */
+    /** @var array<string, CurrencyTradingRate> */
     private $rates;
 
     /**
-     * @param array<CurrencyTradingRates> $rates
+     * @param array<string, CurrencyTradingRate> $rates
      */
     public function __construct(
         string $tableLetter,
@@ -34,12 +34,12 @@ class CurrencyTradingTable
         $this->rates = $rates;
     }
 
-    public function getTableLetter(): string
+    public function getLetter(): string
     {
         return $this->tableLetter;
     }
 
-    public function getTableNumber(): string
+    public function getNumber(): string
     {
         return $this->tableNumber;
     }
@@ -59,7 +59,7 @@ class CurrencyTradingTable
         return $this->rates;
     }
 
-    public function getRate(string $code): CurrencyTradingRates
+    public function getRate(string $code): CurrencyTradingRate
     {
         if (!isset($this->rates[$code])) {
             throw new \OutOfRangeException("Currency code: '{$code}' not found in table '{$this->tableNumber}'");
