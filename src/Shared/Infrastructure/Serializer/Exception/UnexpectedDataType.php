@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace MaciejSz\Nbp\Shared\Infrastructure\Exception;
+namespace MaciejSz\Nbp\Shared\Infrastructure\Serializer\Exception;
 
 class UnexpectedDataType extends \RuntimeException
 {

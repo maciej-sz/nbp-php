@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace MaciejSz\Nbp\Shared\Infrastructure\Serializer;
 
 use MaciejSz\Nbp\Shared\Domain\DateTimeBuilder;
-use MaciejSz\Nbp\Shared\Infrastructure\Exception;
 
 class ArrayDataAccess implements DataAccess
 {
@@ -50,11 +49,14 @@ class ArrayDataAccess implements DataAccess
     public function extractFloat(string $key): float
     {
         $value = $this->extract($key);
-        if (!is_float($value)) {
-            throw new Exception\UnexpectedDataType('float', gettype($value));
+        if (is_float($value)) {
+            return $value;
+        }
+        else if (is_numeric($value)) {
+            return (float) $value;
         }
 
-        return $value;
+        throw new Exception\UnexpectedDataType('float', gettype($value));
     }
 
     /**
@@ -66,7 +68,7 @@ class ArrayDataAccess implements DataAccess
         try {
             return $this->getDateTimeBuilder()->build($value);
         } catch (\Exception $e) {
-            throw new Exception\UnexpectedDataType('date string', gettype($value));
+            throw new Exception\UnexpectedDataType('valid date', gettype($value));
         }
     }
 

@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace MaciejSz\Nbp\Shared\Infrastructure\Serializer;
 
-use MaciejSz\Nbp\Shared\Infrastructure\Exception;
-
 interface DataAccess
 {
     public function extract(string $key);
