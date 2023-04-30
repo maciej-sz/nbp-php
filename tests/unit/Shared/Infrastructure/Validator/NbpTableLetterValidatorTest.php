@@ -35,7 +35,7 @@ class NbpTableLetterValidatorTest extends TestCase
     }
 
     /**
-     * @return iterable<array<string, bool>>
+     * @return iterable<array<mixed>>
      */
     public function isValidDataProvider(): iterable
     {
