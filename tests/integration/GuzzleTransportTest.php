@@ -6,6 +6,7 @@ namespace MaciejSz\Nbp\Test\Integration;
 
 use donatj\MockWebServer\MockWebServer;
 use GuzzleHttp\Client;
+use MaciejSz\Nbp\Shared\Infrastructure\Transport\Exception\TransportException;
 use MaciejSz\Nbp\Shared\Infrastructure\Transport\GuzzleTransport;
 use MaciejSz\Nbp\Test\Fixtures\WebServer\MockWebServerFactory;
 use PHPUnit\Framework\TestCase;
@@ -37,5 +38,17 @@ class GuzzleTransportTest extends TestCase
         self::assertCount(2, $result);
         self::assertEquals('042/A/NBP/2023', $result[0]['no']);
         self::assertEquals('043/A/NBP/2023', $result[1]['no']);
+    }
+
+    public function testInvalidJson(): void
+    {
+        self::expectException(TransportException::class);
+        self::expectExceptionMessageMatches('/^Cannot decode JSON data from.*\/api\/bogus$/');
+
+        $guzzleClient = new Client([
+            'base_uri' => self::$server->getServerRoot(),
+        ]);
+        $transport = new GuzzleTransport($guzzleClient);
+        $transport->fetch('/api/bogus');
     }
 }
