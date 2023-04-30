@@ -16,10 +16,7 @@ class CurrencyAverageRatesMapperTest extends TestCase
     public function testRawDataToDomainObject()
     {
         $mapper = new CurrencyAverageRatesMapper();
-
-        $fixturesRepository = new FixturesRepository();
-        $tables = $fixturesRepository->fetchArray('/api/exchangerates/tables/A/2023-03-01/2023-03-02/data');
-
+        $tables = $this->fetchFixtureTables();
         $rate = $mapper->rawDataToDomainObject($tables[0], $tables[0]['rates'][0]);
 
         self::assertSame('USD', $rate->getCurrencyCode());
@@ -31,10 +28,7 @@ class CurrencyAverageRatesMapperTest extends TestCase
     public function testRawDataToDomainObjectCollection()
     {
         $mapper = new CurrencyAverageRatesMapper();
-
-        $fixturesRepository = new FixturesRepository();
-        $tables = $fixturesRepository->fetchArray('/api/exchangerates/tables/A/2023-03-01/2023-03-02/data');
-
+        $tables = $this->fetchFixtureTables();
         $rates = $mapper->rawDataToDomainObjectCollection($tables[0], $tables[0]['rates']);
 
         self::assertCount(3, $rates);
@@ -55,10 +49,19 @@ class CurrencyAverageRatesMapperTest extends TestCase
                 throw new ValidationException("Invalid rate: {$value}");
             }
         };
-        $fixturesRepository = new FixturesRepository();
-        $tables = $fixturesRepository->fetchArray('/api/exchangerates/tables/A/2023-03-01/2023-03-02/data');
+        $tables = $this->fetchFixtureTables();
 
         $mapper = new CurrencyAverageRatesMapper($mockValidator);
         $mapper->rawDataToDomainObject($tables[0], $tables[0]['rates'][0]);
+    }
+
+    /**
+     * @return array<mixed>
+     */
+    private function fetchFixtureTables(): array
+    {
+        $fixturesRepository = new FixturesRepository();
+
+        return $fixturesRepository->fetchArray('/api/exchangerates/tables/A/2023-03-01/2023-03-02/data');
     }
 }
