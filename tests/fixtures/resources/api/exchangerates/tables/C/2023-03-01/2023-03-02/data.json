@@ -1,0 +1,54 @@
+[
+  {
+    "table": "C",
+    "no": "042/C/NBP/2023",
+    "tradingDate": "2023-02-28",
+    "effectiveDate": "2023-03-01",
+    "rates": [
+      {
+        "currency": "dolar amerykański",
+        "code": "USD",
+        "bid": 4.3,
+        "ask": 4.4
+      },
+      {
+        "currency": "euro",
+        "code": "EUR",
+        "bid": 4.6,
+        "ask": 4.7
+      },
+      {
+        "currency": "frank szwajcarski",
+        "code": "CHF",
+        "bid": 4.8,
+        "ask": 4.9
+      }
+    ]
+  },
+  {
+    "table": "C",
+    "no": "043/C/NBP/2023",
+    "tradingDate": "2023-03-01",
+    "effectiveDate": "2023-03-02",
+    "rates": [
+      {
+        "currency": "dolar amerykański",
+        "code": "USD",
+        "bid": 4.2,
+        "ask": 4.3
+      },
+      {
+        "currency": "euro",
+        "code": "EUR",
+        "bid": 4.3,
+        "ask": 4.4
+      },
+      {
+        "currency": "frank szwajcarski",
+        "code": "CHF",
+        "bid": 4.4,
+        "ask": 4.5
+      }
+    ]
+  }
+]

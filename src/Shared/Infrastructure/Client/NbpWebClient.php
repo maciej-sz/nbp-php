@@ -26,9 +26,8 @@ final class NbpWebClient implements NbpClient
         ?TransportFactory $transportFactory = null
     ): self
     {
-        if (null === $transportFactory) {
-            $transportFactory = new DefaultTransportFactory();
-        }
+        $baseUri = $baseUri ?: self::BASE_URL;
+        $transportFactory = $transportFactory ?: new DefaultTransportFactory();
         $transport = $transportFactory->create($baseUri);
 
         return new self($transport);

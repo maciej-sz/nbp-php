@@ -5,12 +5,11 @@ declare(strict_types=1);
 namespace MaciejSz\Nbp\Shared\Infrastructure\Transport;
 
 use GuzzleHttp\Client as GuzzleHttpClient;
-use MaciejSz\Nbp\Shared\Infrastructure\Client\NbpWebClient;
 use Symfony\Component\HttpClient\HttpClient as SymfonyHttpClient;
 
 class DefaultTransportFactory implements TransportFactory
 {
-    public function create(string $baseUri = NbpWebClient::BASE_URL): Transport
+    public function create(string $baseUri): Transport
     {
         return $this->tryCreateSymfonyTransport($baseUri)
             ?? $this->tryCreateGuzzleTransport($baseUri)
