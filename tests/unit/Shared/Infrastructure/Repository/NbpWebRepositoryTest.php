@@ -159,4 +159,10 @@ class NbpWebRepositoryTest extends TestCase
         $this->assertSame($currencyTradingTableMock01, $rates[0][0]);
         $this->assertSame($currencyTradingTableMock02, $rates[1][0]);
     }
+
+    public function testInstantiateWithDefaultMappers()
+    {
+        self::expectNotToPerformAssertions();
+        new NbpWebRepository($this->createMock(NbpClient::class));
+    }
 }
