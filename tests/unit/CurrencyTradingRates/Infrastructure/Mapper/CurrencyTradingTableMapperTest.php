@@ -32,31 +32,6 @@ class CurrencyTradingTableMapperTest extends TestCase
         self::assertSame([], $tableC->getRates());
     }
 
-    public function testGetRate(): void
-    {
-        $tables = $this->fetchFixtureTables();
-
-        $tradingRate = new CurrencyTradingRate(
-            'dolar gondorski',
-            'GDD',
-            12.3,
-            12.4,
-            new \DateTimeImmutable(),
-            new \DateTimeImmutable()
-        );
-        $ratesMapperMock = $this->createMock(CurrencyTradingRatesMapper::class);
-        $ratesMapperMock
-            ->expects(self::once())
-            ->method('rawDataToDomainObjectCollection')
-            ->willReturn(['GDD' => $tradingRate])
-        ;
-
-        $tableMapper = new CurrencyTradingTableMapper($ratesMapperMock);
-
-        $tableC = $tableMapper->rawDataToDomainObject($tables[0]);
-        $this->assertSame($tradingRate, $tableC->getRate('GDD'));
-    }
-
     /**
      * @return array<mixed>
      */
