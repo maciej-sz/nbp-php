@@ -35,6 +35,6 @@ final class NbpWebClient implements NbpClient
 
     public function send(NbpClientRequest $request): array
     {
-        return $this->transport->fetch($request->getPath());
+        return $this->transport->get($request->getPath());
     }
 }

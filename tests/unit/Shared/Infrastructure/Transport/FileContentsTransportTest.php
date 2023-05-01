@@ -20,6 +20,6 @@ class FileContentsTransportTest extends TestCase
         self::expectExceptionMessage('Cannot decode JSON data from ' . $path);
 
         $transport = new FileContentsTransport('/');
-        $transport->fetch($path);
+        $transport->get($path);
     }
 }

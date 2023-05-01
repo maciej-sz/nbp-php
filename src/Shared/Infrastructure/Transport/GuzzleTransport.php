@@ -24,7 +24,7 @@ class GuzzleTransport implements Transport
         $this->guzzleClient = $guzzleClient;
     }
 
-    public function fetch(string $path): array
+    public function get(string $path): array
     {
         $path = trim($path, '/');
         $response = $this->guzzleClient->get($path, [

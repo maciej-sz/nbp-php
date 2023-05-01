@@ -21,7 +21,7 @@ class SymfonyHttpTransport implements Transport
         $this->httpClient = $httpClient;
     }
 
-    public function fetch(string $path): array
+    public function get(string $path): array
     {
         $response = $this->httpClient->request('GET', $path, [
             'headers' => [

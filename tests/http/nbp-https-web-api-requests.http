@@ -1,0 +1,23 @@
+### Last available table B
+GET https://api.nbp.pl/api/exchangerates/tables/B/
+Accept: application/json
+
+### Table A from specific date
+GET https://api.nbp.pl/api/exchangerates/tables/A/2012-01-02
+Accept: application/json
+
+### Table A from date range
+GET https://api.nbp.pl/api/exchangerates/tables/A/2023-03-01/2023-03-31
+Accept: application/json
+
+### Table B from date range
+GET https://api.nbp.pl/api/exchangerates/tables/B/2023-02-01/2023-02-28
+Accept: application/json
+
+### Table C from date range
+GET https://api.nbp.pl/api/exchangerates/tables/C/2023-03-01/2023-03-31
+Accept: application/json
+
+### Gold rates from date range
+GET https://api.nbp.pl/api/cenyzlota/2023-03-01/2023-03-03
+Accept: application/json
