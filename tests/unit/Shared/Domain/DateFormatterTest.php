@@ -6,10 +6,14 @@ namespace MaciejSz\Nbp\Test\Unit\Shared\Domain;
 
 use MaciejSz\Nbp\Shared\Domain\Exception\InvalidDateException;
 use PHPUnit\Framework\TestCase;
+use function MaciejSz\Nbp\Shared\Domain\DateFormatter\extract_ym;
 use function MaciejSz\Nbp\Shared\Domain\DateFormatter\first_day_of_month;
 use function MaciejSz\Nbp\Shared\Domain\DateFormatter\format_ym;
+use function MaciejSz\Nbp\Shared\Domain\DateFormatter\is_same_day;
 use function MaciejSz\Nbp\Shared\Domain\DateFormatter\last_day_of_month;
 use function MaciejSz\Nbp\Shared\Domain\DateFormatter\month_range;
+use function MaciejSz\Nbp\Shared\Domain\DateFormatter\next_month;
+use function MaciejSz\Nbp\Shared\Domain\DateFormatter\previous_month;
 
 class DateFormatterTest extends TestCase
 {
@@ -38,17 +42,67 @@ class DateFormatterTest extends TestCase
         );
     }
 
-    public function testFormatYm()
+    public function testFormatYm(): void
     {
         self::assertSame('2020-09', format_ym(2020, 9));
         self::assertSame('1970-01', format_ym(1970, 1));
     }
 
-    public function testFormatYmInvalid()
+    public function testFormatYmInvalid(): void
     {
         self::expectException(InvalidDateException::class);
         self::expectExceptionMessage('Invalid year: 2020 and/or month: 13');
 
         format_ym(2020, 13);
+    }
+
+    public function testExtractYm(): void
+    {
+        self::assertSame([2023, 1], extract_ym('2023-01'));
+        self::assertSame([1234, 12], extract_ym('1234-12'));
+    }
+
+    /**
+     * @dataProvider isSameDayDataProvider
+     * @param mixed $date1
+     * @param mixed $date2
+     */
+    public function testIsSameDay($date1, $date2, bool $expected): void
+    {
+        self::assertSame($expected, is_same_day($date1, $date2));
+    }
+
+    public function testPreviousMonth(): void
+    {
+        self::assertSame('2023-02', previous_month('2023-03')->format('Y-m'));
+        self::assertSame('2022-12', previous_month('2023-01-01T00:00:00')->format('Y-m'));
+        self::assertSame('2023-02', previous_month('2023-03-31T23:59:59')->format('Y-m'));
+    }
+
+    public function testNextMonth(): void
+    {
+        self::assertSame('2023-04', next_month('2023-03')->format('Y-m'));
+        self::assertSame('2023-01', next_month('2022-12-31T23:59:59')->format('Y-m'));
+        self::assertSame('2023-04', next_month('2023-03-31T23:59:59')->format('Y-m'));
+    }
+
+    public function isSameDayDataProvider()
+    {
+        return [
+            ['2023-01-01', '2023-01-01', true],
+            ['2023-01-01T12:13:14', '2023-01-01 00:00:00', true],
+            ['2023-01-01T12:13:14', '2023-01-01', true],
+            ['2023-01-01', '2023-01-01 00:00:00', true],
+            [new \DateTimeImmutable('2023-01-01'), '2023-01-01', true],
+            ['2023-01-01', new \DateTimeImmutable('2023-01-01'), true],
+            [new \DateTimeImmutable('2023-01-01'), new \DateTimeImmutable('2023-01-01'), true],
+
+            ['2023-01-01', '2023-01-02', false],
+            ['2023-02-01T12:13:14', '2023-01-01 00:00:00', false],
+            ['2023-01-01T12:13:14', '1988-01-01', false],
+            ['2023-01-01', '2023-01-02 00:00:00', false],
+            [new \DateTimeImmutable('2023-02-01'), '2023-01-01', false],
+            ['2023-02-01', new \DateTimeImmutable('2023-01-01'), false],
+        ];
     }
 }

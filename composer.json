@@ -23,11 +23,12 @@
             "MaciejSz\\Nbp\\Test\\Unit\\": "tests/unit/",
             "MaciejSz\\Nbp\\Test\\Functional\\": "tests/functional/",
             "MaciejSz\\Nbp\\Test\\Integration\\": "tests/integration/",
+            "MaciejSz\\Nbp\\Test\\E2e\\": "tests/e2e/",
             "MaciejSz\\Nbp\\Test\\Fixtures\\": "tests/fixtures/src/"
         }
     },
     "require": {
-        "php": ">=7.2||^8.0",
+        "php": ">=7.2||>=8.0",
         "ext-json": "*"
     },
     "require-dev": {

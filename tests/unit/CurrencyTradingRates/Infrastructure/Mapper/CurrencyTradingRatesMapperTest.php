@@ -13,7 +13,7 @@ use PHPUnit\Framework\TestCase;
 
 class CurrencyTradingRatesMapperTest extends TestCase
 {
-    public function testRawDataToDomainObject()
+    public function testRawDataToDomainObject(): void
     {
         $mapper = new CurrencyTradingRatesMapper();
         $tables = $this->fetchFixtureTables();
@@ -27,7 +27,7 @@ class CurrencyTradingRatesMapperTest extends TestCase
         self::assertSame(4.4, $rate->getAsk());
     }
 
-    public function testRawDataToDomainObjectCollection()
+    public function testRawDataToDomainObjectCollection(): void
     {
         $mapper = new CurrencyTradingRatesMapper();
         $tables = $this->fetchFixtureTables();
@@ -41,7 +41,7 @@ class CurrencyTradingRatesMapperTest extends TestCase
         self::assertSame(4.8, $rates['CHF']->getBid());
     }
 
-    public function testValidatorFailure()
+    public function testValidatorFailure(): void
     {
         $this->expectException(ValidationException::class);
         $this->expectExceptionMessage('Invalid rate: 4.3');
@@ -49,6 +49,9 @@ class CurrencyTradingRatesMapperTest extends TestCase
         $mockValidator = new class implements ThrowableValidator {
             public function validate($value): void
             {
+                if (!is_float($value)) {
+                    throw new \UnexpectedValueException('Expected float, got ' . gettype($value));
+                }
                 throw new ValidationException("Invalid rate: {$value}");
             }
         };
@@ -59,7 +62,22 @@ class CurrencyTradingRatesMapperTest extends TestCase
     }
 
     /**
-     * @return array<mixed>
+     * @return array<
+     *     array{
+     *         table: string,
+     *         no: string,
+     *         tradingDate: string,
+     *         effectiveDate: string,
+     *         rates: array<
+     *             array{
+     *                 currency: string,
+     *                 code: string,
+     *                 bid: float,
+     *                 ask: float
+     *             }
+     *         >
+     *     }
+     * >
      */
     private function fetchFixtureTables(): array
     {

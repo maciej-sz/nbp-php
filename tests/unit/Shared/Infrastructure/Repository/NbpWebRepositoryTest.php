@@ -42,7 +42,6 @@ class NbpWebRepositoryTest extends TestCase
 
         $repository = new NbpWebRepository(
             $clientMock,
-            null,
             $averageTableMapperMock,
             $this->createMock(CurrencyTradingTableMapper::class),
             $this->createMock(GoldRatesMapper::class)
@@ -77,7 +76,6 @@ class NbpWebRepositoryTest extends TestCase
 
         $repository = new NbpWebRepository(
             $clientMock,
-            null,
             $averageTableMapperMock,
             $this->createMock(CurrencyTradingTableMapper::class),
             $this->createMock(GoldRatesMapper::class)
@@ -112,7 +110,6 @@ class NbpWebRepositoryTest extends TestCase
 
         $repository = new NbpWebRepository(
             $clientMock,
-            null,
             $this->createMock(CurrencyAveragesTableMapper::class),
             $tradingTableMapperMock,
             $this->createMock(GoldRatesMapper::class)
@@ -147,7 +144,6 @@ class NbpWebRepositoryTest extends TestCase
 
         $repository = new NbpWebRepository(
             $clientMock,
-            null,
             $this->createMock(CurrencyAveragesTableMapper::class),
             $this->createMock(CurrencyTradingTableMapper::class),
             $goldRatesMapperMock

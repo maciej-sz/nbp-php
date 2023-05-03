@@ -7,8 +7,8 @@ namespace MaciejSz\Nbp\Shared\Infrastructure\Repository;
 use MaciejSz\Nbp\CurrencyAverageRates\Infrastructure\Mapper\CurrencyAveragesTableMapper;
 use MaciejSz\Nbp\CurrencyTradingRates\Infrastructure\Mapper\CurrencyTradingTableMapper;
 use MaciejSz\Nbp\GoldRates\Infrastructure\Mapper\GoldRatesMapper;
-use MaciejSz\Nbp\Service\NbpCache;
 use MaciejSz\Nbp\Shared\Infrastructure\Client\NbpClient;
+use MaciejSz\Nbp\Shared\Infrastructure\Client\NbpWebClient;
 use MaciejSz\Nbp\Shared\Infrastructure\Client\Request\CurrencyAveragesTableARequest;
 use MaciejSz\Nbp\Shared\Infrastructure\Client\Request\CurrencyAveragesTableBRequest;
 use MaciejSz\Nbp\Shared\Infrastructure\Client\Request\CurrencyTradingTableRequest;
@@ -20,8 +20,6 @@ final class NbpWebRepository implements NbpRepository
 {
     /** @var NbpClient */
     private $client;
-    /** @var NbpCache|null */
-    private $nbpCache;
     /** @var CurrencyAveragesTableMapper */
     private $currencyAveragesTableMapper;
     /** @var CurrencyTradingTableMapper */
@@ -31,7 +29,6 @@ final class NbpWebRepository implements NbpRepository
 
     public function __construct(
         NbpClient $client,
-        ?NbpCache $nbpCache = null,
         ?CurrencyAveragesTableMapper $currencyAveragesTableMapper = null,
         ?CurrencyTradingTableMapper $currencyTradingTableMapper = null,
         ?GoldRatesMapper $goldRatesMapper = null
@@ -46,10 +43,18 @@ final class NbpWebRepository implements NbpRepository
             $goldRatesMapper = new GoldRatesMapper();
         }
         $this->client = $client;
-        $this->nbpCache = $nbpCache;
         $this->currencyAveragesTableMapper = $currencyAveragesTableMapper;
         $this->currencyTradingTableMapper = $currencyTradingTableMapper;
         $this->goldRatesMapper = $goldRatesMapper;
+    }
+
+    public static function create(?NbpClient $client = null): self
+    {
+        if (null === $client) {
+            $client = NbpWebClient::create();
+        }
+
+        return new self($client);
     }
 
     /**

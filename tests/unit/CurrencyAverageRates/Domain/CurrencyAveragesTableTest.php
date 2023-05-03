@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace MaciejSz\Nbp\Test\Unit\CurrencyTradingRates\Domain;
+namespace MaciejSz\Nbp\Test\Unit\CurrencyAverageRates\Domain;
 
-use MaciejSz\Nbp\CurrencyTradingRates\Domain\CurrencyTradingRate;
-use MaciejSz\Nbp\CurrencyTradingRates\Domain\CurrencyTradingTable;
+use MaciejSz\Nbp\CurrencyAverageRates\Domain\CurrencyAverageRate;
+use MaciejSz\Nbp\CurrencyAverageRates\Domain\CurrencyAveragesTable;
 use MaciejSz\Nbp\Shared\Domain\Exception\CurrencyCodeNotFoundException;
 use PHPUnit\Framework\TestCase;
 
-class CurrencyTradingTableTest extends TestCase
+class CurrencyAveragesTableTest extends TestCase
 {
     public function testGetRate(): void
     {
@@ -31,31 +31,28 @@ class CurrencyTradingTableTest extends TestCase
     }
 
     /**
-     * @param array<string, CurrencyTradingRate> $rates
+     * @param array<string, CurrencyAveragesTable> $rates
      */
-    private function getTableFixture(array $rates): CurrencyTradingTable
+    private function getTableFixture(array $rates): CurrencyAveragesTable
     {
-        return new CurrencyTradingTable(
+        return new CurrencyAveragesTable(
             'T',
             '042/T/NBP/2023',
-            new \DateTimeImmutable(),
             new \DateTimeImmutable(),
             $rates
         );
     }
 
     /**
-     * @return array<string, CurrencyTradingRate>
+     * @return array<string, CurrencyAverageRate>
      */
     private function getRatesFixture(): array
     {
         return [
-            'FOO' => new CurrencyTradingRate(
+            'FOO' => new CurrencyAverageRate(
                 'FOO',
                 'dolar testowy',
                 12.3,
-                13.4,
-                new \DateTimeImmutable(),
                 new \DateTimeImmutable()
             )
         ];

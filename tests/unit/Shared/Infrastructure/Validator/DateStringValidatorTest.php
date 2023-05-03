@@ -13,7 +13,7 @@ class DateStringValidatorTest extends TestCase
     /**
      * @dataProvider isValidDataProvider
      */
-    public function testIsValid(string $date, bool $expectedResult)
+    public function testIsValid(string $date, bool $expectedResult): void
     {
         $validator = new NbpDateStringValidator();
         self::assertSame($expectedResult, $validator->isValid($date));
@@ -22,7 +22,7 @@ class DateStringValidatorTest extends TestCase
     /**
      * @dataProvider isValidDataProvider
      */
-    public function testValidate(string $value, bool $isValid)
+    public function testValidate(string $value, bool $isValid): void
     {
         if (!$isValid) {
             $this->expectException(ValidationException::class);
@@ -35,7 +35,7 @@ class DateStringValidatorTest extends TestCase
     }
 
     /**
-     * @return array<array<string, bool>>
+     * @return array<array<mixed>>
      */
     public function isValidDataProvider(): array
     {

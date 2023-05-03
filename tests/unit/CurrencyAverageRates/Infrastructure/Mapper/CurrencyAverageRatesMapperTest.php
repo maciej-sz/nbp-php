@@ -56,7 +56,20 @@ class CurrencyAverageRatesMapperTest extends TestCase
     }
 
     /**
-     * @return array<mixed>
+      @return array<
+     *     array{
+     *         table: string,
+     *         no: string,
+     *         effectiveDate: string,
+     *         rates: array<
+     *             array{
+     *                 currency: string,
+     *                 code: string,
+     *                 mid: float
+     *             }
+     *         >
+     *     }
+     * >
      */
     private function fetchFixtureTables(): array
     {

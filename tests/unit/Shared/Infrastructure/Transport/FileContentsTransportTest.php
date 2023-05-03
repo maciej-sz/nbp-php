@@ -11,7 +11,7 @@ use PHPUnit\Framework\TestCase;
 
 class FileContentsTransportTest extends TestCase
 {
-    public function testInvalidJson()
+    public function testInvalidJson(): void
     {
         $fixturesRepository = new FixturesRepository();
         $path = $fixturesRepository->getFullFixturePath('/api/bogus/data', 'json');

@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 
 class GuzzleTransportTest extends TestCase
 {
-    public function testInstantiateWithDefaultClient()
+    public function testInstantiateWithDefaultClient(): void
     {
         self::expectNotToPerformAssertions();
         new GuzzleTransport();

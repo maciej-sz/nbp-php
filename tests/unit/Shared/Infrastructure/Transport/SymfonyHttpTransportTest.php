@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 
 class SymfonyHttpTransportTest extends TestCase
 {
-    public function testInstantiateWithDefaultClient()
+    public function testInstantiateWithDefaultClient(): void
     {
         self::expectNotToPerformAssertions();
         new SymfonyHttpTransport();

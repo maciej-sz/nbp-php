@@ -58,7 +58,7 @@ class ArrayDataAccessTest extends TestCase
         self::assertSame(123.4, $dataAccess->extractFloat('foo'));
     }
 
-    public function testExtractFloatFromInt()
+    public function testExtractFloatFromInt(): void
     {
         $dataAccess = new ArrayDataAccess(['foo' => 123]);
         self::assertSame(123.0, $dataAccess->extractFloat('foo'));

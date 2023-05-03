@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace MaciejSz\Nbp\CurrencyTradingRates\Domain;
 
+use MaciejSz\Nbp\Shared\Domain\Exception\CurrencyCodeNotFoundException;
+
 class CurrencyTradingTable
 {
     /** @var string */
@@ -54,6 +56,9 @@ class CurrencyTradingTable
         return $this->effectiveDate;
     }
 
+    /**
+     * @return array<string, CurrencyTradingRate>
+     */
     public function getRates(): array
     {
         return $this->rates;
@@ -62,7 +67,9 @@ class CurrencyTradingTable
     public function getRate(string $code): CurrencyTradingRate
     {
         if (!isset($this->rates[$code])) {
-            throw new \OutOfRangeException("Currency code: '{$code}' not found in table '{$this->no}'");
+            throw new CurrencyCodeNotFoundException(
+                "Currency code: '{$code}' not found in table '{$this->no}'"
+            );
         }
 
         return $this->rates[$code];

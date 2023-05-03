@@ -13,7 +13,7 @@ class NbpTableNumberValidatorTest extends TestCase
     /**
      * @dataProvider isValidDataProvider
      */
-    public function testIsValid(string $value, bool $expectedResult)
+    public function testIsValid(string $value, bool $expectedResult): void
     {
         $validator = new NbpTableNumberValidator();
         self::assertSame($expectedResult, $validator->isValid($value));
@@ -22,7 +22,7 @@ class NbpTableNumberValidatorTest extends TestCase
     /**
      * @dataProvider isValidDataProvider
      */
-    public function testValidate(string $value, bool $isValid)
+    public function testValidate(string $value, bool $isValid): void
     {
         if (!$isValid) {
             $this->expectException(ValidationException::class);
@@ -35,7 +35,7 @@ class NbpTableNumberValidatorTest extends TestCase
     }
 
     /**
-     * @return array<array<string, bool>>
+     * @return array<array<int, mixed>>
      */
     public function isValidDataProvider(): array
     {
