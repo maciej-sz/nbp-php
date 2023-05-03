@@ -30,6 +30,27 @@ class CurrencyTradingTableTest extends TestCase
         $table->getRate('BOGUS');
     }
 
+    public function testSetState(): void
+    {
+        $date1 = new \DateTimeImmutable();
+        $date2 = new \DateTimeImmutable();
+        $mockRate = $this->createMock(CurrencyTradingRate::class);
+        $instance = CurrencyTradingTable::__set_state([
+            'letter' => 'Z',
+            'no' => '1/Z/ZZZ',
+            'tradingDate' => $date1,
+            'effectiveDate' => $date2,
+            'rates' => ['BAR' => $mockRate],
+        ]);
+
+        self::assertSame('Z', $instance->getLetter());
+        self::assertSame('1/Z/ZZZ', $instance->getNo());
+        self::assertSame($date1, $instance->getTradingDate());
+        self::assertSame($date2, $instance->getEffectiveDate());
+
+        self::assertSame(['BAR' => $mockRate], $instance->getRates());
+    }
+
     /**
      * @param array<string, CurrencyTradingRate> $rates
      */

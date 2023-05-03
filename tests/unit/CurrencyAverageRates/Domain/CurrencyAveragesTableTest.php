@@ -30,6 +30,24 @@ class CurrencyAveragesTableTest extends TestCase
         $table->getRate('BOGUS');
     }
 
+    public function testSetState(): void
+    {
+        $now = new \DateTimeImmutable();
+        $mockRate = $this->createMock(CurrencyAverageRate::class);
+
+        $instance = CurrencyAveragesTable::__set_state([
+            'letter' => 'F',
+            'no' => '1/F/NOW',
+            'effectiveDate' => $now,
+            'rates' => ['FOO' => $mockRate],
+        ]);
+
+        self::assertSame('F', $instance->getLetter());
+        self::assertSame('1/F/NOW', $instance->getNo());
+        self::assertSame($now, $instance->getEffectiveDate());
+        self::assertSame(['FOO' => $mockRate], $instance->getRates());
+    }
+
     /**
      * @param array<string, CurrencyAverageRate> $rates
      */

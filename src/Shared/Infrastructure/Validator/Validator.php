@@ -6,8 +6,8 @@ namespace MaciejSz\Nbp\Shared\Infrastructure\Validator;
 
 /**
  * @template T
- * @implements BoolValidator<T>
- * @implements ThrowableValidator<T>
+ * @extends BoolValidator<T>
+ * @extends ThrowableValidator<T>
  */
 interface Validator extends BoolValidator, ThrowableValidator
 {

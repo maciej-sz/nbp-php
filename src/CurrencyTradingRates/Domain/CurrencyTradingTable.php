@@ -74,4 +74,24 @@ class CurrencyTradingTable
 
         return $this->rates[$code];
     }
+
+    /**
+     * @param array{
+     *     letter: string,
+     *     no: string,
+     *     tradingDate: \DateTimeInterface,
+     *     effectiveDate: \DateTimeInterface,
+     *     rates: array<string, CurrencyTradingRate>,
+     * } $data
+     */
+    public static function __set_state(array $data): self
+    {
+        return new self(
+            $data['letter'],
+            $data['no'],
+            $data['tradingDate'],
+            $data['effectiveDate'],
+            $data['rates']
+        );
+    }
 }

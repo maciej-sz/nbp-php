@@ -29,7 +29,7 @@ class NbpWebClientTest extends TestCase
         self::$server->stop();
     }
 
-    public function testCurrencyTablesUsingTransportFactory()
+    public function testCurrencyTablesUsingTransportFactory(): void
     {
         $factory = new class() implements TransportFactory {
             public function create(string $baseUri = NbpWebClient::BASE_URL): Transport
@@ -39,6 +39,7 @@ class NbpWebClientTest extends TestCase
         };
 
         $client = NbpWebClient::create(self::$server->getServerRoot(), $factory);
+        /** @var array<array{no: string}> $result */
         $result = $client->send(new CurrencyAveragesTableARequest('2023-03-01', '2023-03-02'));
 
         self::assertCount(2, $result);

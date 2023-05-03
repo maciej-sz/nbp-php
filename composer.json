@@ -1,6 +1,6 @@
 {
     "name": "maciej-sz/nbp-php",
-    "description": "API for accessing Polish National Bank (NBP - Narodowy Bank Polski) currency and commodities rates",
+    "description": "API for accessing Polish National Bank (NBP - Narodowy Bank Polski) currency and commodities exchange rates",
     "keywords": ["nbp", "currency", "money", "commodity", "gold", "exchange", "rate", "rates"],
     "type": "library",
     "license": "MIT",

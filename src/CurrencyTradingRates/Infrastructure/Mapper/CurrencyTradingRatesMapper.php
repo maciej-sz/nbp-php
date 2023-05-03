@@ -27,7 +27,7 @@ class CurrencyTradingRatesMapper
 
     /**
      * @param array<mixed> $tableData
-     * @param array<mixed> $ratesData
+     * @param array<array<mixed>> $ratesData
      * @return array<CurrencyTradingRate>
      */
     public function rawDataToDomainObjectCollection(array $tableData, array $ratesData): array

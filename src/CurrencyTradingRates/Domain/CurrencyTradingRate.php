@@ -64,4 +64,26 @@ class CurrencyTradingRate
     {
         return $this->effectiveDate;
     }
+
+    /**
+     * @param array{
+     *     currencyName: string,
+     *     currencyCode: string,
+     *     bid: float,
+     *     ask: float,
+     *     tradingDate: \DateTimeInterface,
+     *     effectiveDate: \DateTimeInterface
+     * } $data
+     */
+    public static function __set_state(array $data): self
+    {
+        return new self(
+            $data['currencyName'],
+            $data['currencyCode'],
+            $data['bid'],
+            $data['ask'],
+            $data['tradingDate'],
+            $data['effectiveDate']
+        );
+    }
 }

@@ -21,7 +21,7 @@ class CurrencyTradingTableMapperTest extends TestCase
         ;
 
         $tableMapper = new CurrencyTradingTableMapper($ratesMapperMock);
-        $tables = $this->fetchFixtureTables();
+        $tables = FixturesRepository::create()->fetchTradingTablesJson('2023-03-01', '2023-03-02');
         $tableC = $tableMapper->rawDataToDomainObject($tables[0]);
 
         self::assertSame('C', $tableC->getLetter());
@@ -29,30 +29,5 @@ class CurrencyTradingTableMapperTest extends TestCase
         self::assertSame('2023-02-28T00:00:00+01:00', $tableC->getTradingDate()->format('c'));
         self::assertSame('2023-03-01T00:00:00+01:00', $tableC->getEffectiveDate()->format('c'));
         self::assertSame([], $tableC->getRates());
-    }
-
-    /**
-     * @return array<
-     *     array{
-     *         table: string,
-     *         no: string,
-     *         tradingDate: string,
-     *         effectiveDate: string,
-     *         rates: array<
-     *             array{
-     *                 currency: string,
-     *                 code: string,
-     *                 bid: float,
-     *                 ask: float
-     *             }
-     *         >
-     *     }
-     * >
-     */
-    private function fetchFixtureTables(): array
-    {
-        $fixturesRepository = new FixturesRepository();
-
-        return $fixturesRepository->fetchArray('/api/exchangerates/tables/C/2023-03-01/2023-03-02/data');
     }
 }

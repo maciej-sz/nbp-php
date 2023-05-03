@@ -23,7 +23,11 @@ class MockWebServerFactory
             $fileName = mb_substr($pathName, mb_strlen($resourcesDir));
             $path = dirname($fileName);
 
-            $response = new Response(file_get_contents($pathName));
+            $body = file_get_contents($pathName);
+            if (false === $body) {
+                throw new \RuntimeException("Cannot load resource: $pathName");
+            }
+            $response = new Response($body);
 
             $server->setResponseOfPath($path, $response);
         }

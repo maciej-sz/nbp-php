@@ -16,7 +16,7 @@ class CurrencyTradingRatesMapperTest extends TestCase
     public function testRawDataToDomainObject(): void
     {
         $mapper = new CurrencyTradingRatesMapper();
-        $tables = $this->fetchFixtureTables();
+        $tables = FixturesRepository::create()->fetchTradingTablesJson('2023-03-01', '2023-03-02');
         $rate = $mapper->rawDataToDomainObject($tables[0], $tables[0]['rates'][0]);
 
         self::assertSame('USD', $rate->getCurrencyCode());
@@ -30,7 +30,7 @@ class CurrencyTradingRatesMapperTest extends TestCase
     public function testRawDataToDomainObjectCollection(): void
     {
         $mapper = new CurrencyTradingRatesMapper();
-        $tables = $this->fetchFixtureTables();
+        $tables = FixturesRepository::create()->fetchTradingTablesJson('2023-03-01', '2023-03-02');
         $rates = $mapper->rawDataToDomainObjectCollection($tables[0], $tables[0]['rates']);
 
         self::assertCount(3, $rates);
@@ -54,33 +54,8 @@ class CurrencyTradingRatesMapperTest extends TestCase
             }
         };
 
-        $tables = $this->fetchFixtureTables();
+        $tables = FixturesRepository::create()->fetchTradingTablesJson('2023-03-01', '2023-03-02');
         $mapper = new CurrencyTradingRatesMapper($mockValidator);
         $mapper->rawDataToDomainObject($tables[0], $tables[0]['rates'][0]);
-    }
-
-    /**
-     * @return array<
-     *     array{
-     *         table: string,
-     *         no: string,
-     *         tradingDate: string,
-     *         effectiveDate: string,
-     *         rates: array<
-     *             array{
-     *                 currency: string,
-     *                 code: string,
-     *                 bid: float,
-     *                 ask: float
-     *             }
-     *         >
-     *     }
-     * >
-     */
-    private function fetchFixtureTables(): array
-    {
-        $fixturesRepository = new FixturesRepository();
-
-        return $fixturesRepository->fetchArray('/api/exchangerates/tables/C/2023-03-01/2023-03-02/data');
     }
 }

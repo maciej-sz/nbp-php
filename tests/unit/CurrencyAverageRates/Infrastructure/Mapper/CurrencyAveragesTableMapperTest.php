@@ -20,35 +20,12 @@ class CurrencyAveragesTableMapperTest extends TestCase
             ->willReturn([])
         ;
         $tableMapper = new CurrencyAveragesTableMapper($ratesMapperMock);
-        $tables = $this->getFixtureTables();
+        $tables = FixturesRepository::create()->fetchAverageTablesJson('A', '2023-03-01', '2023-03-02');
         $tableA = $tableMapper->rawDataToDomainObject($tables[0]);
 
         self::assertSame('A', $tableA->getLetter());
         self::assertSame('042/A/NBP/2023', $tableA->getNo());
         self::assertSame('2023-03-01T00:00:00+01:00', $tableA->getEffectiveDate()->format('c'));
         self::assertSame([], $tableA->getRates());
-    }
-
-    /**
-     * @return array<
-     *     array{
-     *         table: string,
-     *         no: string,
-     *         effectiveDate: string,
-     *         rates: array<
-     *             array{
-     *                 currency: string,
-     *                 code: string,
-     *                 mid: float
-     *             }
-     *         >
-     *     }
-     * >
-     */
-    private function getFixtureTables(): array
-    {
-        $fixturesRepository = new FixturesRepository();
-
-        return $fixturesRepository->fetchArray('/api/exchangerates/tables/A/2023-03-01/2023-03-02/data');
     }
 }

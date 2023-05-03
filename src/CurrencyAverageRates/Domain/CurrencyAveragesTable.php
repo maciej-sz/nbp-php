@@ -50,6 +50,9 @@ class CurrencyAveragesTable
         return $this->effectiveDate;
     }
 
+    /**
+     * @return array<string, CurrencyAverageRate>
+     */
     public function getRates(): array
     {
         return $this->rates;
@@ -64,5 +67,23 @@ class CurrencyAveragesTable
         }
 
         return $this->rates[$code];
+    }
+
+    /**
+     * @param array{
+     *     letter: string,
+     *     no: string,
+     *     effectiveDate: \DateTimeInterface,
+     *     rates: array<string, CurrencyAverageRate>
+     * } $data
+     */
+    public static function __set_state(array $data): self
+    {
+        return new self(
+            $data['letter'],
+            $data['no'],
+            $data['effectiveDate'],
+            $data['rates']
+        );
     }
 }
