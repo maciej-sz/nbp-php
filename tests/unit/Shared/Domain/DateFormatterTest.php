@@ -64,8 +64,8 @@ class DateFormatterTest extends TestCase
 
     /**
      * @dataProvider isSameDayDataProvider
-     * @param mixed $date1
-     * @param mixed $date2
+     * @param string|\DateTimeInterface $date1
+     * @param string|\DateTimeInterface $date2
      */
     public function testIsSameDay($date1, $date2, bool $expected): void
     {
@@ -86,7 +86,10 @@ class DateFormatterTest extends TestCase
         self::assertSame('2023-04', next_month('2023-03-31T23:59:59')->format('Y-m'));
     }
 
-    public function isSameDayDataProvider()
+    /**
+     * @return array<array<mixed>>
+     */
+    public function isSameDayDataProvider(): array
     {
         return [
             ['2023-01-01', '2023-01-01', true],

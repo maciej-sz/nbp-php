@@ -49,9 +49,7 @@ class CurrencyTradingRatesMapperTest extends TestCase
         $mockValidator = new class implements ThrowableValidator {
             public function validate($value): void
             {
-                if (!is_float($value)) {
-                    throw new \UnexpectedValueException('Expected float, got ' . gettype($value));
-                }
+                assert(is_float($value));
                 throw new ValidationException("Invalid rate: {$value}");
             }
         };

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace MaciejSz\Nbp\Test\Unit\CurrencyTradingRates\Infrastructure\Mapper;
 
-use MaciejSz\Nbp\CurrencyTradingRates\Domain\CurrencyTradingRate;
 use MaciejSz\Nbp\CurrencyTradingRates\Infrastructure\Mapper\CurrencyTradingRatesMapper;
 use MaciejSz\Nbp\CurrencyTradingRates\Infrastructure\Mapper\CurrencyTradingTableMapper;
 use MaciejSz\Nbp\Test\Fixtures\FixturesRepository;
@@ -33,7 +32,22 @@ class CurrencyTradingTableMapperTest extends TestCase
     }
 
     /**
-     * @return array<mixed>
+     * @return array<
+     *     array{
+     *         table: string,
+     *         no: string,
+     *         tradingDate: string,
+     *         effectiveDate: string,
+     *         rates: array<
+     *             array{
+     *                 currency: string,
+     *                 code: string,
+     *                 bid: float,
+     *                 ask: float
+     *             }
+     *         >
+     *     }
+     * >
      */
     private function fetchFixtureTables(): array
     {

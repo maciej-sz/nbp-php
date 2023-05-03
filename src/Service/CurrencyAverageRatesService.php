@@ -94,17 +94,17 @@ class CurrencyAverageRatesService
     }
 
     /**
-     * @return iterable<CurrencyAveragesTable>
+     * @return \Iterator<CurrencyAveragesTable>
      */
-    public function getMonthTablesA(int $year, int $month): iterable
+    public function getMonthTablesA(int $year, int $month): \Iterator
     {
         yield from $this->nbpRepository->getCurrencyAveragesTableA($year, $month);
     }
 
     /**
-     * @return iterable<CurrencyAveragesTable>
+     * @return \Iterator<CurrencyAveragesTable>
      */
-    public function getMonthTablesB(int $year, int $month): iterable
+    public function getMonthTablesB(int $year, int $month): \Iterator
     {
         yield from $this->nbpRepository->getCurrencyAveragesTableB($year, $month);
     }

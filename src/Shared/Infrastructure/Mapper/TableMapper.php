@@ -13,5 +13,5 @@ interface TableMapper
      * @param array<mixed> $tableData
      * @return T
      */
-    public function rawDataToDomainObject(array $tableData);
+    public function rawDataToDomainObject(array $tableData): object;
 }

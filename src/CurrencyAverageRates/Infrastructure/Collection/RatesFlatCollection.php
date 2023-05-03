@@ -10,7 +10,7 @@ use MaciejSz\Nbp\CurrencyAverageRates\Domain\CurrencyAveragesTable;
 /**
  * @internal
  */
-final class RatesFlatCollection
+final class RatesFlatCollection implements \IteratorAggregate
 {
     /** @var iterable<CurrencyAveragesTable> */
     private $tablesA;
@@ -59,9 +59,9 @@ final class RatesFlatCollection
     }
 
     /**
-     * @return iterable<CurrencyAverageRate>
+     * @return \Iterator<CurrencyAverageRate>
      */
-    public function getRates(): iterable
+    public function getIterator(): \Iterator
     {
         foreach ($this->tablesA as $table) {
             foreach ($table->getRates() as $rate) {
@@ -84,10 +84,7 @@ final class RatesFlatCollection
      */
     public function toArray(): array
     {
-        /** @var \Generator $rates */
-        $rates = $this->getRates();
-
-        return iterator_to_array($rates);
+        return iterator_to_array($this);
     }
 
     private function fulfillsConditions(

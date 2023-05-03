@@ -10,7 +10,7 @@ use MaciejSz\Nbp\CurrencyTradingRates\Domain\CurrencyTradingTable;
 /**
  * @internal
  */
-final class RatesFlatCollection
+final class RatesFlatCollection implements \IteratorAggregate
 {
     /** @var iterable<CurrencyTradingTable> */
     private $tables;
@@ -46,9 +46,9 @@ final class RatesFlatCollection
     }
 
     /**
-     * @return iterable<CurrencyTradingRate>
+     * @return \Iterator<CurrencyTradingRate>
      */
-    public function getRates(): iterable
+    public function getIterator(): \Iterator
     {
         foreach ($this->tables as $table) {
             foreach ($table->getRates() as $rate) {
@@ -64,10 +64,7 @@ final class RatesFlatCollection
      */
     public function toArray(): array
     {
-        /** @var \Generator $rates */
-        $rates = $this->getRates();
-
-        return iterator_to_array($rates);
+        return iterator_to_array($this);
     }
 
     private function fulfillsConditions(

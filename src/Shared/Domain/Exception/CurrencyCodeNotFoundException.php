@@ -4,6 +4,6 @@ declare(strict_types=1);
 
 namespace MaciejSz\Nbp\Shared\Domain\Exception;
 
-class CurrencyCodeNotFoundException extends \OutOfRangeException
+class CurrencyCodeNotFoundException extends \OutOfRangeException implements NbpException
 {
 }

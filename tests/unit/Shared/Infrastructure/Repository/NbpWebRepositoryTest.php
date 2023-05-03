@@ -139,7 +139,7 @@ class NbpWebRepositoryTest extends TestCase
         $goldRatesMapperMock
             ->expects(self::exactly(2))
             ->method('rawDataToDomainObject')
-            ->willReturn([$currencyTradingTableMock01], [$currencyTradingTableMock02])
+            ->willReturnOnConsecutiveCalls($currencyTradingTableMock01, $currencyTradingTableMock02)
         ;
 
         $repository = new NbpWebRepository(
@@ -152,11 +152,11 @@ class NbpWebRepositoryTest extends TestCase
         $ratesIterable = $repository->getGoldRates(2023, 3);
         $rates = is_array($ratesIterable) ? $ratesIterable : iterator_to_array($ratesIterable);
 
-        $this->assertSame($currencyTradingTableMock01, $rates[0][0]);
-        $this->assertSame($currencyTradingTableMock02, $rates[1][0]);
+        $this->assertSame($currencyTradingTableMock01, $rates[0]);
+        $this->assertSame($currencyTradingTableMock02, $rates[1]);
     }
 
-    public function testInstantiateWithDefaultMappers()
+    public function testInstantiateWithDefaultMappers(): void
     {
         self::expectNotToPerformAssertions();
         new NbpWebRepository($this->createMock(NbpClient::class));

@@ -31,7 +31,7 @@ class CurrencyAveragesTableTest extends TestCase
     }
 
     /**
-     * @param array<string, CurrencyAveragesTable> $rates
+     * @param array<string, CurrencyAverageRate> $rates
      */
     private function getTableFixture(array $rates): CurrencyAveragesTable
     {

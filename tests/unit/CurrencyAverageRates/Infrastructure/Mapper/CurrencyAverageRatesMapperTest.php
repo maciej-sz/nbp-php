@@ -13,7 +13,7 @@ use PHPUnit\Framework\TestCase;
 
 class CurrencyAverageRatesMapperTest extends TestCase
 {
-    public function testRawDataToDomainObject()
+    public function testRawDataToDomainObject(): void
     {
         $mapper = new CurrencyAverageRatesMapper();
         $tables = $this->fetchFixtureTables();
@@ -25,7 +25,7 @@ class CurrencyAverageRatesMapperTest extends TestCase
         self::assertSame(4.4, $rate->getValue());
     }
 
-    public function testRawDataToDomainObjectCollection()
+    public function testRawDataToDomainObjectCollection(): void
     {
         $mapper = new CurrencyAverageRatesMapper();
         $tables = $this->fetchFixtureTables();
@@ -38,7 +38,7 @@ class CurrencyAverageRatesMapperTest extends TestCase
         self::assertSame('CHF', $rates[2]->getCurrencyCode());
     }
 
-    public function testValidatorFailure()
+    public function testValidatorFailure(): void
     {
         $this->expectException(ValidationException::class);
         $this->expectExceptionMessage('Invalid rate: 4.4');
@@ -46,6 +46,7 @@ class CurrencyAverageRatesMapperTest extends TestCase
         $mockValidator = new class implements ThrowableValidator {
             public function validate($value): void
             {
+                assert(is_float($value));
                 throw new ValidationException("Invalid rate: {$value}");
             }
         };
@@ -56,7 +57,7 @@ class CurrencyAverageRatesMapperTest extends TestCase
     }
 
     /**
-      @return array<
+     * @return array<
      *     array{
      *         table: string,
      *         no: string,

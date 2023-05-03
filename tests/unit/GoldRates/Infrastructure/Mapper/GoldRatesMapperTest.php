@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace MaciejSz\Nbp\Test\Unit\GoldRates\Infrastructure\Mapper;
 
-use MaciejSz\Nbp\GoldRates\Domain\GoldRate;
 use MaciejSz\Nbp\GoldRates\Infrastructure\Mapper\GoldRatesMapper;
 use MaciejSz\Nbp\Shared\Infrastructure\Validator\Exception\ValidationException;
 use MaciejSz\Nbp\Shared\Infrastructure\Validator\ThrowableValidator;
@@ -17,13 +16,10 @@ class GoldRatesMapperTest extends TestCase
     {
         $mapper = new GoldRatesMapper();
         $tables = $this->fetchFixtureTables();
-        $rates = $mapper->rawDataToDomainObject($tables);
+        $rate = $mapper->rawDataToDomainObject($tables[0]);
 
-        self::assertCount(3, $rates);
-        self::assertContainsOnly(GoldRate::class, $rates);
-        self::assertEquals(['2023-03-01', '2023-03-02', '2023-03-03'], array_keys($rates));
-        self::assertSame(260.89, $rates['2023-03-01']->getRate());
-        self::assertSame('2023-03-01T00:00:00+01:00', $rates['2023-03-01']->getDate()->format('c'));
+        self::assertSame('2023-03-01', $rate->getDate()->format('Y-m-d'));
+        self::assertSame(260.89, $rate->getRate());
     }
 
     public function testFailingValidator(): void
@@ -34,18 +30,19 @@ class GoldRatesMapperTest extends TestCase
         $mockValidator = new class implements ThrowableValidator {
             public function validate($value): void
             {
+                assert(is_float($value));
                 throw new ValidationException("Invalid value: {$value}");
             }
         };
         $mapper = new GoldRatesMapper($mockValidator);
         $tables = $this->fetchFixtureTables();
-        $rates = $mapper->rawDataToDomainObject($tables);
-        
-        self::markTestIncomplete();
+        $mapper->rawDataToDomainObject($tables[0]);
     }
 
     /**
-     * @return array<mixed>
+     * @return array<
+     *     array{data: string, cena: float}
+     * >
      */
     private function fetchFixtureTables(): array
     {

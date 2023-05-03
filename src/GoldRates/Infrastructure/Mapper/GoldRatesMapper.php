@@ -30,24 +30,17 @@ class GoldRatesMapper implements TableMapper
     }
 
     /**
-     * @param array<mixed> $goldRates
-     * @return array<string, GoldRate>
+     * @param array{data: string, cena: float} $goldRate
+     * @return GoldRate
      */
-    public function rawDataToDomainObject(array $goldRates): array
+    public function rawDataToDomainObject(array $goldRate): object
     {
-        $domainObjects = [];
+        $rateDataAccess = new ArrayDataAccess($goldRate);
+        $date = $rateDataAccess->extractDateTime('data');
+        $rate = $rateDataAccess->extractFloat('cena');
 
-        foreach ($goldRates as $goldRate) {
-            $rateDataAccess = new ArrayDataAccess($goldRate);
-            $date = $rateDataAccess->extractDateTime('data');
-            $rate = $rateDataAccess->extractFloat('cena');
-            $dateKey = $date->format('Y-m-d');
+        $this->rateValidator->validate($rate);
 
-            $this->rateValidator->validate($rate);
-
-            $domainObjects[$dateKey] = new GoldRate($date, $rate);
-        }
-
-        return $domainObjects;
+        return new GoldRate($date, $rate);
     }
 }

@@ -79,11 +79,11 @@ class CurrencyTradingRatesService
     }
 
     /**
-     * @return iterable<CurrencyTradingTable>
+     * @return \Iterator<CurrencyTradingTable>
      */
-    public function getMonthTables(int $year, int $month): iterable
+    public function getMonthTables(int $year, int $month): \Iterator
     {
-        return $this->nbpRepository->getCurrencyTradingTables($year, $month);
+        yield from $this->nbpRepository->getCurrencyTradingTables($year, $month);
     }
 
     private function findTableByTradingDate(
