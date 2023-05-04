@@ -31,6 +31,7 @@ class SymfonyHttpTransportTest extends TestCase
     {
         $httpClient = HttpClient::createForBaseUri(self::$server->getServerRoot());
         $transport = new SymfonyHttpTransport($httpClient);
+        /** @var array<array{no: string}> $result */
         $result = $transport->get('/api/exchangerates/tables/A/2023-03-01/2023-03-02');
 
         self::assertCount(2, $result);

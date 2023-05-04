@@ -17,7 +17,7 @@ class DefaultTransportFactory implements TransportFactory
         ;
     }
 
-    private function tryCreateSymfonyTransport(string $baseUri): ?Transport
+    public function tryCreateSymfonyTransport(string $baseUri): ?Transport
     {
         if (!class_exists(SymfonyHttpClient::class)) {
             return null;
@@ -28,7 +28,7 @@ class DefaultTransportFactory implements TransportFactory
         return new SymfonyHttpTransport($symfonyHttpClient);
     }
 
-    private function tryCreateGuzzleTransport(string $baseUri): ?Transport
+    public function tryCreateGuzzleTransport(string $baseUri): ?Transport
     {
         if (!class_exists(GuzzleHttpClient::class)) {
             return null;

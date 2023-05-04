@@ -20,6 +20,12 @@ use PHPUnit\Framework\TestCase;
 
 class NbpWebRepositoryTest extends TestCase
 {
+    public function testCreate(): void
+    {
+        $instance = NbpWebRepository::create();
+        self::assertInstanceOf(NbpWebRepository::class, $instance);
+    }
+
     public function testGetCurrencyAveragesTableA(): void
     {
         $clientMock = $this->createMock(NbpClient::class);

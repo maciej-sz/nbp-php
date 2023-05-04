@@ -33,6 +33,7 @@ class GuzzleTransportTest extends TestCase
             'base_uri' => self::$server->getServerRoot(),
         ]);
         $transport = new GuzzleTransport($guzzleClient);
+        /** @var array<array{no: string}> $result */
         $result = $transport->get('/api/exchangerates/tables/A/2023-03-01/2023-03-02');
 
         self::assertCount(2, $result);

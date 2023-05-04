@@ -24,7 +24,7 @@ final class TablesDictionary
     {
         if (!isset($this->tables[$letter])) {
             throw new TableNotFoundException(
-                "The table with letter '{$letter}' was not found"
+                "Table with letter '{$letter}' was not found"
             );
         }
 

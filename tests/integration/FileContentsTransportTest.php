@@ -25,9 +25,10 @@ class FileContentsTransportTest extends TestCase
         self::$server->stop();
     }
 
-    public function testGetCurrencyTradingTables()
+    public function testGetCurrencyTradingTables(): void
     {
         $transport = new FileContentsTransport(self::$server->getServerRoot());
+        /** @var array<array{no: string}> $result */
         $result = $transport->get('/api/exchangerates/tables/A/2023-03-01/2023-03-02');
 
         self::assertCount(2, $result);

@@ -17,7 +17,7 @@ function last_day_of_month(int $year, int $month): string
 }
 
 /**
- * @return array{0: string, 1: string}
+ * @return array{string, string}
  */
 function month_range(int $year, int $month): array
 {
@@ -39,7 +39,7 @@ function format_ym(int $year, int $month): string
 
 /**
  * @param string|\DateTimeInterface $date
- * @return array{0: int, 1: int}
+ * @return array{int, int}
  */
 function extract_ym($date): array
 {

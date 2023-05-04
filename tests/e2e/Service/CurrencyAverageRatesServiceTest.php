@@ -79,7 +79,7 @@ class CurrencyAverageRatesServiceTest extends TestCase
     public function testFromDayWithTableANotAvailable(): void
     {
         self::expectException(TableNotFoundException::class);
-        self::expectExceptionMessage('The table with letter \'B\' was not found');
+        self::expectExceptionMessage('Table with letter \'B\' was not found');
 
         $currencyAverages = CurrencyAverageRatesService::create();
         $tables = $currencyAverages->fromDay('2011-03-03');
