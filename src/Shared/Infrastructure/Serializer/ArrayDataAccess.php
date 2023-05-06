@@ -21,6 +21,9 @@ class ArrayDataAccess implements DataAccess
         $this->data = $data;
     }
 
+    /**
+     * @return mixed
+     */
     public function extract(string $key)
     {
         if (!isset($this->data[$key])) {
@@ -55,7 +58,7 @@ class ArrayDataAccess implements DataAccess
         if (is_float($value)) {
             return $value;
         }
-        else if (is_numeric($value)) {
+        if (is_numeric($value)) {
             return (float) $value;
         }
 
@@ -74,7 +77,7 @@ class ArrayDataAccess implements DataAccess
         try {
             return $this->getDateTimeBuilder()->build($value);
         } catch (\Exception $e) {
-            throw new Exception\UnexpectedDataType('valid date', gettype($value));
+            throw new Exception\UnexpectedDataType('valid date', mb_substr($value, 0, 10));
         }
     }
 

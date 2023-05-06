@@ -109,14 +109,13 @@ class FixturesRepository
         $expectedFixtureFullPath =
             $fixturesResourceDir
             . "/{$basePath}"
-            . ((!empty($fileExt)) ? ".{$fileExt}" : '')
-        ;
+            . ((!empty($fileExt)) ? ".{$fileExt}" : '');
         $fixtureFullPath = realpath($expectedFixtureFullPath);
         if (false === $fixtureFullPath) {
             throw new \Exception("Fixture file not found. Searched at: {$expectedFixtureFullPath}");
         }
         if (strpos($fixtureFullPath, $fixturesResourceDir) !== 0) {
-            throw new \Exception("Security breach: fixture file path cannot go above fixtures directory");
+            throw new \Exception('Security breach: fixture file path cannot go above fixtures directory');
         }
 
         return $fixtureFullPath;

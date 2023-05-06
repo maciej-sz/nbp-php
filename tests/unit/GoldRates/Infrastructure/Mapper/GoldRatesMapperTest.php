@@ -27,7 +27,7 @@ class GoldRatesMapperTest extends TestCase
         self::expectException(ValidationException::class);
         self::expectExceptionMessage('Invalid value: 260.89');
 
-        $mockValidator = new class implements ThrowableValidator {
+        $mockValidator = new class() implements ThrowableValidator {
             public function validate($value): void
             {
                 assert(is_float($value));
@@ -47,6 +47,6 @@ class GoldRatesMapperTest extends TestCase
         $fixturesRepository = new FixturesRepository();
 
         // @phpstan-ignore-next-line
-        return $fixturesRepository->fetchArray('/api/cenyzlota/2023-03-01/2023-03-03/data');;
+        return $fixturesRepository->fetchArray('/api/cenyzlota/2023-03-01/2023-03-03/data');
     }
 }

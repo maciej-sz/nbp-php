@@ -19,7 +19,7 @@ class NbpNumericRateValidator implements Validator
     public function validate($value): void
     {
         if (!$this->isValid($value)) {
-            $stringRepresentation = (is_string($value) || is_numeric($value))? $value : 'value';
+            $stringRepresentation = (is_string($value) || is_numeric($value)) ? $value : 'value';
             throw new ValidationException("Invalid numeric rate value: '{$stringRepresentation}'");
         }
     }

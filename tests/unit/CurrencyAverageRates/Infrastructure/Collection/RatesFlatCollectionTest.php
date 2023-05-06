@@ -57,7 +57,7 @@ class RatesFlatCollectionTest extends TestCase
 
         $collection = new RatesFlatCollection([$tableA1, $tableA2], [$tableB1, $tableB2]);
         $collection = $collection->where(
-            function(CurrencyAveragesTable $table, CurrencyAverageRate $rate) use ($tableB2) {
+            function (CurrencyAveragesTable $table, CurrencyAverageRate $rate) use ($tableB2) {
                 return $table === $tableB2;
             }
         );

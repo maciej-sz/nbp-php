@@ -300,7 +300,7 @@ class CurrencyAverageRatesServiceTest extends TestCase
         ;
 
         $service = new CurrencyAverageRatesService($repository);
-        
+
         self::expectException(TableNotFoundException::class);
         self::expectExceptionMessage('Averages table A from day before 2023-04-04 has not been found');
 

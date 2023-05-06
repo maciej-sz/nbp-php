@@ -8,7 +8,6 @@ use donatj\MockWebServer\MockWebServer;
 use MaciejSz\Nbp\Shared\Infrastructure\Transport\SymfonyHttpTransport;
 use MaciejSz\Nbp\Test\Fixtures\WebServer\MockWebServerFactory;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\HttpClient\Exception\TransportException;
 use Symfony\Component\HttpClient\HttpClient;
 
 class SymfonyHttpTransportTest extends TestCase

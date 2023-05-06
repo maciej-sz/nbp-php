@@ -78,7 +78,7 @@ class CurrencyTradingTableTest extends TestCase
                 13.4,
                 new \DateTimeImmutable(),
                 new \DateTimeImmutable()
-            )
+            ),
         ];
     }
 }

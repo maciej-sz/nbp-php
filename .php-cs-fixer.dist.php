@@ -30,7 +30,7 @@ return (new PhpCsFixer\Config())
         'psr_autoloading' => true,
         'return_assignment' => true,
         'yoda_style' => false,
-        'no_superfluous_phpdoc_tags' => true,
+        'no_superfluous_phpdoc_tags' => ['allow_mixed' => true],
         'single_line_throw' => false,
     ])
     ->setFinder($finder)

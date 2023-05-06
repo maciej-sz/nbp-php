@@ -14,6 +14,12 @@ use Psr\Http\Message\UriInterface;
 
 class GuzzleTransportTest extends TestCase
 {
+    public function testDefaultInstance(): void
+    {
+        self::expectNotToPerformAssertions();
+        new GuzzleTransport();
+    }
+
     public function testGet(): void
     {
         $body = $this->createMock(StreamInterface::class);
@@ -38,7 +44,7 @@ class GuzzleTransportTest extends TestCase
             ->method('get')
             ->willReturn($response)
         ;
-        
+
         $transport = new GuzzleTransport($client);
         self::assertSame(['foo' => 123.45], $transport->get('/'));
     }

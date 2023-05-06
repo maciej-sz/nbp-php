@@ -6,6 +6,7 @@ namespace MaciejSz\Nbp\Test\Unit\Shared\Domain;
 
 use MaciejSz\Nbp\Shared\Domain\Exception\InvalidDateException;
 use PHPUnit\Framework\TestCase;
+
 use function MaciejSz\Nbp\Shared\Domain\DateFormatter\compare_days;
 use function MaciejSz\Nbp\Shared\Domain\DateFormatter\extract_ym;
 use function MaciejSz\Nbp\Shared\Domain\DateFormatter\first_day_of_month;
@@ -15,9 +16,23 @@ use function MaciejSz\Nbp\Shared\Domain\DateFormatter\last_day_of_month;
 use function MaciejSz\Nbp\Shared\Domain\DateFormatter\month_range;
 use function MaciejSz\Nbp\Shared\Domain\DateFormatter\next_month;
 use function MaciejSz\Nbp\Shared\Domain\DateFormatter\previous_month;
+use function MaciejSz\Nbp\Shared\Domain\DateFormatter\safe_strtotime;
 
 class DateFormatterTest extends TestCase
 {
+    public function testSafeStrToTime(): void
+    {
+        self::assertSame(1680652800, safe_strtotime('2023-04-05'));
+    }
+
+    public function testSafeStrToTimeInvalid(): void
+    {
+        self::expectException(InvalidDateException::class);
+        self::expectExceptionMessage('Cannot convert string to time');
+
+        safe_strtotime('bogus');
+    }
+
     public function testFirstDayOfMonth(): void
     {
         $this->assertSame('2022-01-01', first_day_of_month(2022, 1));

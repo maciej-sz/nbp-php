@@ -59,7 +59,7 @@ class NbpWebClientTest extends TestCase
         $transportMock = $this->createMock(Transport::class);
         $transportMock
             ->method('get')
-            ->willReturnCallback(function(string $path){
+            ->willReturnCallback(function (string $path) {
                 return [$path];
             })
         ;

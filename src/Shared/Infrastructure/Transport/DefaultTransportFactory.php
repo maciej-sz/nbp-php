@@ -13,8 +13,7 @@ class DefaultTransportFactory implements TransportFactory
     {
         return $this->tryCreateSymfonyTransport($baseUri)
             ?? $this->tryCreateGuzzleTransport($baseUri)
-            ?? $this->createFallbackTransport($baseUri)
-        ;
+            ?? $this->createFallbackTransport($baseUri);
     }
 
     public function tryCreateSymfonyTransport(string $baseUri): ?Transport

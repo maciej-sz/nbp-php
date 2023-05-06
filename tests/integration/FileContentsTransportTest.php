@@ -5,9 +5,6 @@ declare(strict_types=1);
 namespace MaciejSz\Nbp\Test\Integration;
 
 use donatj\MockWebServer\MockWebServer;
-use donatj\MockWebServer\Response;
-use donatj\MockWebServer\ResponseInterface;
-use donatj\MockWebServer\Responses\NotFoundResponse;
 use MaciejSz\Nbp\Shared\Infrastructure\Transport\FileContentsTransport;
 use MaciejSz\Nbp\Test\Fixtures\WebServer\MockWebServerFactory;
 use PHPUnit\Framework\TestCase;

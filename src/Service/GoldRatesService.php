@@ -9,6 +9,7 @@ use MaciejSz\Nbp\GoldRates\Infrastructure\Collection\GoldRatesCollection;
 use MaciejSz\Nbp\Shared\Domain\Exception\RateNotFoundException;
 use MaciejSz\Nbp\Shared\Infrastructure\Repository\NbpRepository;
 use MaciejSz\Nbp\Shared\Infrastructure\Repository\NbpWebRepository;
+
 use function MaciejSz\Nbp\Shared\Domain\DateFormatter\ensure_date_obj;
 use function MaciejSz\Nbp\Shared\Domain\DateFormatter\extract_ym;
 use function MaciejSz\Nbp\Shared\Domain\DateFormatter\is_same_day;
@@ -36,6 +37,7 @@ class GoldRatesService
     public function fromMonth(int $year, int $month): GoldRatesCollection
     {
         $rates = $this->nbpRepository->getGoldRates($year, $month);
+
         return new GoldRatesCollection($rates);
     }
 

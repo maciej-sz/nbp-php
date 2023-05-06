@@ -9,6 +9,7 @@ use MaciejSz\Nbp\CurrencyTradingRates\Infrastructure\Collection\RatesFlatCollect
 use MaciejSz\Nbp\Shared\Domain\Exception\InvalidDateException;
 use MaciejSz\Nbp\Shared\Infrastructure\Repository\NbpRepository;
 use MaciejSz\Nbp\Shared\Infrastructure\Repository\NbpWebRepository;
+
 use function MaciejSz\Nbp\Shared\Domain\DateFormatter\ensure_date_obj;
 use function MaciejSz\Nbp\Shared\Domain\DateFormatter\extract_ym;
 use function MaciejSz\Nbp\Shared\Domain\DateFormatter\is_same_day;

@@ -20,7 +20,7 @@ function safe_strtotime(string $datetime): int
 {
     $result = strtotime($datetime);
     if (false === $result) {
-        throw new InvalidDateException("Cannot convert string to time");
+        throw new InvalidDateException('Cannot convert string to time');
     }
 
     return $result;
@@ -116,6 +116,5 @@ function ensure_date_obj($date): \DateTimeImmutable
 {
     return ($date instanceof \DateTimeInterface)
         ? new \DateTimeImmutable($date->format('c'))
-        : new \DateTimeImmutable($date)
-    ;
+        : new \DateTimeImmutable($date);
 }

@@ -11,6 +11,12 @@ use Symfony\Contracts\HttpClient\ResponseInterface;
 
 class SymfonyHttpTransportTest extends TestCase
 {
+    public function testDefaultInstance(): void
+    {
+        self::expectNotToPerformAssertions();
+        new SymfonyHttpTransport();
+    }
+
     public function testGet(): void
     {
         $response = $this->createMock(ResponseInterface::class);

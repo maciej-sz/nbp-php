@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace MaciejSz\Nbp\Test\Unit\Shared\Infrastructure\Serializer;
 
-use MaciejSz\Nbp\Shared\Infrastructure\Serializer\Exception\DataKeyDoesNotExist;
 use MaciejSz\Nbp\Shared\Infrastructure\Serializer\ArrayDataAccess;
+use MaciejSz\Nbp\Shared\Infrastructure\Serializer\Exception\DataKeyDoesNotExist;
 use MaciejSz\Nbp\Shared\Infrastructure\Serializer\Exception\UnexpectedDataType;
 use PHPUnit\Framework\TestCase;
 
@@ -34,7 +34,7 @@ class ArrayDataAccessTest extends TestCase
 
     public function testExtractStringObject(): void
     {
-        $dataAccess = new ArrayDataAccess(['foo' => new class {
+        $dataAccess = new ArrayDataAccess(['foo' => new class() {
             public function __toString()
             {
                 return __FUNCTION__;
@@ -82,10 +82,19 @@ class ArrayDataAccessTest extends TestCase
         );
     }
 
+    public function testExtractDateTimeFromInvalidType(): void
+    {
+        self::expectException(UnexpectedDataType::class);
+        self::expectExceptionMessage('Expected valid date, got integer');
+
+        $dataAccess = new ArrayDataAccess(['foo' => 123]);
+        $dataAccess->extractDateTime('foo');
+    }
+
     public function testExtractDateTimeUnexpectedType(): void
     {
         self::expectException(UnexpectedDataType::class);
-        self::expectExceptionMessage('Expected valid date, got string');
+        self::expectExceptionMessage('Expected valid date, got bogus');
 
         $dataAccess = new ArrayDataAccess(['foo' => 'bogus']);
         $dataAccess->extractDateTime('foo');

@@ -44,7 +44,7 @@ final class RatesFlatCollection implements \IteratorAggregate
     public function whereCurrency(string $code): self
     {
         return $this->where(
-            function(CurrencyAveragesTable $table, CurrencyAverageRate $rate) use ($code) {
+            function (CurrencyAveragesTable $table, CurrencyAverageRate $rate) use ($code) {
                 return $rate->getCurrencyCode() === $code;
             }
         );
@@ -53,7 +53,7 @@ final class RatesFlatCollection implements \IteratorAggregate
     public function fromTable(string $letter): self
     {
         return $this->where(
-            function(CurrencyAveragesTable $table, CurrencyAverageRate $rate) use ($letter) {
+            function (CurrencyAveragesTable $table, CurrencyAverageRate $rate) use ($letter) {
                 return $table->getLetter() === $letter;
             }
         );
@@ -91,8 +91,7 @@ final class RatesFlatCollection implements \IteratorAggregate
     private function fulfillsConditions(
         CurrencyAveragesTable $table,
         CurrencyAverageRate $rate
-    ): bool
-    {
+    ): bool {
         foreach ($this->conditions as $predicate) {
             if (!$predicate($table, $rate)) {
                 return false;

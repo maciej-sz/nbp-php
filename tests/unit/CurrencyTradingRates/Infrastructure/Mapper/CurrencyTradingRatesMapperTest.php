@@ -46,7 +46,7 @@ class CurrencyTradingRatesMapperTest extends TestCase
         $this->expectException(ValidationException::class);
         $this->expectExceptionMessage('Invalid rate: 4.3');
 
-        $mockValidator = new class implements ThrowableValidator {
+        $mockValidator = new class() implements ThrowableValidator {
             public function validate($value): void
             {
                 assert(is_float($value));

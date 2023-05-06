@@ -14,6 +14,7 @@ use MaciejSz\Nbp\Shared\Infrastructure\Client\Request\CurrencyAveragesTableBRequ
 use MaciejSz\Nbp\Shared\Infrastructure\Client\Request\CurrencyTradingTableRequest;
 use MaciejSz\Nbp\Shared\Infrastructure\Client\Request\GoldRatesRequest;
 use MaciejSz\Nbp\Shared\Infrastructure\Mapper\TableMapper;
+
 use function MaciejSz\Nbp\Shared\Domain\DateFormatter\month_range;
 
 final class NbpWebRepository implements NbpRepository

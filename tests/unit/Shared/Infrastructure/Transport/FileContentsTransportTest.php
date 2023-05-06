@@ -37,7 +37,7 @@ class FileContentsTransportTest extends TestCase
     public function testGetInvalidPath(): void
     {
         self::expectException(TransportException::class);
-        self::expectExceptionMessage("Cannot get contents from /bogus");
+        self::expectExceptionMessage('Cannot get contents from /bogus');
 
         $transport = new FileContentsTransport('/');
 

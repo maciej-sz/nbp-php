@@ -60,16 +60,16 @@ class CurrencyAverageRatesServiceTest extends TestCase
         self::assertSame('2011-03-02', $tableB->getEffectiveDate()->format('Y-m-d'));
         self::assertContainsOnly(CurrencyAverageRate::class, $ratesTableA);
         self::assertContainsOnly(CurrencyAverageRate::class, $ratesTableB);
-        self::assertCount(1, array_filter($ratesTableA, function(CurrencyAverageRate $rate){
+        self::assertCount(1, array_filter($ratesTableA, function (CurrencyAverageRate $rate) {
             return $rate->getCurrencyCode() === 'USD';
         }));
-        self::assertCount(0, array_filter($ratesTableA, function(CurrencyAverageRate $rate){
+        self::assertCount(0, array_filter($ratesTableA, function (CurrencyAverageRate $rate) {
             return $rate->getCurrencyCode() === 'AED';
         }));
-        self::assertCount(1, array_filter($ratesTableB, function(CurrencyAverageRate $rate){
+        self::assertCount(1, array_filter($ratesTableB, function (CurrencyAverageRate $rate) {
             return $rate->getCurrencyCode() === 'AED';
         }));
-        self::assertCount(0, array_filter($ratesTableB, function(CurrencyAverageRate $rate){
+        self::assertCount(0, array_filter($ratesTableB, function (CurrencyAverageRate $rate) {
             return $rate->getCurrencyCode() === 'USD';
         }));
         self::assertCount(34, $ratesTableA);

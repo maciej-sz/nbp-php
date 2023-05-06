@@ -40,7 +40,7 @@ final class RatesFlatCollection implements \IteratorAggregate
     public function whereCurrency(string $code): self
     {
         return $this->where(
-            function(CurrencyTradingTable $table, CurrencyTradingRate $rate) use ($code) {
+            function (CurrencyTradingTable $table, CurrencyTradingRate $rate) use ($code) {
                 return $rate->getCurrencyCode() === $code;
             }
         );
@@ -71,8 +71,7 @@ final class RatesFlatCollection implements \IteratorAggregate
     private function fulfillsConditions(
         CurrencyTradingTable $table,
         CurrencyTradingRate $rate
-    ): bool
-    {
+    ): bool {
         foreach ($this->conditions as $predicate) {
             if (!$predicate($table, $rate)) {
                 return false;

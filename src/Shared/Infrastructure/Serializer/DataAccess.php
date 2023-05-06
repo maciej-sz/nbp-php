@@ -27,8 +27,8 @@ interface DataAccess
     public function extractDateTime(string $key): \DateTimeInterface;
 
     /**
-     * @throws Exception\UnexpectedDataType
      * @return array<mixed>
+     * @throws Exception\UnexpectedDataType
      */
     public function extractArray(string $key): array;
 }

@@ -72,7 +72,7 @@ class CurrencyAveragesTableTest extends TestCase
                 'dolar testowy',
                 12.3,
                 new \DateTimeImmutable()
-            )
+            ),
         ];
     }
 }
