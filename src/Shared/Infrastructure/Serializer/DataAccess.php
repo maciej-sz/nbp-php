@@ -6,6 +6,9 @@ namespace MaciejSz\Nbp\Shared\Infrastructure\Serializer;
 
 interface DataAccess
 {
+    /**
+     * @return mixed
+     */
     public function extract(string $key);
 
     /**
@@ -25,6 +28,7 @@ interface DataAccess
 
     /**
      * @throws Exception\UnexpectedDataType
+     * @return array<mixed>
      */
     public function extractArray(string $key): array;
 }

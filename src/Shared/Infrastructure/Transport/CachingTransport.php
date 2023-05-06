@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace MaciejSz\Nbp\Shared\Infrastructure\Transport;
 
+use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
 
 class CachingTransport implements Transport
@@ -29,6 +30,7 @@ class CachingTransport implements Transport
 
     public function get(string $path): array
     {
+        /** @var CacheItemInterface<array<array<mixed>>> $item */
         $item = $this->cache->getItem($path);
         if (!$item->isHit()) {
             $item->set($this->backend->get($path));

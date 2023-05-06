@@ -8,11 +8,14 @@ use MaciejSz\Nbp\Shared\Domain\DateTimeBuilder;
 
 class ArrayDataAccess implements DataAccess
 {
-    /** @var array */
+    /** @var array<mixed> */
     private $data;
-    /** @var DateTimeBuilder|null */
+    /** @var ?DateTimeBuilder */
     private $dateTimeBuilder = null;
 
+    /**
+     * @param array<mixed> $data
+     */
     public function __construct(array $data)
     {
         $this->data = $data;
@@ -65,6 +68,9 @@ class ArrayDataAccess implements DataAccess
     public function extractDateTime(string $key): \DateTimeInterface
     {
         $value = $this->extract($key);
+        if (!is_string($value)) {
+            throw new Exception\UnexpectedDataType('valid date', gettype($value));
+        }
         try {
             return $this->getDateTimeBuilder()->build($value);
         } catch (\Exception $e) {

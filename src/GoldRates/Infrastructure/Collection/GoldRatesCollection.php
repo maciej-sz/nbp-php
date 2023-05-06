@@ -6,6 +6,9 @@ namespace MaciejSz\Nbp\GoldRates\Infrastructure\Collection;
 
 use MaciejSz\Nbp\GoldRates\Domain\GoldRate;
 
+/**
+ * @implements \IteratorAggregate<int, GoldRate>
+ */
 class GoldRatesCollection implements \IteratorAggregate
 {
     /** @var iterable<GoldRate> */

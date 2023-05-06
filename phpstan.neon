@@ -7,3 +7,5 @@ parameters:
         - *DEPRECATED_*
     parallel:
         maximumNumberOfProcesses: 4
+    stubFiles:
+        - stubs/Psr/Cache/CacheItemInterface.stub

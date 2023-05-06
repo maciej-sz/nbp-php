@@ -8,12 +8,22 @@ use MaciejSz\Nbp\Shared\Domain\Exception\InvalidDateException;
 
 function first_day_of_month(int $year, int $month): string
 {
-    return date('Y-m-d', strtotime("{$year}-{$month}-01"));
+    return date('Y-m-d', safe_strtotime("{$year}-{$month}-01"));
 }
 
 function last_day_of_month(int $year, int $month): string
 {
-    return date('Y-m-t', strtotime("{$year}-{$month}"));
+    return date('Y-m-t', safe_strtotime("{$year}-{$month}"));
+}
+
+function safe_strtotime(string $datetime): int
+{
+    $result = strtotime($datetime);
+    if (false === $result) {
+        throw new InvalidDateException("Cannot convert string to time");
+    }
+
+    return $result;
 }
 
 /**
@@ -91,7 +101,10 @@ function next_month($date): \DateTimeInterface
     return middle_of_month($date)->add(new \DateInterval('P1M'));
 }
 
-function middle_of_month($date): \DateTimeInterface
+/**
+ * @param string|\DateTimeInterface $date
+ */
+function middle_of_month($date): \DateTimeImmutable
 {
     return new \DateTimeImmutable(ensure_date_obj($date)->format('Y-m-') . '15');
 }

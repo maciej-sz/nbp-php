@@ -73,7 +73,7 @@ class DateFormatterTest extends TestCase
         self::assertSame($expected, is_same_day($date1, $date2));
     }
 
-    public function testCompareDays()
+    public function testCompareDays(): void
     {
         self::assertSame(-1, compare_days('2020-01-01', '2020-01-02'));
         self::assertSame(0, compare_days('2020-01-01', '2020-01-01'));

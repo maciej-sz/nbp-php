@@ -15,7 +15,7 @@ class CurrencyTradingRatesMapper
     private $rateValidator;
 
     /**
-     * @param ThrowableValidator<mixed>|null $rateValidator
+     * @param ?ThrowableValidator<mixed> $rateValidator
      */
     public function __construct(?ThrowableValidator $rateValidator = null)
     {
@@ -26,15 +26,28 @@ class CurrencyTradingRatesMapper
     }
 
     /**
-     * @param array<mixed> $tableData
-     * @param array<array<mixed>> $ratesData
+     * @param array{
+     *     table: string,
+     *     no: string,
+     *     tradingDate: string,
+     *     effectiveDate: string,
+     *     rates: array<mixed>,
+     * } $tableData
+     * @param array<
+     *     array{
+     *         currency: string,
+     *         code: string,
+     *         bid: float,
+     *         ask: float,
+     *     }
+     * > $rates
      * @return array<CurrencyTradingRate>
      */
-    public function rawDataToDomainObjectCollection(array $tableData, array $ratesData): array
+    public function rawDataToDomainObjectCollection(array $tableData, array $rates): array
     {
         $collection = [];
-        foreach ($ratesData as $rateData) {
-            $currencyTradingRate = $this->rawDataToDomainObject($tableData, $rateData);
+        foreach ($rates as $rate) {
+            $currencyTradingRate = $this->rawDataToDomainObject($tableData, $rate);
             $collection[$currencyTradingRate->getCurrencyCode()] = $currencyTradingRate;
         }
 
@@ -42,8 +55,19 @@ class CurrencyTradingRatesMapper
     }
 
     /**
-     * @param array<mixed> $tableData
-     * @param array<mixed> $ratesData
+     * @param array{
+     *     table: string,
+     *     no: string,
+     *     tradingDate: string,
+     *     effectiveDate: string,
+     *     rates: array<mixed>,
+     * } $tableData
+     * @param array{
+     *     currency: string,
+     *     code: string,
+     *     bid: float,
+     *     ask: float,
+     * } $ratesData
      */
     public function rawDataToDomainObject(array $tableData, array $ratesData): CurrencyTradingRate
     {

@@ -102,9 +102,10 @@ final class NbpWebRepository implements NbpRepository
     }
 
     /**
+     * @template T
      * @param iterable<array<mixed>> $results
-     * @param TableMapper $mapper
-     * @return iterable
+     * @param TableMapper<T> $mapper
+     * @return iterable<T>
      */
     private function hydrate(iterable $results, TableMapper $mapper): iterable
     {

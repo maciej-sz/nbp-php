@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 
 class DateBuilderTest extends TestCase
 {
-    public function testBuild()
+    public function testBuild(): void
     {
         $validator = $this->createMock(Validator::class);
         $validator->method('validate');
@@ -21,7 +21,7 @@ class DateBuilderTest extends TestCase
         $this->assertEquals('2023-01-01T00:00:00+01:00', $date->format('c'));
     }
 
-    public function testBuildInvalid()
+    public function testBuildInvalid(): void
     {
         $validator = $this->createMock(Validator::class);
         $exception = new \Exception('Invalid date');

@@ -25,7 +25,13 @@ class CurrencyTradingTableMapper implements TableMapper
     }
 
     /**
-     * @param array<mixed> $tableData
+     * @param array{
+     *     table: string,
+     *     no: string,
+     *     tradingDate: string,
+     *     effectiveDate: string,
+     *     rates: array<mixed>,
+     * } $tableData
      */
     public function rawDataToDomainObject(array $tableData): CurrencyTradingTable
     {
@@ -35,6 +41,16 @@ class CurrencyTradingTableMapper implements TableMapper
         $tableNumber = $dataAccess->extractString('no');
         $tradingDate = $dataAccess->extractDateTime('tradingDate');
         $effectiveDate = $dataAccess->extractDateTime('effectiveDate');
+        /**
+         * @var array<
+         *     array{
+         *         currency: string,
+         *         code: string,
+         *         bid: float,
+         *         ask: float,
+         *     }
+         * > $rates
+         */
         $rates = $dataAccess->extractArray('rates');
 
         return new CurrencyTradingTable(

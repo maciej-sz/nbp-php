@@ -40,14 +40,13 @@ class GoldRatesMapperTest extends TestCase
     }
 
     /**
-     * @return array<
-     *     array{data: string, cena: float}
-     * >
+     * @return array<array{data: string, cena: float}>
      */
     private function fetchFixtureTables(): array
     {
         $fixturesRepository = new FixturesRepository();
 
-        return $fixturesRepository->fetchArray('/api/cenyzlota/2023-03-01/2023-03-03/data');
+        // @phpstan-ignore-next-line
+        return $fixturesRepository->fetchArray('/api/cenyzlota/2023-03-01/2023-03-03/data');;
     }
 }

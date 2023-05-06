@@ -15,7 +15,7 @@ class CurrencyAverageRatesMapper
     private $rateValidator;
 
     /**
-     * @param ThrowableValidator<mixed>|null $rateValidator
+     * @param ?ThrowableValidator<mixed> $rateValidator
      */
     public function __construct(?ThrowableValidator $rateValidator = null)
     {

@@ -1,0 +1,22 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Psr\Cache;
+
+/**
+ * @template T
+ */
+interface CacheItemInterface
+{
+    /**
+     * @return T
+     */
+    public function get();
+
+    /**
+     * @param T $value
+     * @return $this
+     */
+    public function set($value): self;
+}

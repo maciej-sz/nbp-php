@@ -8,6 +8,7 @@ use MaciejSz\Nbp\CurrencyAverageRates\Domain\CurrencyAverageRate;
 use MaciejSz\Nbp\CurrencyAverageRates\Domain\CurrencyAveragesTable;
 
 /**
+ * @implements \IteratorAggregate<int, CurrencyAverageRate>
  * @internal
  */
 final class RatesFlatCollection implements \IteratorAggregate

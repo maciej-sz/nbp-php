@@ -33,4 +33,22 @@ class FileContentsTransportTest extends TestCase
         $transport = new FileContentsTransport('/');
         $transport->get($path);
     }
+
+    public function testGetInvalidPath(): void
+    {
+        self::expectException(TransportException::class);
+        self::expectExceptionMessage("Cannot get contents from /bogus");
+
+        $transport = new FileContentsTransport('/');
+
+        set_error_handler(
+            function (int $errno, string $errstr, string $errfile, int $errline): bool {
+                return true;
+            }
+        );
+
+        $transport->get('bogus');
+
+        restore_error_handler();
+    }
 }

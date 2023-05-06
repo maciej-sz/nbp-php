@@ -11,7 +11,7 @@ use MaciejSz\Nbp\Shared\Infrastructure\Validator\NbpNumericRateValidator;
 use MaciejSz\Nbp\Shared\Infrastructure\Validator\ThrowableValidator;
 
 /**
- * @implements TableMapper<array<GoldRate>>
+ * @implements TableMapper<GoldRate>
  */
 class GoldRatesMapper implements TableMapper
 {
@@ -19,7 +19,7 @@ class GoldRatesMapper implements TableMapper
     private $rateValidator;
 
     /**
-     * @param ThrowableValidator<mixed>|null $rateValidator
+     * @param ?ThrowableValidator<mixed> $rateValidator
      */
     public function __construct(?ThrowableValidator $rateValidator = null)
     {

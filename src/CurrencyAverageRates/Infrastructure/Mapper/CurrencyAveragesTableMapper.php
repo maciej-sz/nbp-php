@@ -33,6 +33,7 @@ class CurrencyAveragesTableMapper implements TableMapper
         $tableLetter = $dataAccess->extractString('table');
         $tableNumber = $dataAccess->extractString('no');
         $effectiveDate = $dataAccess->extractDateTime('effectiveDate');
+        /** @var array<array{currency: string, code: string, mid: float}> $rates */
         $rates = $dataAccess->extractArray('rates');
 
         return new CurrencyAveragesTable(

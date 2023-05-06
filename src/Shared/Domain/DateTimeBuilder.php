@@ -12,9 +12,12 @@ class DateTimeBuilder
 
     /** @var string */
     private $timezone;
-    /** @var Validator<string>|null */
+    /** @var ?Validator<string> */
     private $validator;
 
+    /**
+     * @param ?Validator<string> $validator
+     */
     public function __construct(
         string $timezone = self::DEFAULT_TIMEZONE,
         ?Validator $validator = null
@@ -23,7 +26,7 @@ class DateTimeBuilder
         $this->validator = $validator;
     }
 
-    public function build(?string $date = null): \DateTimeInterface
+    public function build(string $date): \DateTimeInterface
     {
         if ($this->validator) {
             $this->validator->validate($date);

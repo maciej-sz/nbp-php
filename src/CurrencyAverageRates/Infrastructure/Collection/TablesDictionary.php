@@ -12,9 +12,12 @@ use MaciejSz\Nbp\Shared\Domain\Exception\TableNotFoundException;
  */
 final class TablesDictionary
 {
-    /** @var array<string, CurrencyAveragesTable> */
+    /** @var array<string, ?CurrencyAveragesTable> */
     private $tables;
 
+    /**
+     * @param array<string, ?CurrencyAveragesTable> $tables
+     */
     public function __construct(array $tables)
     {
         $this->tables = $tables;

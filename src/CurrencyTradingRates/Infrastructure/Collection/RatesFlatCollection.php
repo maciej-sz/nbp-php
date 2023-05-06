@@ -8,6 +8,7 @@ use MaciejSz\Nbp\CurrencyTradingRates\Domain\CurrencyTradingRate;
 use MaciejSz\Nbp\CurrencyTradingRates\Domain\CurrencyTradingTable;
 
 /**
+ * @implements \IteratorAggregate<int, CurrencyTradingRate>
  * @internal
  */
 final class RatesFlatCollection implements \IteratorAggregate

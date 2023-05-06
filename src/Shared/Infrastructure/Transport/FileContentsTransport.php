@@ -23,7 +23,10 @@ class FileContentsTransport implements Transport
         $path = trim($path, '/');
         $uri = "{$baseUri}/{$path}?format=json";
         $contents = file_get_contents($uri);
-        /** @var array<mixed>|null $data */
+        if (false === $contents) {
+            throw new TransportException("Cannot get contents from {$uri}");
+        }
+        /** @var ?array<array<mixed>> $data */
         $data = json_decode($contents, true);
         if (null === $data) {
             throw new TransportException("Cannot decode JSON data from {$uri}");
