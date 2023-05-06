@@ -9,12 +9,12 @@ class GoldRate
     /** @var \DateTimeInterface */
     private $date;
     /** @var float */
-    private $rate;
+    private $value;
 
-    public function __construct(\DateTimeInterface $date, float $rate)
+    public function __construct(\DateTimeInterface $date, float $value)
     {
         $this->date = $date;
-        $this->rate = $rate;
+        $this->value = $value;
     }
 
     public function getDate(): \DateTimeInterface
@@ -22,8 +22,8 @@ class GoldRate
         return $this->date;
     }
 
-    public function getRate(): float
+    public function getValue(): float
     {
-        return $this->rate;
+        return $this->value;
     }
 }

@@ -6,6 +6,7 @@ namespace MaciejSz\Nbp\Test\Unit\Shared\Domain;
 
 use MaciejSz\Nbp\Shared\Domain\Exception\InvalidDateException;
 use PHPUnit\Framework\TestCase;
+use function MaciejSz\Nbp\Shared\Domain\DateFormatter\compare_days;
 use function MaciejSz\Nbp\Shared\Domain\DateFormatter\extract_ym;
 use function MaciejSz\Nbp\Shared\Domain\DateFormatter\first_day_of_month;
 use function MaciejSz\Nbp\Shared\Domain\DateFormatter\format_ym;
@@ -70,6 +71,13 @@ class DateFormatterTest extends TestCase
     public function testIsSameDay($date1, $date2, bool $expected): void
     {
         self::assertSame($expected, is_same_day($date1, $date2));
+    }
+
+    public function testCompareDays()
+    {
+        self::assertSame(-1, compare_days('2020-01-01', '2020-01-02'));
+        self::assertSame(0, compare_days('2020-01-01', '2020-01-01'));
+        self::assertSame(1, compare_days('2020-01-02', '2020-01-01'));
     }
 
     public function testPreviousMonth(): void

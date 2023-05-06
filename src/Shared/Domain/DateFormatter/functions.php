@@ -64,6 +64,18 @@ function is_same_day($date1, $date2): bool
 }
 
 /**
+ * @param string|\DateTimeInterface $date1
+ * @param string|\DateTimeInterface $date2
+ */
+function compare_days($date1, $date2): int
+{
+    $dateObj1 = ensure_date_obj($date1);
+    $dateObj2 = ensure_date_obj($date2);
+
+    return $dateObj1->format('Y-m-d') <=> $dateObj2->format('Y-m-d');
+}
+
+/**
  * @param string|\DateTimeInterface $date
  */
 function previous_month($date): \DateTimeInterface

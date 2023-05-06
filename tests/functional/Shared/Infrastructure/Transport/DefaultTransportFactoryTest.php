@@ -8,16 +8,16 @@ use MaciejSz\Nbp\Shared\Infrastructure\Transport\DefaultTransportFactory;
 use MaciejSz\Nbp\Shared\Infrastructure\Transport\FileContentsTransport;
 use MaciejSz\Nbp\Shared\Infrastructure\Transport\GuzzleTransport;
 use MaciejSz\Nbp\Shared\Infrastructure\Transport\SymfonyHttpTransport;
+use MaciejSz\Nbp\Shared\Infrastructure\Transport\Transport;
 use PHPUnit\Framework\TestCase;
 
 class DefaultTransportFactoryTest extends TestCase
 {
     public function testCreate(): void
     {
-        self::expectNotToPerformAssertions();
-
         $factory = new DefaultTransportFactory();
-        $factory->create('https://dummy.restapiexample.com');
+        $transport = $factory->create('https://dummy.restapiexample.com');
+        self::assertInstanceOf(Transport::class, $transport);
     }
 
     public function testTryCreateSymfonyTransport(): void

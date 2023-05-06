@@ -10,6 +10,7 @@ use MaciejSz\Nbp\CurrencyAverageRates\Infrastructure\Collection\TablesDictionary
 use MaciejSz\Nbp\Shared\Domain\Exception\TableNotFoundException;
 use MaciejSz\Nbp\Shared\Infrastructure\Repository\NbpRepository;
 use MaciejSz\Nbp\Shared\Infrastructure\Repository\NbpWebRepository;
+
 use function MaciejSz\Nbp\Shared\Domain\DateFormatter\ensure_date_obj;
 use function MaciejSz\Nbp\Shared\Domain\DateFormatter\extract_ym;
 use function MaciejSz\Nbp\Shared\Domain\DateFormatter\is_same_day;
@@ -81,7 +82,8 @@ class CurrencyAverageRatesService
             throw new TableNotFoundException(
                 "Averages table A from day before {$date->format('Y-m-d')} has not been found"
             );
-        } else if (null === $tableB) {
+        }
+        if (null === $tableB) {
             throw new TableNotFoundException(
                 "Averages table B from day before {$date->format('Y-m-d')} has not been found"
             );
@@ -94,22 +96,23 @@ class CurrencyAverageRatesService
     }
 
     /**
-     * @return \Iterator<CurrencyAveragesTable>
+     * @return iterable<CurrencyAveragesTable>
      */
-    public function getMonthTablesA(int $year, int $month): \Iterator
+    public function getMonthTablesA(int $year, int $month): iterable
     {
         yield from $this->nbpRepository->getCurrencyAveragesTableA($year, $month);
     }
 
     /**
-     * @return \Iterator<CurrencyAveragesTable>
+     * @return iterable<CurrencyAveragesTable>
      */
-    public function getMonthTablesB(int $year, int $month): \Iterator
+    public function getMonthTablesB(int $year, int $month): iterable
     {
         yield from $this->nbpRepository->getCurrencyAveragesTableB($year, $month);
     }
 
     /**
+     * @param string|\DateTimeInterface $date
      * @param iterable<CurrencyAveragesTable> $tables
      */
     private function findTableFromDate($date, iterable $tables): ?CurrencyAveragesTable
@@ -125,6 +128,7 @@ class CurrencyAverageRatesService
     }
 
     /**
+     * @param string|\DateTimeInterface $date
      * @param iterable<CurrencyAveragesTable> $tables
      */
     private function findTableFromDateBefore($date, iterable $tables): ?CurrencyAveragesTable
@@ -141,6 +145,9 @@ class CurrencyAverageRatesService
         return null;
     }
 
+    /**
+     * @param iterable<CurrencyAveragesTable> $tables
+     */
     private function getLastTable(iterable $tables): ?CurrencyAveragesTable
     {
         $last = null;

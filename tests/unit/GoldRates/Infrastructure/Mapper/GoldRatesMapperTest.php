@@ -19,7 +19,7 @@ class GoldRatesMapperTest extends TestCase
         $rate = $mapper->rawDataToDomainObject($tables[0]);
 
         self::assertSame('2023-03-01', $rate->getDate()->format('Y-m-d'));
-        self::assertSame(260.89, $rate->getRate());
+        self::assertSame(260.89, $rate->getValue());
     }
 
     public function testFailingValidator(): void

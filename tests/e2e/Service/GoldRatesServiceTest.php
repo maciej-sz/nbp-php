@@ -26,7 +26,7 @@ class GoldRatesServiceTest extends TestCase
         $febFourth2013Rate = $goldRates->fromDay('2013-02-04');
 
         self::assertSame('2013-02-04', $febFourth2013Rate->getDate()->format('Y-m-d'));
-        self::assertSame(164.97, $febFourth2013Rate->getRate());
+        self::assertSame(164.97, $febFourth2013Rate->getValue());
     }
 
     public function testFromDayInvalid(): void
@@ -44,7 +44,7 @@ class GoldRatesServiceTest extends TestCase
         $febFourth2013Rate = $goldRates->fromDayBefore('2013-02-04');
 
         self::assertSame('2013-02-01', $febFourth2013Rate->getDate()->format('Y-m-d'));
-        self::assertSame(165.24, $febFourth2013Rate->getRate());
+        self::assertSame(165.24, $febFourth2013Rate->getValue());
     }
 
     public function testFromDayBeforeNewYear(): void
@@ -53,6 +53,6 @@ class GoldRatesServiceTest extends TestCase
         $febFourth2013Rate = $goldRates->fromDayBefore('2014-01-02');
 
         self::assertSame('2013-12-31', $febFourth2013Rate->getDate()->format('Y-m-d'));
-        self::assertSame(116.89, $febFourth2013Rate->getRate());
+        self::assertSame(116.89, $febFourth2013Rate->getValue());
     }
 }

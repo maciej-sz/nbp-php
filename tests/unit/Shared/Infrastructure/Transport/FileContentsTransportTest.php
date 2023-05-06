@@ -11,13 +11,24 @@ use PHPUnit\Framework\TestCase;
 
 class FileContentsTransportTest extends TestCase
 {
-    public function testInvalidJson(): void
+    public function testGet(): void
+    {
+        $fixturesRepository = new FixturesRepository();
+        $path = $fixturesRepository->getFullFixturePath('/api/sample/array-foo-bar-baz', 'json');
+
+        $transport = new FileContentsTransport('/');
+        $data = $transport->get($path);
+
+        self::assertSame(['foo', 'bar', 'baz'], $data);
+    }
+
+    public function testGetInvalidJson(): void
     {
         $fixturesRepository = new FixturesRepository();
         $path = $fixturesRepository->getFullFixturePath('/api/bogus/data', 'json');
 
         self::expectException(TransportException::class);
-        self::expectExceptionMessage('Cannot decode JSON data from ' . $path);
+        self::expectExceptionMessage("Cannot decode JSON data from {$path}");
 
         $transport = new FileContentsTransport('/');
         $transport->get($path);

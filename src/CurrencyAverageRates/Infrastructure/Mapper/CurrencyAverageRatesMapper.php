@@ -26,14 +26,14 @@ class CurrencyAverageRatesMapper
     }
 
     /**
-     * @param array<mixed> $tableData
-     * @param array<mixed> $ratesData
+     * @param array{table: string, no: string, effectiveDate: string, rates: array<mixed>} $tableData
+     * @param array<array{currency: string, code: string, mid: float}> $rates
      * @return array<CurrencyAverageRate>
      */
-    public function rawDataToDomainObjectCollection(array $tableData, array $ratesData): array
+    public function rawDataToDomainObjectCollection(array $tableData, array $rates): array
     {
         $collection = [];
-        foreach ($ratesData as $rateData) {
+        foreach ($rates as $rateData) {
             $collection[] = $this->rawDataToDomainObject($tableData, $rateData);
         }
 
@@ -41,8 +41,8 @@ class CurrencyAverageRatesMapper
     }
 
     /**
-     * @param array<mixed> $tableData
-     * @param array<mixed> $rateData
+     * @param array{table: string, no: string, effectiveDate: string, rates: array<mixed>} $tableData
+     * @param array{currency: string, code: string, mid: float} $rateData
      */
     public function rawDataToDomainObject(array $tableData, array $rateData): CurrencyAverageRate
     {

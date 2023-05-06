@@ -33,12 +33,10 @@ class GoldRatesService
         return new self($nbpRepository);
     }
 
-    /**
-     * @return GoldRatesCollection
-     */
     public function fromMonth(int $year, int $month): GoldRatesCollection
     {
-        return new GoldRatesCollection($this->nbpRepository->getGoldRates($year, $month));
+        $rates = $this->nbpRepository->getGoldRates($year, $month);
+        return new GoldRatesCollection($rates);
     }
 
     /**
@@ -82,6 +80,7 @@ class GoldRatesService
     }
 
     /**
+     * @param string|\DateTimeInterface $date
      * @param iterable<GoldRate> $rates
      */
     private function findRateBefore($date, iterable $rates): ?GoldRate
@@ -97,7 +96,10 @@ class GoldRatesService
         return null;
     }
 
-    public function getLastRate(iterable $rates): ?GoldRate
+    /**
+     * @param iterable<GoldRate> $rates
+     */
+    private function getLastRate(iterable $rates): ?GoldRate
     {
         $last = null;
         foreach ($rates as $rate) {

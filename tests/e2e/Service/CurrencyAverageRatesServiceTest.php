@@ -90,7 +90,7 @@ class CurrencyAverageRatesServiceTest extends TestCase
         $tables->fromTable('B');
     }
 
-    public function testFromDayBefore()
+    public function testFromDayBefore(): void
     {
         $currencyAverages = CurrencyAverageRatesService::create();
         $tables = $currencyAverages->fromDayBefore('2011-03-09');
@@ -102,7 +102,7 @@ class CurrencyAverageRatesServiceTest extends TestCase
         self::assertSame('2011-03-02', $tableB->getEffectiveDate()->format('Y-m-d'));
     }
 
-    public function testFromDayBeforeBreakOfYear()
+    public function testFromDayBeforeBreakOfYear(): void
     {
         $currencyAverages = CurrencyAverageRatesService::create();
         $tables = $currencyAverages->fromDayBefore('2012-01-02');

@@ -33,9 +33,6 @@ class CurrencyTradingRatesService
         return new self($nbpRepository);
     }
 
-    /**
-     * @return RatesFlatCollection
-     */
     public function fromMonth(int $year, int $month): RatesFlatCollection
     {
         return new RatesFlatCollection($this->getMonthTables($year, $month));
@@ -79,9 +76,9 @@ class CurrencyTradingRatesService
     }
 
     /**
-     * @return \Iterator<CurrencyTradingTable>
+     * @return iterable<CurrencyTradingTable>
      */
-    public function getMonthTables(int $year, int $month): \Iterator
+    public function getMonthTables(int $year, int $month): iterable
     {
         yield from $this->nbpRepository->getCurrencyTradingTables($year, $month);
     }
@@ -89,8 +86,7 @@ class CurrencyTradingRatesService
     private function findTableByTradingDate(
         \DateTimeInterface $tradingDate,
         ?\DateTimeInterface $searchMonth = null
-    ): ?CurrencyTradingTable
-    {
+    ): ?CurrencyTradingTable {
         if (null === $searchMonth) {
             $searchMonth = $tradingDate;
         }
