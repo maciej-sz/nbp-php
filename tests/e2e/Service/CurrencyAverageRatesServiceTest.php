@@ -113,4 +113,14 @@ class CurrencyAverageRatesServiceTest extends TestCase
         self::assertSame('2011-12-30', $tableA->getEffectiveDate()->format('Y-m-d'));
         self::assertSame('2011-12-28', $tableB->getEffectiveDate()->format('Y-m-d'));
     }
+
+    public function testFullExample(): void
+    {
+        $currencyAverages = CurrencyAverageRatesService::create();
+        $rate = $currencyAverages->fromDayBefore('2023-01-01')->fromTable('A')->getRate('USD');
+
+        self::assertEquals(4.4018, $rate->getValue());
+        self::assertEquals('2022-12-30', $rate->getEffectiveDate()->format('Y-m-d'));
+        self::assertEquals('dolar amerykański', $rate->getCurrencyName());
+    }
 }

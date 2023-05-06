@@ -10,6 +10,7 @@ use MaciejSz\Nbp\CurrencyTradingRates\Domain\CurrencyTradingTable;
 use MaciejSz\Nbp\CurrencyTradingRates\Infrastructure\Mapper\CurrencyTradingTableMapper;
 use MaciejSz\Nbp\GoldRates\Domain\GoldRate;
 use MaciejSz\Nbp\GoldRates\Infrastructure\Mapper\GoldRatesMapper;
+use MaciejSz\Nbp\Shared\Domain\Exception\InvalidDateException;
 use MaciejSz\Nbp\Shared\Infrastructure\Client\NbpClient;
 use MaciejSz\Nbp\Shared\Infrastructure\Client\Request\CurrencyAveragesTableARequest;
 use MaciejSz\Nbp\Shared\Infrastructure\Client\Request\CurrencyAveragesTableBRequest;
@@ -166,5 +167,46 @@ class NbpWebRepositoryTest extends TestCase
     {
         self::expectNotToPerformAssertions();
         new NbpWebRepository($this->createMock(NbpClient::class));
+    }
+
+    public function testFromCurrentMonth(): void
+    {
+        $client = $this->createMock(NbpClient::class);
+        $client
+            ->expects(self::once())
+            ->method('send')
+            ->willReturn([])
+        ;
+        $repository = new NbpWebRepository($client);
+
+        $today = new \DateTimeImmutable();
+        $year = (int) $today->format('Y');
+        $month = (int) $today->format('n');
+
+        $tablesIterable = $repository->getCurrencyTradingTables($year, $month);
+        $tables = (is_array($tablesIterable))
+            ? $tablesIterable
+            : iterator_to_array($tablesIterable);
+
+        self::assertSame([], $tables);
+    }
+
+    public function testFromDateTooFarInTheFuture(): void
+    {
+        $client = $this->createStub(NbpClient::class);
+        $repository = new NbpWebRepository($client);
+
+        $today = new \DateTimeImmutable();
+        $nextMonth = $today->add(new \DateInterval('P1M'));
+        $year = (int) $nextMonth->format('Y');
+        $month = (int) $nextMonth->format('n');
+
+        self::expectException(InvalidDateException::class);
+        self::expectExceptionMessage('The requested date is in the future');
+
+        $tables = $repository->getCurrencyTradingTables($year, $month);
+        foreach ($tables as $item) {
+            break;
+        }
     }
 }

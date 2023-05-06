@@ -83,4 +83,14 @@ class CurrencyTradingRatesServiceTest extends TestCase
         $currencyTrading = CurrencyTradingRatesService::create();
         $currencyTrading->fromTradingDay('2010-05-15');
     }
+
+    public function testFullExample(): void
+    {
+        $currencyAverages = CurrencyTradingRatesService::create();
+        $rate = $currencyAverages->fromEffectiveDay('2022-12-30')->getRate('USD');
+
+        self::assertEquals(4.3588, $rate->getBid());
+        self::assertEquals(4.4468, $rate->getAsk());
+        self::assertEquals('2022-12-30', $rate->getEffectiveDate()->format('Y-m-d'));
+    }
 }

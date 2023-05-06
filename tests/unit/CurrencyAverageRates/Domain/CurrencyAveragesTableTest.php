@@ -16,7 +16,7 @@ class CurrencyAveragesTableTest extends TestCase
         $rates = $this->getRatesFixture();
         $table = $this->getTableFixture($rates);
 
-        self::assertSame($rates['FOO'], $table->getRate('FOO'));
+        self::assertSame($rates[0], $table->getRate('FOO'));
     }
 
     public function testGetRateFailure(): void
@@ -49,7 +49,7 @@ class CurrencyAveragesTableTest extends TestCase
     }
 
     /**
-     * @param array<string, CurrencyAverageRate> $rates
+     * @param array<CurrencyAverageRate> $rates
      */
     private function getTableFixture(array $rates): CurrencyAveragesTable
     {
@@ -62,14 +62,14 @@ class CurrencyAveragesTableTest extends TestCase
     }
 
     /**
-     * @return array<string, CurrencyAverageRate>
+     * @return array<CurrencyAverageRate>
      */
     private function getRatesFixture(): array
     {
         return [
-            'FOO' => new CurrencyAverageRate(
-                'FOO',
+            new CurrencyAverageRate(
                 'dolar testowy',
+                'FOO',
                 12.3,
                 new \DateTimeImmutable()
             ),

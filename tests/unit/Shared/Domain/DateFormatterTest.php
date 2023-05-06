@@ -11,12 +11,14 @@ use function MaciejSz\Nbp\Shared\Domain\DateFormatter\compare_days;
 use function MaciejSz\Nbp\Shared\Domain\DateFormatter\extract_ym;
 use function MaciejSz\Nbp\Shared\Domain\DateFormatter\first_day_of_month;
 use function MaciejSz\Nbp\Shared\Domain\DateFormatter\format_ym;
+use function MaciejSz\Nbp\Shared\Domain\DateFormatter\is_after_today;
 use function MaciejSz\Nbp\Shared\Domain\DateFormatter\is_same_day;
 use function MaciejSz\Nbp\Shared\Domain\DateFormatter\last_day_of_month;
 use function MaciejSz\Nbp\Shared\Domain\DateFormatter\month_range;
 use function MaciejSz\Nbp\Shared\Domain\DateFormatter\next_month;
 use function MaciejSz\Nbp\Shared\Domain\DateFormatter\previous_month;
 use function MaciejSz\Nbp\Shared\Domain\DateFormatter\safe_strtotime;
+use function MaciejSz\Nbp\Shared\Domain\DateFormatter\today;
 
 class DateFormatterTest extends TestCase
 {
@@ -60,6 +62,7 @@ class DateFormatterTest extends TestCase
 
     public function testFormatYm(): void
     {
+        self::assertSame('2020-12', format_ym(2020, 12));
         self::assertSame('2020-09', format_ym(2020, 9));
         self::assertSame('1970-01', format_ym(1970, 1));
     }
@@ -88,11 +91,40 @@ class DateFormatterTest extends TestCase
         self::assertSame($expected, is_same_day($date1, $date2));
     }
 
+    public function testToday(): void
+    {
+        self::assertMatchesRegularExpression(
+            '/^\d{4}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/',
+            today()
+        );
+    }
+
     public function testCompareDays(): void
     {
         self::assertSame(-1, compare_days('2020-01-01', '2020-01-02'));
         self::assertSame(0, compare_days('2020-01-01', '2020-01-01'));
         self::assertSame(1, compare_days('2020-01-02', '2020-01-01'));
+    }
+
+    /**
+     * @dataProvider isAfterTodayDataProvider
+     * @param \DateTimeInterface|string $date
+     */
+    public function testIsAfterToday(bool $expected, $date): void
+    {
+        self::assertSame($expected, is_after_today($date));
+    }
+
+    /**
+     * @return array<array{bool, string|\DateTimeInterface}>
+     */
+    public function isAfterTodayDataProvider(): array
+    {
+        return [
+            [true, (new \DateTimeImmutable())->add(new \DateInterval('P1D'))],
+            [false, new \DateTimeImmutable()],
+            [false, (new \DateTimeImmutable())->sub(new \DateInterval('P1D'))],
+        ];
     }
 
     public function testPreviousMonth(): void

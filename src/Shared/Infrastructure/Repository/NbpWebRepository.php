@@ -7,6 +7,7 @@ namespace MaciejSz\Nbp\Shared\Infrastructure\Repository;
 use MaciejSz\Nbp\CurrencyAverageRates\Infrastructure\Mapper\CurrencyAveragesTableMapper;
 use MaciejSz\Nbp\CurrencyTradingRates\Infrastructure\Mapper\CurrencyTradingTableMapper;
 use MaciejSz\Nbp\GoldRates\Infrastructure\Mapper\GoldRatesMapper;
+use MaciejSz\Nbp\Shared\Domain\Exception\InvalidDateException;
 use MaciejSz\Nbp\Shared\Infrastructure\Client\NbpClient;
 use MaciejSz\Nbp\Shared\Infrastructure\Client\NbpWebClient;
 use MaciejSz\Nbp\Shared\Infrastructure\Client\Request\CurrencyAveragesTableARequest;
@@ -15,7 +16,9 @@ use MaciejSz\Nbp\Shared\Infrastructure\Client\Request\CurrencyTradingTableReques
 use MaciejSz\Nbp\Shared\Infrastructure\Client\Request\GoldRatesRequest;
 use MaciejSz\Nbp\Shared\Infrastructure\Mapper\TableMapper;
 
+use function MaciejSz\Nbp\Shared\Domain\DateFormatter\is_after_today;
 use function MaciejSz\Nbp\Shared\Domain\DateFormatter\month_range;
+use function MaciejSz\Nbp\Shared\Domain\DateFormatter\today;
 
 final class NbpWebRepository implements NbpRepository
 {
@@ -63,7 +66,7 @@ final class NbpWebRepository implements NbpRepository
      */
     public function getCurrencyAveragesTableA(int $year, int $month): iterable
     {
-        $request = new CurrencyAveragesTableARequest(...month_range($year, $month));
+        $request = new CurrencyAveragesTableARequest(...$this->getMonthRange($year, $month));
         $results = $this->client->send($request);
 
         yield from $this->hydrate($results, $this->currencyAveragesTableMapper);
@@ -74,7 +77,7 @@ final class NbpWebRepository implements NbpRepository
      */
     public function getCurrencyAveragesTableB(int $year, int $month): iterable
     {
-        $request = new CurrencyAveragesTableBRequest(...month_range($year, $month));
+        $request = new CurrencyAveragesTableBRequest(...$this->getMonthRange($year, $month));
         $results = $this->client->send($request);
 
         yield from $this->hydrate($results, $this->currencyAveragesTableMapper);
@@ -85,7 +88,7 @@ final class NbpWebRepository implements NbpRepository
      */
     public function getCurrencyTradingTables(int $year, int $month): iterable
     {
-        $request = new CurrencyTradingTableRequest(...month_range($year, $month));
+        $request = new CurrencyTradingTableRequest(...$this->getMonthRange($year, $month));
         $results = $this->client->send($request);
 
         yield from $this->hydrate($results, $this->currencyTradingTableMapper);
@@ -96,10 +99,26 @@ final class NbpWebRepository implements NbpRepository
      */
     public function getGoldRates(int $year, int $month): iterable
     {
-        $request = new GoldRatesRequest(...month_range($year, $month));
+        $request = new GoldRatesRequest(...$this->getMonthRange($year, $month));
         $results = $this->client->send($request);
 
         yield from $this->hydrate($results, $this->goldRatesMapper);
+    }
+
+    /**
+     * @return array{string, string}
+     */
+    private function getMonthRange(int $year, int $month): array
+    {
+        $range = month_range($year, $month);
+        if (is_after_today($range[0])) {
+            throw new InvalidDateException('The requested date is in the future');
+        }
+        if (is_after_today($range[1])) {
+            $range[1] = today();
+        }
+
+        return $range;
     }
 
     /**

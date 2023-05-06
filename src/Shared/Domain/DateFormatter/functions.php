@@ -88,6 +88,19 @@ function compare_days($date1, $date2): int
 /**
  * @param string|\DateTimeInterface $date
  */
+function is_after_today($date): bool
+{
+    return compare_days($date, new \DateTimeImmutable()) > 0;
+}
+
+function today(): string
+{
+    return (new \DateTimeImmutable())->format('Y-m-d');
+}
+
+/**
+ * @param string|\DateTimeInterface $date
+ */
 function previous_month($date): \DateTimeInterface
 {
     return middle_of_month($date)->sub(new \DateInterval('P1M'));

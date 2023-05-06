@@ -33,9 +33,9 @@ class CurrencyAverageRatesMapperTest extends TestCase
 
         self::assertCount(3, $rates);
         self::assertContainsOnly(CurrencyAverageRate::class, $rates);
-        self::assertSame('USD', $rates[0]->getCurrencyCode());
-        self::assertSame('EUR', $rates[1]->getCurrencyCode());
-        self::assertSame('CHF', $rates[2]->getCurrencyCode());
+        self::assertSame('dolar amerykański', $rates[0]->getCurrencyName());
+        self::assertSame('euro', $rates[1]->getCurrencyName());
+        self::assertSame('frank szwajcarski', $rates[2]->getCurrencyName());
     }
 
     public function testValidatorFailure(): void

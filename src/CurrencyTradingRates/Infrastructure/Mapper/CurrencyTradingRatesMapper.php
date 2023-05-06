@@ -46,9 +46,8 @@ class CurrencyTradingRatesMapper
     public function rawDataToDomainObjectCollection(array $tableData, array $rates): array
     {
         $collection = [];
-        foreach ($rates as $rate) {
-            $currencyTradingRate = $this->rawDataToDomainObject($tableData, $rate);
-            $collection[$currencyTradingRate->getCurrencyCode()] = $currencyTradingRate;
+        foreach ($rates as $rateData) {
+            $collection[] = $this->rawDataToDomainObject($tableData, $rateData);
         }
 
         return $collection;

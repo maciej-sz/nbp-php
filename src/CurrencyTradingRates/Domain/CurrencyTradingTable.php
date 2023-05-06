@@ -16,11 +16,11 @@ class CurrencyTradingTable
     private $tradingDate;
     /** @var \DateTimeInterface */
     private $effectiveDate;
-    /** @var array<string, CurrencyTradingRate> */
+    /** @var array<CurrencyTradingRate> */
     private $rates;
 
     /**
-     * @param array<string, CurrencyTradingRate> $rates
+     * @param array<CurrencyTradingRate> $rates
      */
     public function __construct(
         string $tableLetter,
@@ -66,13 +66,15 @@ class CurrencyTradingTable
 
     public function getRate(string $code): CurrencyTradingRate
     {
-        if (!isset($this->rates[$code])) {
-            throw new CurrencyCodeNotFoundException(
-                "Currency code: '{$code}' not found in table '{$this->no}'"
-            );
+        foreach ($this->rates as $rate) {
+            if ($rate->getCurrencyCode() === $code) {
+                return $rate;
+            }
         }
 
-        return $this->rates[$code];
+        throw new CurrencyCodeNotFoundException(
+            "Currency code: '{$code}' not found in table '{$this->no}'"
+        );
     }
 
     /**

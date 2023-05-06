@@ -35,10 +35,12 @@ class CurrencyTradingRatesMapperTest extends TestCase
 
         self::assertCount(3, $rates);
         self::assertContainsOnly(CurrencyTradingRate::class, $rates);
-        self::assertEquals(['USD', 'EUR', 'CHF'], array_keys($rates));
-        self::assertSame(4.3, $rates['USD']->getBid());
-        self::assertSame(4.6, $rates['EUR']->getBid());
-        self::assertSame(4.8, $rates['CHF']->getBid());
+        self::assertSame(4.3, $rates[0]->getBid());
+        self::assertSame('USD', $rates[0]->getCurrencyCode());
+        self::assertSame(4.6, $rates[1]->getBid());
+        self::assertSame('EUR', $rates[1]->getCurrencyCode());
+        self::assertSame(4.8, $rates[2]->getBid());
+        self::assertSame('CHF', $rates[2]->getCurrencyCode());
     }
 
     public function testValidatorFailure(): void
