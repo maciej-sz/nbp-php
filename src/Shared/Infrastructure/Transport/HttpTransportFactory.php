@@ -7,7 +7,7 @@ namespace MaciejSz\Nbp\Shared\Infrastructure\Transport;
 use GuzzleHttp\Client as GuzzleHttpClient;
 use Symfony\Component\HttpClient\HttpClient as SymfonyHttpClient;
 
-class DefaultTransportFactory implements TransportFactory
+class HttpTransportFactory implements TransportFactory
 {
     public function create(string $baseUri): Transport
     {

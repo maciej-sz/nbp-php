@@ -12,9 +12,14 @@ class FileContentsTransport implements Transport
     /** @var string */
     private $baseUri;
 
-    public function __construct(string $baseUri = NbpWebClient::BASE_URL)
+    public function __construct(string $baseUri)
     {
         $this->baseUri = $baseUri;
+    }
+
+    public static function new(string $baseUri = NbpWebClient::BASE_URL): self
+    {
+        return new self($baseUri);
     }
 
     public function get(string $path): array

@@ -26,10 +26,10 @@ class CurrencyAverageRatesService
         $this->nbpRepository = $nbpRepository;
     }
 
-    public static function create(?NbpRepository $nbpRepository = null): self
+    public static function new(?NbpRepository $nbpRepository = null): self
     {
         if (null === $nbpRepository) {
-            $nbpRepository = NbpWebRepository::create();
+            $nbpRepository = NbpWebRepository::new();
         }
 
         return new self($nbpRepository);

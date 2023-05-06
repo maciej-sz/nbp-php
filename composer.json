@@ -32,7 +32,6 @@
         "ext-json": "*"
     },
     "require-dev": {
-        "doctrine/cache": "^2.2",
         "guzzlehttp/guzzle": "^6.3",
         "phpunit/phpunit": "^9.6",
         "qossmic/deptrac-shim": "^1.0",
@@ -40,10 +39,11 @@
         "phpstan/phpstan": "^1.10",
         "symfony/http-client": "^6.2",
         "donatj/mock-webserver": "^2.6",
-        "symfony/cache": "^6.2"
+        "symfony/cache": "^6.2",
+        "cache/integration-tests": "dev-master"
     },
     "suggest": {
-        "doctrine/cache": "Allows local cache",
+        "symfony/cache": "Allows local cache",
         "symfony/http-foundation": "Symfony HTTP Transport layer"
     }
 }

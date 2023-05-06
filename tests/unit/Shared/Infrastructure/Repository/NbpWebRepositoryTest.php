@@ -21,9 +21,9 @@ use PHPUnit\Framework\TestCase;
 
 class NbpWebRepositoryTest extends TestCase
 {
-    public function testCreate(): void
+    public function testDefaultInstance(): void
     {
-        $instance = NbpWebRepository::create();
+        $instance = NbpWebRepository::new();
         self::assertInstanceOf(NbpWebRepository::class, $instance);
     }
 

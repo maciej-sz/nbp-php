@@ -13,12 +13,18 @@ class SymfonyHttpTransport implements Transport
     /** @var HttpClientInterface */
     private $httpClient;
 
-    public function __construct(?HttpClientInterface $httpClient = null)
+    public function __construct(HttpClientInterface $httpClient)
+    {
+        $this->httpClient = $httpClient;
+    }
+
+    public static function new(?HttpClientInterface $httpClient = null): self
     {
         if (null === $httpClient) {
             $httpClient = HttpClient::createForBaseUri(NbpWebClient::BASE_URL);
         }
-        $this->httpClient = $httpClient;
+
+        return new self($httpClient);
     }
 
     public function get(string $path): array

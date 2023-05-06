@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace MaciejSz\Nbp\Shared\Infrastructure\Client;
 
 use MaciejSz\Nbp\Shared\Infrastructure\Client\Request\NbpClientRequest;
-use MaciejSz\Nbp\Shared\Infrastructure\Transport\DefaultTransportFactory;
+use MaciejSz\Nbp\Shared\Infrastructure\Transport\HttpTransportFactory;
 use MaciejSz\Nbp\Shared\Infrastructure\Transport\Transport;
 use MaciejSz\Nbp\Shared\Infrastructure\Transport\TransportFactory;
 
@@ -21,12 +21,12 @@ final class NbpWebClient implements NbpClient
         $this->transport = $transport;
     }
 
-    public static function create(
+    public static function new(
         ?string $baseUri = null,
         ?TransportFactory $transportFactory = null
     ): self {
         $baseUri = $baseUri ?: self::BASE_URL;
-        $transportFactory = $transportFactory ?: new DefaultTransportFactory();
+        $transportFactory = $transportFactory ?: new HttpTransportFactory();
         $transport = $transportFactory->create($baseUri);
 
         return new self($transport);

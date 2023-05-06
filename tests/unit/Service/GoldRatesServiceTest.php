@@ -12,9 +12,9 @@ use PHPUnit\Framework\TestCase;
 
 class GoldRatesServiceTest extends TestCase
 {
-    public function testCreate(): void
+    public function testDefaultInstance(): void
     {
-        $service = GoldRatesService::create();
+        $service = GoldRatesService::new();
         self::assertInstanceOf(GoldRatesService::class, $service);
     }
 

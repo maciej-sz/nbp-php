@@ -13,9 +13,9 @@ use PHPUnit\Framework\TestCase;
 
 class CurrencyAverageRatesServiceTest extends TestCase
 {
-    public function testCreateWithDefaultParameters(): void
+    public function testDefaultInstance(): void
     {
-        $instance = CurrencyAverageRatesService::create();
+        $instance = CurrencyAverageRatesService::new();
         self::assertInstanceOf(CurrencyAverageRatesService::class, $instance);
     }
 

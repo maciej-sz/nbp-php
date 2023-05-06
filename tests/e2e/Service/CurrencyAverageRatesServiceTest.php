@@ -14,7 +14,7 @@ class CurrencyAverageRatesServiceTest extends TestCase
 {
     public function testGetMonthsTableA(): void
     {
-        $currencyAverages = CurrencyAverageRatesService::create();
+        $currencyAverages = CurrencyAverageRatesService::new();
         $tablesIterable = $currencyAverages->getMonthTablesA(2011, 1);
         $tables = is_array($tablesIterable)
             ? $tablesIterable
@@ -26,7 +26,7 @@ class CurrencyAverageRatesServiceTest extends TestCase
 
     public function testGetMonthsTableB(): void
     {
-        $currencyAverages = CurrencyAverageRatesService::create();
+        $currencyAverages = CurrencyAverageRatesService::new();
         $tablesIterable = $currencyAverages->getMonthTablesB(2011, 1);
         $tables = is_array($tablesIterable)
             ? $tablesIterable
@@ -38,7 +38,7 @@ class CurrencyAverageRatesServiceTest extends TestCase
 
     public function testFromMonth(): void
     {
-        $currencyAverages = CurrencyAverageRatesService::create();
+        $currencyAverages = CurrencyAverageRatesService::new();
         $rates = $currencyAverages->fromMonth(2011, 2)->toArray();
 
         self::assertCount(1220, $rates);
@@ -47,7 +47,7 @@ class CurrencyAverageRatesServiceTest extends TestCase
 
     public function testFromDay(): void
     {
-        $currencyAverages = CurrencyAverageRatesService::create();
+        $currencyAverages = CurrencyAverageRatesService::new();
         $tables = $currencyAverages->fromDay('2011-03-02');
 
         $tableA = $tables->fromTable('A');
@@ -81,7 +81,7 @@ class CurrencyAverageRatesServiceTest extends TestCase
         self::expectException(TableNotFoundException::class);
         self::expectExceptionMessage('Table with letter \'B\' was not found');
 
-        $currencyAverages = CurrencyAverageRatesService::create();
+        $currencyAverages = CurrencyAverageRatesService::new();
         $tables = $currencyAverages->fromDay('2011-03-03');
 
         $tableA = $tables->fromTable('A');
@@ -92,7 +92,7 @@ class CurrencyAverageRatesServiceTest extends TestCase
 
     public function testFromDayBefore(): void
     {
-        $currencyAverages = CurrencyAverageRatesService::create();
+        $currencyAverages = CurrencyAverageRatesService::new();
         $tables = $currencyAverages->fromDayBefore('2011-03-09');
 
         $tableA = $tables->fromTable('A');
@@ -104,7 +104,7 @@ class CurrencyAverageRatesServiceTest extends TestCase
 
     public function testFromDayBeforeBreakOfYear(): void
     {
-        $currencyAverages = CurrencyAverageRatesService::create();
+        $currencyAverages = CurrencyAverageRatesService::new();
         $tables = $currencyAverages->fromDayBefore('2012-01-02');
 
         $tableA = $tables->fromTable('A');
@@ -116,7 +116,7 @@ class CurrencyAverageRatesServiceTest extends TestCase
 
     public function testFullExample(): void
     {
-        $currencyAverages = CurrencyAverageRatesService::create();
+        $currencyAverages = CurrencyAverageRatesService::new();
         $rate = $currencyAverages->fromDayBefore('2023-01-01')->fromTable('A')->getRate('USD');
 
         self::assertEquals(4.4018, $rate->getValue());

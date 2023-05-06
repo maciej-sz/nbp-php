@@ -11,6 +11,12 @@ use PHPUnit\Framework\TestCase;
 
 class FileContentsTransportTest extends TestCase
 {
+    public function testDefaultInstance(): void
+    {
+        $transport = FileContentsTransport::new();
+        self::assertInstanceOf(FileContentsTransport::class, $transport);
+    }
+
     public function testGet(): void
     {
         $fixturesRepository = new FixturesRepository();

@@ -13,8 +13,8 @@ class SymfonyHttpTransportTest extends TestCase
 {
     public function testDefaultInstance(): void
     {
-        self::expectNotToPerformAssertions();
-        new SymfonyHttpTransport();
+        $transport = SymfonyHttpTransport::new();
+        self::assertInstanceOf(SymfonyHttpTransport::class, $transport);
     }
 
     public function testGet(): void

@@ -14,14 +14,20 @@ class GuzzleTransport implements Transport
     /** @var Client */
     private $guzzleClient;
 
-    public function __construct(?Client $guzzleClient = null)
+    public function __construct(Client $guzzleClient)
+    {
+        $this->guzzleClient = $guzzleClient;
+    }
+
+    public static function new(?Client $guzzleClient = null): self
     {
         if (null === $guzzleClient) {
             $guzzleClient = new Client([
                 'base_uri' => NbpWebClient::BASE_URL,
             ]);
         }
-        $this->guzzleClient = $guzzleClient;
+
+        return new self($guzzleClient);
     }
 
     public function get(string $path): array

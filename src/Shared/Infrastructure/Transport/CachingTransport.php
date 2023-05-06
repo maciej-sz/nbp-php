@@ -14,28 +14,40 @@ class CachingTransport implements Transport
     /** @var Transport */
     private $backend;
     /** @var CacheItemPoolInterface */
-    private $cache;
+    private $cachePool;
     /** @var \DateInterval */
     private $lifetime;
 
     public function __construct(
         Transport $backend,
-        CacheItemPoolInterface $cache,
-        ?\DateInterval $lifetime = null
+        CacheItemPoolInterface $cachePool,
+        \DateInterval $lifetime
     ) {
         $this->backend = $backend;
-        $this->cache = $cache;
-        $this->lifetime = $lifetime ?: new \DateInterval(self::DEFAULT_LIFETIME);
+        $this->cachePool = $cachePool;
+        $this->lifetime = $lifetime;
+    }
+
+    public static function new(
+        Transport $backend,
+        CacheItemPoolInterface $cachePool,
+        ?\DateInterval $lifetime = null
+    ): self {
+        return new self(
+            $backend,
+            $cachePool,
+            $lifetime ?: new \DateInterval(self::DEFAULT_LIFETIME)
+        );
     }
 
     public function get(string $path): array
     {
         /** @var CacheItemInterface<array<array<mixed>>> $item */
-        $item = $this->cache->getItem($path);
+        $item = $this->cachePool->getItem($path);
         if (!$item->isHit()) {
             $item->set($this->backend->get($path));
             $item->expiresAfter($this->lifetime);
-            $this->cache->save($item);
+            $this->cachePool->save($item);
         }
 
         return $item->get();
