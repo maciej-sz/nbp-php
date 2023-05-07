@@ -23,6 +23,7 @@ jobs:
       enabled: true
     working_directory: ~/app
     steps:
+      - checkout
       - run: ./vendor/bin/php-cs-fixer --config=./.php-cs-fixer.dist.php fix --dry-run --diff --allow-risky=yes
       - run: ./vendor/bin/phpstan
 
@@ -31,6 +32,7 @@ jobs:
       enabled: true
     working_directory: ~/app
     steps:
+      - checkout
       - run: ./vendor/bin/phpunit -vv --testsuite unit,functional,integration,e2e
 
 workflows:
