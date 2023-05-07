@@ -4,7 +4,7 @@ API for accessing Polish National Bank (NBP - Narodowy Bank Polski) currency and
 
 [![Latest Version on Packagist][ico-version]][link-packagist]
 [![Build Status][ico-circleci]][link-circleci]
-![Build Status][ico-coverage]
+[![Build Status][ico-coverage]][link-coverage]
 [![No dependencies][ico-no-deps]][link-packagist]
 [![MIT License][ico-license]][link-license]
 
@@ -409,11 +409,12 @@ It is also equipped with a convenient factories which pick the most appropriate
 implementation depending on installed libraries and configuration.
 
 [ico-version]:https://img.shields.io/packagist/v/maciej-sz/nbp-php.svg?style=shield
-[ico-circleci]:https://circleci.com/gh/maciej-sz/nbp-php/tree/v2.svg?style=shield
+[ico-circleci]:https://circleci.com/gh/maciej-sz/nbp-php/tree/master.svg?style=shield
 [ico-coverage]:https://img.shields.io/badge/coverage-99%25-brightgreen
 [ico-no-deps]:https://img.shields.io/badge/dependencies-none-brightgreen.svg?style=shield
 [ico-license]:https://img.shields.io/badge/license-MIT-blue.svg?style=shield
 
 [link-packagist]:https://packagist.org/packages/maciej-sz/nbp-php
-[link-circleci]:https://circleci.com/gh/circleci/circleci-docs/?branch=teesloane-patch-5
+[link-circleci]:https://circleci.com/gh/maciej-sz/nbp-php/
+[link-coverage]:https://output.circle-artifacts.com/output/job/3c10e60b-e05d-4a55-808e-12cf4aded9bd/artifacts/0/var/coverage/html-report/index.html
 [link-license]:https://github.com/maciej-sz/nbp-php/blob/master/LICENSE
