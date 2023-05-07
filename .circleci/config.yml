@@ -4,7 +4,7 @@ executors:
   php81-cli:
     docker:
       - image: maszdockerid/php8.1-ci-cli-alpine:latest
-    working_directory: /app
+    working_directory: /root/app
 
 jobs:
 
@@ -22,7 +22,7 @@ jobs:
           paths:
             - ./vendor
       - persist_to_workspace:
-          root: /app
+          root: /root/app
           paths:
             - "*"
 
@@ -30,7 +30,7 @@ jobs:
     executor: php81-cli
     steps:
       - attach_workspace:
-          at: /app
+          at: /root/app
       - run: ./vendor/bin/php-cs-fixer --config=./.php-cs-fixer.dist.php fix --dry-run --diff --allow-risky=yes
       - run: ./vendor/bin/phpstan
 
@@ -38,7 +38,7 @@ jobs:
     executor: php81-cli
     steps:
       - attach_workspace:
-          at: /app
+          at: /root/app
       - run: ./vendor/bin/phpunit -vv --testsuite unit,functional,integration,e2e
 
 workflows:
