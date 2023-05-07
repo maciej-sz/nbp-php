@@ -24,6 +24,9 @@ jobs:
     working_directory: ~/app
     steps:
       - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "composer.json" }}
       - run: ./vendor/bin/php-cs-fixer --config=./.php-cs-fixer.dist.php fix --dry-run --diff --allow-risky=yes
       - run: ./vendor/bin/phpstan
 
@@ -33,6 +36,9 @@ jobs:
     working_directory: ~/app
     steps:
       - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "composer.json" }}
       - run: ./vendor/bin/phpunit -vv --testsuite unit,functional,integration,e2e
 
 workflows:
