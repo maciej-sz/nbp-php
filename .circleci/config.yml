@@ -25,3 +25,14 @@ jobs:
   test:
     steps:
       - run: ./vendor/bin/phpunit -vv --testsuite unit,functional,integration,e2e
+
+workflows:
+  all:
+    jobs:
+      - build
+      - analyse:
+          requires:
+            - build
+      - test:
+          requires:
+            - build
