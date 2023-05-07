@@ -18,11 +18,15 @@ jobs:
             - ./vendor
 
   analyse:
+    machine:
+      enabled: true
     steps:
       - run: ./vendor/bin/php-cs-fixer --config=./.php-cs-fixer.dist.php fix --dry-run --diff --allow-risky=yes
       - run: ./vendor/bin/phpstan
 
   test:
+    machine:
+      enabled: true
     steps:
       - run: ./vendor/bin/phpunit -vv --testsuite unit,functional,integration,e2e
 
