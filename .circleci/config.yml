@@ -1,24 +1,27 @@
 version: 2
 
 jobs:
+
   build:
     docker:
       - image: maszdockerid/php8.1-ci-cli-alpine:latest
     steps:
       - checkout
-
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "composer.json" }}
             - v1-dependencies-
-
       - run: composer install -n --prefer-dist
-
       - save_cache:
           key: v1-dependencies-{{ checksum "composer.json" }}
           paths:
             - ./vendor
 
+  analyse:
+    steps:
       - run: ./vendor/bin/php-cs-fixer --config=./.php-cs-fixer.dist.php fix --dry-run --diff --allow-risky=yes
       - run: ./vendor/bin/phpstan
+
+  test:
+    steps:
       - run: ./vendor/bin/phpunit -vv --testsuite unit,functional,integration,e2e
