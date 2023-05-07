@@ -1,0 +1,51 @@
+<?php
+
+declare(strict_types=1);
+
+namespace MaciejSz\Nbp\Shared\Infrastructure\Transport;
+
+use Psr\Cache\CacheItemPoolInterface;
+
+class CachingTransportFactory implements TransportFactory
+{
+    private const DEFAULT_LIFETIME_INTERVAL = 'PT1H';
+
+    /** @var CacheItemPoolInterface */
+    private $cachePool;
+    /** @var \DateInterval */
+    private $lifetime;
+    /** @var TransportFactory */
+    private $backendFactory;
+
+    public function __construct(
+        CacheItemPoolInterface $cachePool,
+        \DateInterval $lifetime,
+        TransportFactory $backendFactory
+    ) {
+        $this->cachePool = $cachePool;
+        $this->lifetime = $lifetime;
+        $this->backendFactory = $backendFactory;
+    }
+
+    public static function new(
+        CacheItemPoolInterface $cachePool,
+        ?\DateInterval $lifetime = null,
+        TransportFactory $backendFactory = null
+    ): self {
+        if (null === $lifetime) {
+            $lifetime = new \DateInterval(self::DEFAULT_LIFETIME_INTERVAL);
+        }
+        if (null === $backendFactory) {
+            $backendFactory = new HttpTransportFactory();
+        }
+
+        return new self($cachePool, $lifetime, $backendFactory);
+    }
+
+    public function create(string $baseUri): Transport
+    {
+        $backend = $this->backendFactory->create($baseUri);
+
+        return CachingTransport::new($backend, $this->cachePool, $this->lifetime);
+    }
+}

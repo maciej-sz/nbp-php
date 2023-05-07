@@ -1,0 +1,37 @@
+deptrac:
+  paths:
+    - ./src
+  exclude_files:
+  layers:
+    - name: Domain
+      collectors:
+        - type: className
+          value: .*\\Domain\\.*
+    - name: Infrastructure
+      collectors:
+        - type: bool
+          must:
+            - type: className
+              value: .*\\Infrastructure\\.*
+          must_not:
+            - type: layer
+              layer: Repository
+    - name: Repository
+      collectors:
+        - type: className
+          value: .*\\Infrastructure\\Repository\\.*
+    - name: Service
+      collectors:
+        - type: className
+          value: .*\\Service\\.*
+  ruleset:
+    Service:
+      - Infrastructure
+      - Repository
+    Repository:
+      - Domain
+      - Infrastructure
+    Infrastructure:
+      - Domain
+      - Infrastructure
+    Domain:

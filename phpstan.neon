@@ -1,0 +1,11 @@
+parameters:
+    level: 9
+    paths:
+        - src
+        - tests
+    excludePaths:
+        - *DEPRECATED_*
+    parallel:
+        maximumNumberOfProcesses: 4
+    stubFiles:
+        - stubs/Psr/Cache/CacheItemInterface.stub

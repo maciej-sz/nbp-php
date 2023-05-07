@@ -1,7 +1,7 @@
 {
     "name": "maciej-sz/nbp-php",
-    "description": "API for accessing NBP (Narodowy Bank Polski) currency rates in PHP",
-    "keywords": ["nbp", "currency", "money"],
+    "description": "API for accessing Polish National Bank (NBP - Narodowy Bank Polski) currency and commodities exchange rates",
+    "keywords": ["nbp", "currency", "money", "commodity", "gold", "exchange", "rate", "rates"],
     "type": "library",
     "license": "MIT",
     "authors": [
@@ -11,24 +11,39 @@
         }
     ],
     "autoload": {
-        "psr-0": {
-            "MaciejSz\\NbpPhp\\": "src/",
-            "MaciejSzUt\\NbpPhp\\": "tests/php-unit/src/",
-            "MaciejSzAt\\NbpPhp\\": "tests/behat/src/"
+        "psr-4": {
+            "MaciejSz\\Nbp\\": "src/"
+        },
+        "files": [
+            "src/Shared/Domain/DateFormatter/functions.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "MaciejSz\\Nbp\\Test\\Unit\\": "tests/unit/",
+            "MaciejSz\\Nbp\\Test\\Functional\\": "tests/functional/",
+            "MaciejSz\\Nbp\\Test\\Integration\\": "tests/integration/",
+            "MaciejSz\\Nbp\\Test\\E2e\\": "tests/e2e/",
+            "MaciejSz\\Nbp\\Test\\Fixtures\\": "tests/fixtures/src/"
         }
     },
-    "require-dev": {
-        "php": ">=7.2",
-        "behat/behat": "^3.4",
-        "behat/mink": "^1.7",
-        "doctrine/cache": "~1.6.2",
-        "guzzlehttp/guzzle": "^6.3",
-        "phpunit/phpunit": "^8.1"
-    },
     "require": {
-        "php": ">=7.0.0"
+        "php": ">=7.2||>=8.0",
+        "ext-json": "*"
+    },
+    "require-dev": {
+        "guzzlehttp/guzzle": "^6.3",
+        "phpunit/phpunit": "^9.6",
+        "qossmic/deptrac-shim": "^1.0",
+        "friendsofphp/php-cs-fixer": "^3.16",
+        "phpstan/phpstan": "^1.10",
+        "symfony/http-client": "^6.2",
+        "donatj/mock-webserver": "^2.6",
+        "symfony/cache": "^6.2",
+        "cache/integration-tests": "dev-master"
     },
     "suggest": {
-        "doctrine/cache": "Allows local cache"
+        "symfony/cache": "Allows local cache",
+        "symfony/http-foundation": "Symfony HTTP Transport layer"
     }
 }

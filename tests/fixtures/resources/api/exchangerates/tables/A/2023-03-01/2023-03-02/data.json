@@ -1,0 +1,46 @@
+[
+  {
+    "table": "A",
+    "no": "042/A/NBP/2023",
+    "effectiveDate": "2023-03-01",
+    "rates": [
+      {
+        "currency": "dolar amerykański",
+        "code": "USD",
+        "mid": 4.4
+      },
+      {
+        "currency": "euro",
+        "code": "EUR",
+        "mid": 4.7
+      },
+      {
+        "currency": "frank szwajcarski",
+        "code": "CHF",
+        "mid": 4.8
+      }
+    ]
+  },
+  {
+    "table": "A",
+    "no": "043/A/NBP/2023",
+    "effectiveDate": "2023-03-02",
+    "rates": [
+      {
+        "currency": "dolar amerykański",
+        "code": "USD",
+        "mid": 4.5
+      },
+      {
+        "currency": "euro",
+        "code": "EUR",
+        "mid": 4.8
+      },
+      {
+        "currency": "frank szwajcarski",
+        "code": "CHF",
+        "mid": 4.9
+      }
+    ]
+  }
+]
