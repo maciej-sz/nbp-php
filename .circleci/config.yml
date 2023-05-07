@@ -1,11 +1,15 @@
 version: 2
 
+executors:
+  php81-cli:
+    docker:
+      - image: maszdockerid/php8.1-ci-cli-alpine:latest
+    working_directory: /app
+
 jobs:
 
   build:
-    docker:
-      - image: maszdockerid/php8.1-ci-cli-alpine:latest
-    working_directory: ~/app
+    executor: php81-cli
     steps:
       - checkout
       - restore_cache:
@@ -17,26 +21,24 @@ jobs:
           key: v1-dependencies-{{ checksum "composer.json" }}
           paths:
             - ./vendor
-      - run: pwd
-      - run: ls -la
+      - persist_to_workspace:
+          root: /app
+          paths:
+            - *
 
   analyse:
-    machine:
-      enabled: true
-    working_directory: ~/app
+    executor: php81-cli
     steps:
-      - checkout
+      - attach_workspace:
+          at: /app
       - run: ./vendor/bin/php-cs-fixer --config=./.php-cs-fixer.dist.php fix --dry-run --diff --allow-risky=yes
       - run: ./vendor/bin/phpstan
 
   test:
-    machine:
-      enabled: true
-    working_directory: ~/app
+    executor: php81-cli
     steps:
-      - checkout
-      - run: pwd
-      - run: ls -la
+      - attach_workspace:
+          at: /app
       - run: ./vendor/bin/phpunit -vv --testsuite unit,functional,integration,e2e
 
 workflows:
