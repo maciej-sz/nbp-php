@@ -21,4 +21,4 @@ jobs:
 
       - run: ./vendor/bin/php-cs-fixer --config=./.php-cs-fixer.dist.php fix --dry-run --diff --allow-risky=yes
       - run: ./vendor/bin/phpstan
-      - run: ./vendor/bin/phpunit -d xdebug.mode=coverage vendor/bin/phpunit -vv --testsuite unit,functional,integration,e2e
+      - run: ./vendor/bin/phpunit -vv --testsuite unit,functional,integration,e2e
