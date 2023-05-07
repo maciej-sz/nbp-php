@@ -5,4 +5,5 @@
 /phpunit.xml.dist export-ignore
 /deptrac.yaml export-ignore
 /phpunit.xml.dist export-ignore
+/.circleci export-ignore
 /tests/ export-ignore
