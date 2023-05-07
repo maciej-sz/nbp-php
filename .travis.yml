@@ -17,4 +17,4 @@ before_script:
 script:
   - ./vendor/bin/php-cs-fixer --config=./.php-cs-fixer.dist.php fix --dry-run --diff --allow-risky=yes
   - ./vendor/bin/phpstan
-  - ./vendor/bin/phpunit
+  - php vendor/bin/phpunit -d xdebug.mode=coverage vendor/bin/phpunit -vv --testsuite unit,functional,integration,e2e
