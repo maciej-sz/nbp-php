@@ -3,12 +3,9 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/php:8.1-cli
+      - image: maszdockerid/php8.1-ci-cli-alpine:latest
     steps:
       - checkout
-
-      - run: sudo apt update
-      - run: sudo docker-php-ext-install zip intl
 
       - restore_cache:
           keys:
