@@ -27,6 +27,7 @@ jobs:
       - run: ./vendor/bin/phpunit -vv --testsuite unit,functional,integration,e2e
 
 workflows:
+  version: 2
   all:
     jobs:
       - build
