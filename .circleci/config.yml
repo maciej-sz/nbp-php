@@ -5,7 +5,7 @@ jobs:
   build:
     docker:
       - image: maszdockerid/php8.1-ci-cli-alpine:latest
-    working_directory: ~/app
+    working_directory: /app
     steps:
       - checkout
       - restore_cache:
@@ -21,24 +21,16 @@ jobs:
   analyse:
     machine:
       enabled: true
-    working_directory: ~/app
+    working_directory: /app
     steps:
-      - checkout
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "composer.json" }}
       - run: ./vendor/bin/php-cs-fixer --config=./.php-cs-fixer.dist.php fix --dry-run --diff --allow-risky=yes
       - run: ./vendor/bin/phpstan
 
   test:
     machine:
       enabled: true
-    working_directory: ~/app
+    working_directory: /app
     steps:
-      - checkout
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "composer.json" }}
       - run: ./vendor/bin/phpunit -vv --testsuite unit,functional,integration,e2e
 
 workflows:
