@@ -39,7 +39,9 @@ jobs:
     steps:
       - attach_workspace:
           at: /root/app
-      - run: ./vendor/bin/phpunit -vv --testsuite unit,functional,integration,e2e
+      - run: ./vendor/bin/phpunit -vv --coverage-html var/coverage/html-report --testsuite unit,functional,integration,e2e
+      - store_artifacts:
+          path: var/coverage/html-report
 
 workflows:
   version: 2.1
