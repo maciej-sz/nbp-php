@@ -381,12 +381,10 @@ In such cases it is suggested to use different transport. It can be achieved
 by replacing the TransportFactory of the NbpClient with your own implementation.
 
 ```php
-$customTransportFactory = new class() implements TransportFactory
-{
+$customTransportFactory = new class() implements TransportFactory {
     public function create(string $baseUri): Transport
     {
-        return new class() implements Transport
-        {
+        return new class() implements Transport {
             public function get(string $path): array
             {
                 echo "Requesting resource: {$path}" . PHP_EOL;
@@ -405,7 +403,6 @@ $customTransportFactory = new class() implements TransportFactory
 
                 return json_decode($output, true);
             }
-
         };
     }
 };
