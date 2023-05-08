@@ -45,5 +45,20 @@
     "suggest": {
         "psr/cache": "Allows local cache",
         "symfony/http-foundation": "Symfony HTTP Transport layer"
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit -vv --testsuite unit,functional,integration",
+        "test-all": "vendor/bin/phpunit -vv --testsuite unit,functional,integration,e2e",
+        "test-coverage": "php -d xdebug.mode=coverage vendor/bin/phpunit --coverage-html var/coverage/html-report -vv --testsuite unit,functional,integration",
+        "cs-check": "vendor/bin/php-cs-fixer --config=./.php-cs-fixer.dist.php fix --dry-run --diff --allow-risky=yes",
+        "phpstan-analyse": "vendor/bin/phpstan",
+        "analyse": [
+            "@cs-check",
+            "@phpstan-analyse"
+        ],
+        "pre-commit": [
+            "@analyse",
+            "@test-all"
+        ]
     }
 }
