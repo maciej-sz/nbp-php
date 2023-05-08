@@ -341,8 +341,8 @@ Gold rate from 2013-12-31 is 116.890000
 
 ## Using cache
 
-> Note that a library implementing PSR-6 has to be provided in order to use the caching
-abilities.
+_Note that a library implementing PSR-6 has to be provided in order to use the caching
+abilities._
 
 The `CachedTransport` class is a proxy for all other transport implementations.
 This transport has to be backed by another transport, as it relies on it to
@@ -370,7 +370,7 @@ $took = $end - $start;
 printf('Getting the rate took %F ms', $took * 1000);
 ```
 
-### Using different transport
+## Using custom transport
 
 The library uses Symfony HTTP Client and Guzzle as default transports.
 If those packages are not available then it falls back to the `file_get_contents`
@@ -378,7 +378,7 @@ method. This may not be ideal in some situations. Especially when there is no ac
 to HTTP client packages as may be the case when using PHP version prior to 8.0.
 
 In such cases it is suggested to use different transport. It can be achieved 
-by replacing the TransportFactory of the NbpClient with your own implementation.
+by replacing the `TransportFactory` of the `NbpClient` with your own implementation.
 
 ```php
 $customTransportFactory = new class() implements TransportFactory {
