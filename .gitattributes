@@ -6,4 +6,5 @@
 /deptrac.yaml export-ignore
 /phpunit.xml.dist export-ignore
 /.circleci export-ignore
+/examples/ export-ignore
 /tests/ export-ignore

@@ -43,7 +43,7 @@
         "cache/integration-tests": "dev-master"
     },
     "suggest": {
-        "symfony/cache": "Allows local cache",
+        "psr/cache": "Allows local cache",
         "symfony/http-foundation": "Symfony HTTP Transport layer"
     }
 }
