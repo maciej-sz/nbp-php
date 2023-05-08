@@ -56,7 +56,7 @@
             "@cs-check",
             "@phpstan-analyse"
         ],
-        "pre-commit": [
+        "pre-commit-checks": [
             "@analyse",
             "@test-all"
         ]

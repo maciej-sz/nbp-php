@@ -18,7 +18,7 @@ class HttpTransportFactory implements TransportFactory
 
     public function tryCreateSymfonyTransport(string $baseUri): ?Transport
     {
-        if (!class_exists(SymfonyHttpClient::class)) {
+        if (PHP_VERSION_ID < 80100 || !class_exists(SymfonyHttpClient::class)) {
             return null;
         }
 
@@ -29,7 +29,7 @@ class HttpTransportFactory implements TransportFactory
 
     public function tryCreateGuzzleTransport(string $baseUri): ?Transport
     {
-        if (!class_exists(GuzzleHttpClient::class)) {
+        if (PHP_VERSION_ID < 70205 || !class_exists(GuzzleHttpClient::class)) {
             return null;
         }
 
