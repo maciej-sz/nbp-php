@@ -11,6 +11,7 @@ use MaciejSz\Nbp\Shared\Domain\Exception\NoDataException;
 use MaciejSz\Nbp\Shared\Infrastructure\Repository\NbpRepository;
 use MaciejSz\Nbp\Shared\Infrastructure\Repository\NbpWebRepository;
 
+use function MaciejSz\Nbp\Shared\Domain\DateFormatter\compare_days;
 use function MaciejSz\Nbp\Shared\Domain\DateFormatter\ensure_date_obj;
 use function MaciejSz\Nbp\Shared\Domain\DateFormatter\ensure_mutable_date_obj;
 use function MaciejSz\Nbp\Shared\Domain\DateFormatter\extract_ym;
@@ -142,11 +143,10 @@ class CurrencyAverageRatesService
             $prevTable = null;
             foreach ($tables as $table) {
                 $nextTableDay = ensure_mutable_date_obj($table->getEffectiveDate())->modify('+1 day');
-
                 if (is_same_day($date, $nextTableDay)) {
                     return $table;
                 }
-                if (is_same_day($date, $table->getEffectiveDate())) {
+                if (compare_days($table->getEffectiveDate(), $date) >= 0) {
                     return $prevTable;
                 }
                 $prevTable = $table;

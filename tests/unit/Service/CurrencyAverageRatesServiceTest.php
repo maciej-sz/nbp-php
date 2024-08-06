@@ -331,4 +331,58 @@ class CurrencyAverageRatesServiceTest extends TestCase
 
         $service->fromDayBefore('2023-04-04')->fromTable('B');
     }
+
+    public function testFromDayBeforeWithDayGaps(): void
+    {
+        $rateA1 = $this->createStub(CurrencyAverageRate::class);
+
+        $tableA1 = $this->createStub(CurrencyAveragesTable::class);
+        $tableA1->method('getRates')->willReturn([$rateA1]);
+        $tableA1->method('getEffectiveDate')->willReturn(new \DateTimeImmutable('2024-07-26'));
+
+        $tableA2 = $this->createStub(CurrencyAveragesTable::class);
+        $tableA2->method('getEffectiveDate')->willReturn(new \DateTimeImmutable('2024-07-28'));
+
+        $repository = $this->createStub(NbpRepository::class);
+
+        $repository
+            ->method('getCurrencyAveragesTableA')
+            ->willReturnMap([
+                [2024, 7, [$tableA1, $tableA2]],
+            ])
+        ;
+
+        $service = new CurrencyAverageRatesService($repository);
+        self::assertSame(
+            [$rateA1],
+            $service->fromDayBefore('2024-07-28')->fromTable('A')->getRates()
+        );
+    }
+
+    public function testFromDayBeforeWithDayGapsOnBothSides(): void
+    {
+        $rateA1 = $this->createStub(CurrencyAverageRate::class);
+
+        $tableA1 = $this->createStub(CurrencyAveragesTable::class);
+        $tableA1->method('getRates')->willReturn([$rateA1]);
+        $tableA1->method('getEffectiveDate')->willReturn(new \DateTimeImmutable('2024-07-26'));
+
+        $tableA2 = $this->createStub(CurrencyAveragesTable::class);
+        $tableA2->method('getEffectiveDate')->willReturn(new \DateTimeImmutable('2024-07-30'));
+
+        $repository = $this->createStub(NbpRepository::class);
+
+        $repository
+            ->method('getCurrencyAveragesTableA')
+            ->willReturnMap([
+                [2024, 7, [$tableA1, $tableA2]],
+            ])
+        ;
+
+        $service = new CurrencyAverageRatesService($repository);
+        self::assertSame(
+            [$rateA1],
+            $service->fromDayBefore('2024-07-28')->fromTable('A')->getRates()
+        );
+    }
 }
