@@ -36,6 +36,7 @@ class FileContentsTransport implements Transport
             int $errline
         ) use (&$errorMessage): bool {
             $errorMessage = $errstr;
+
             return true;
         });
 
