@@ -6,7 +6,6 @@ namespace MaciejSz\Nbp\Test\Functional\Service;
 
 use donatj\MockWebServer\MockWebServer;
 use MaciejSz\Nbp\Service\CurrencyAverageRatesService;
-use MaciejSz\Nbp\Shared\Domain\Exception\NoDataException;
 use MaciejSz\Nbp\Shared\Domain\Exception\TableNotFoundException;
 use MaciejSz\Nbp\Shared\Infrastructure\Client\NbpWebClient;
 use MaciejSz\Nbp\Shared\Infrastructure\Repository\NbpWebRepository;

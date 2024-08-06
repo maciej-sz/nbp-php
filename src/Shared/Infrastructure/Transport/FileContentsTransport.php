@@ -34,8 +34,9 @@ class FileContentsTransport implements Transport
             string $errstr,
             string $errfile,
             int $errline
-        ) use (&$errorMessage) {
+        ) use (&$errorMessage): bool {
             $errorMessage = $errstr;
+            return true;
         });
 
         try {
@@ -46,7 +47,7 @@ class FileContentsTransport implements Transport
 
         if (false === $contents) {
             $code = 0;
-            if (mb_strpos((string)$errorMessage, '404 Not Found') !== false) {
+            if (mb_strpos((string) $errorMessage, '404 Not Found') !== false) {
                 $code = 404;
             }
             throw new TransportException("Cannot get contents from {$uri}", $code);

@@ -145,7 +145,8 @@ class CurrencyAverageRatesService
 
                 if (is_same_day($date, $nextTableDay)) {
                     return $table;
-                } elseif (is_same_day($date, $table->getEffectiveDate())) {
+                }
+                if (is_same_day($date, $table->getEffectiveDate())) {
                     return $prevTable;
                 }
                 $prevTable = $table;

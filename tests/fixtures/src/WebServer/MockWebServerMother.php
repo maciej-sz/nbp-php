@@ -10,6 +10,7 @@ use donatj\MockWebServer\Response;
 class MockWebServerMother
 {
     private const RESOURCES_DIR = __DIR__ . '/../../resources';
+
     public function create(): MockWebServer
     {
         $server = new MockWebServer();
