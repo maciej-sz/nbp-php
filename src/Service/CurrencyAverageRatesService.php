@@ -7,11 +7,12 @@ namespace MaciejSz\Nbp\Service;
 use MaciejSz\Nbp\CurrencyAverageRates\Domain\CurrencyAveragesTable;
 use MaciejSz\Nbp\CurrencyAverageRates\Infrastructure\Collection\RatesFlatCollection;
 use MaciejSz\Nbp\CurrencyAverageRates\Infrastructure\Collection\TablesDictionary;
-use MaciejSz\Nbp\Shared\Domain\Exception\TableNotFoundException;
+use MaciejSz\Nbp\Shared\Domain\Exception\NoDataException;
 use MaciejSz\Nbp\Shared\Infrastructure\Repository\NbpRepository;
 use MaciejSz\Nbp\Shared\Infrastructure\Repository\NbpWebRepository;
 
 use function MaciejSz\Nbp\Shared\Domain\DateFormatter\ensure_date_obj;
+use function MaciejSz\Nbp\Shared\Domain\DateFormatter\ensure_mutable_date_obj;
 use function MaciejSz\Nbp\Shared\Domain\DateFormatter\extract_ym;
 use function MaciejSz\Nbp\Shared\Domain\DateFormatter\is_same_day;
 use function MaciejSz\Nbp\Shared\Domain\DateFormatter\previous_month;
@@ -52,10 +53,15 @@ class CurrencyAverageRatesService
         $tableA = $this->findTableFromDate($date, $this->getMonthTablesA(...extract_ym($date)));
         $tableB = $this->findTableFromDate($date, $this->getMonthTablesB(...extract_ym($date)));
 
-        return new TablesDictionary([
-            CurrencyAveragesTable::A => $tableA,
-            CurrencyAveragesTable::B => $tableB,
-        ]);
+        $tables = [];
+        if (null !== $tableA) {
+            $tables[CurrencyAveragesTable::A] = $tableA;
+        }
+        if (null !== $tableB) {
+            $tables[CurrencyAveragesTable::B] = $tableB;
+        }
+
+        return new TablesDictionary($tables);
     }
 
     /**
@@ -78,21 +84,15 @@ class CurrencyAverageRatesService
             $tableB = $this->getLastTable($previousMonthTablesB);
         }
 
-        if (null === $tableA) {
-            throw new TableNotFoundException(
-                "Averages table A from day before {$date->format('Y-m-d')} has not been found"
-            );
+        $tables = [];
+        if (null !== $tableA) {
+            $tables[CurrencyAveragesTable::A] = $tableA;
         }
-        if (null === $tableB) {
-            throw new TableNotFoundException(
-                "Averages table B from day before {$date->format('Y-m-d')} has not been found"
-            );
+        if (null !== $tableB) {
+            $tables[CurrencyAveragesTable::B] = $tableB;
         }
 
-        return new TablesDictionary([
-            CurrencyAveragesTable::A => $tableA,
-            CurrencyAveragesTable::B => $tableB,
-        ]);
+        return new TablesDictionary($tables);
     }
 
     /**
@@ -118,10 +118,14 @@ class CurrencyAverageRatesService
     private function findTableFromDate($date, iterable $tables): ?CurrencyAveragesTable
     {
         $date = ensure_date_obj($date);
-        foreach ($tables as $table) {
-            if (is_same_day($date, $table->getEffectiveDate())) {
-                return $table;
+        try {
+            foreach ($tables as $table) {
+                if (is_same_day($date, $table->getEffectiveDate())) {
+                    return $table;
+                }
             }
+        } catch (NoDataException $e) {
+            return null;
         }
 
         return null;
@@ -134,12 +138,20 @@ class CurrencyAverageRatesService
     private function findTableFromDateBefore($date, iterable $tables): ?CurrencyAveragesTable
     {
         $date = ensure_date_obj($date);
-        $prevTable = null;
-        foreach ($tables as $table) {
-            if (is_same_day($date, $table->getEffectiveDate())) {
-                return $prevTable;
+        try {
+            $prevTable = null;
+            foreach ($tables as $table) {
+                $nextTableDay = ensure_mutable_date_obj($table->getEffectiveDate())->modify('+1 day');
+
+                if (is_same_day($date, $nextTableDay)) {
+                    return $table;
+                } elseif (is_same_day($date, $table->getEffectiveDate())) {
+                    return $prevTable;
+                }
+                $prevTable = $table;
             }
-            $prevTable = $table;
+        } catch (NoDataException $e) {
+            return null;
         }
 
         return null;
@@ -151,8 +163,12 @@ class CurrencyAverageRatesService
     private function getLastTable(iterable $tables): ?CurrencyAveragesTable
     {
         $last = null;
-        foreach ($tables as $table) {
-            $last = $table;
+        try {
+            foreach ($tables as $table) {
+                $last = $table;
+            }
+        } catch (NoDataException $e) {
+            return null;
         }
 
         return $last;

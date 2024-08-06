@@ -131,3 +131,13 @@ function ensure_date_obj($date): \DateTimeImmutable
         ? new \DateTimeImmutable($date->format('c'))
         : new \DateTimeImmutable($date);
 }
+
+/**
+ * @param string|\DateTimeInterface $date
+ */
+function ensure_mutable_date_obj($date): \DateTime
+{
+    return ($date instanceof \DateTimeInterface)
+        ? new \DateTime($date->format('c'))
+        : new \DateTime($date);
+}

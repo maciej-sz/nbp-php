@@ -27,9 +27,29 @@ class FileContentsTransport implements Transport
         $baseUri = trim($this->baseUri, '/');
         $path = trim($path, '/');
         $uri = "{$baseUri}/{$path}?format=json";
-        $contents = file_get_contents($uri);
+
+        $errorMessage = null;
+        set_error_handler(static function (
+            int $errno,
+            string $errstr,
+            string $errfile,
+            int $errline
+        ) use (&$errorMessage) {
+            $errorMessage = $errstr;
+        });
+
+        try {
+            $contents = file_get_contents($uri);
+        } finally {
+            restore_error_handler();
+        }
+
         if (false === $contents) {
-            throw new TransportException("Cannot get contents from {$uri}");
+            $code = 0;
+            if (mb_strpos((string)$errorMessage, '404 Not Found') !== false) {
+                $code = 404;
+            }
+            throw new TransportException("Cannot get contents from {$uri}", $code);
         }
         /** @var ?array<array<mixed>> $data */
         $data = json_decode($contents, true);

@@ -9,7 +9,7 @@ use MaciejSz\Nbp\Service\CurrencyAverageRatesService;
 $currencyAverages = CurrencyAverageRatesService::new();
 
 $eurRateFromApril4th = $currencyAverages
-    ->fromDay('2023-04-04')
+    ->fromDay('2024-08-05')
     ->fromTable('A')
     ->getRate('EUR')
 ;

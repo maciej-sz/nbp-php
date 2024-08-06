@@ -8,7 +8,7 @@ use MaciejSz\Nbp\Service\CurrencyAverageRatesService;
 
 $currencyAverages = CurrencyAverageRatesService::new();
 
-$aTablesFromMarch = $currencyAverages->getMonthTablesA(2023, 3);
+$aTablesFromMarch = $currencyAverages->getMonthTablesA(2024, 8);
 
 foreach ($aTablesFromMarch as $table) {
     foreach ($table->getRates() as $rate) {

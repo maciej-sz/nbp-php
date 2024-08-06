@@ -10,7 +10,7 @@ use MaciejSz\Nbp\Shared\Infrastructure\Client\Request\CurrencyAveragesTableARequ
 use MaciejSz\Nbp\Shared\Infrastructure\Transport\FileContentsTransport;
 use MaciejSz\Nbp\Shared\Infrastructure\Transport\Transport;
 use MaciejSz\Nbp\Shared\Infrastructure\Transport\TransportFactory;
-use MaciejSz\Nbp\Test\Fixtures\WebServer\MockWebServerFactory;
+use MaciejSz\Nbp\Test\Fixtures\WebServer\MockWebServerMother;
 use PHPUnit\Framework\TestCase;
 
 class NbpWebClientTest extends TestCase
@@ -20,7 +20,7 @@ class NbpWebClientTest extends TestCase
 
     public static function setUpBeforeClass(): void
     {
-        self::$server = (new MockWebServerFactory())->create();
+        self::$server = (new MockWebServerMother())->create();
         self::$server->start();
     }
 
