@@ -8,7 +8,7 @@ use donatj\MockWebServer\MockWebServer;
 use GuzzleHttp\Client;
 use MaciejSz\Nbp\Shared\Infrastructure\Transport\Exception\TransportException;
 use MaciejSz\Nbp\Shared\Infrastructure\Transport\GuzzleTransport;
-use MaciejSz\Nbp\Test\Fixtures\WebServer\MockWebServerFactory;
+use MaciejSz\Nbp\Test\Fixtures\WebServer\MockWebServerMother;
 use PHPUnit\Framework\TestCase;
 
 class GuzzleTransportTest extends TestCase
@@ -18,7 +18,7 @@ class GuzzleTransportTest extends TestCase
 
     public static function setUpBeforeClass(): void
     {
-        self::$server = (new MockWebServerFactory())->create();
+        self::$server = (new MockWebServerMother())->create();
         self::$server->start();
     }
 

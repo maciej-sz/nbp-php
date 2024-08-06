@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace MaciejSz\Nbp\Shared\Infrastructure\Client;
 
+use MaciejSz\Nbp\Shared\Domain\Exception\NoDataException;
 use MaciejSz\Nbp\Shared\Infrastructure\Client\Request\NbpClientRequest;
+use MaciejSz\Nbp\Shared\Infrastructure\Transport\Exception\TransportException;
 use MaciejSz\Nbp\Shared\Infrastructure\Transport\HttpTransportFactory;
 use MaciejSz\Nbp\Shared\Infrastructure\Transport\Transport;
 use MaciejSz\Nbp\Shared\Infrastructure\Transport\TransportFactory;
+use Symfony\Component\HttpClient\Exception\ClientException;
 
 final class NbpWebClient implements NbpClient
 {
@@ -34,6 +37,13 @@ final class NbpWebClient implements NbpClient
 
     public function send(NbpClientRequest $request): array
     {
-        return $this->transport->get($request->getPath());
+        try {
+            return $this->transport->get($request->getPath());
+        } catch (ClientException|TransportException $e) {
+            if ($e->getCode() === 404) {
+                throw new NoDataException("Data not found for {$request->getPath()}", 0, $e);
+            }
+            throw $e;
+        }
     }
 }

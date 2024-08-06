@@ -302,9 +302,9 @@ class CurrencyAverageRatesServiceTest extends TestCase
         $service = new CurrencyAverageRatesService($repository);
 
         self::expectException(TableNotFoundException::class);
-        self::expectExceptionMessage('Averages table A from day before 2023-04-04 has not been found');
+        self::expectExceptionMessage('Table with letter \'A\' was not found');
 
-        $service->fromDayBefore('2023-04-04');
+        $service->fromDayBefore('2023-04-04')->fromTable('A');
     }
 
     public function testFromDayBeforeInvalidTableB(): void
@@ -327,8 +327,8 @@ class CurrencyAverageRatesServiceTest extends TestCase
         $service = new CurrencyAverageRatesService($repository);
 
         self::expectException(TableNotFoundException::class);
-        self::expectExceptionMessage('Averages table B from day before 2023-04-04 has not been found');
+        self::expectExceptionMessage('Table with letter \'B\' was not found');
 
-        $service->fromDayBefore('2023-04-04');
+        $service->fromDayBefore('2023-04-04')->fromTable('B');
     }
 }

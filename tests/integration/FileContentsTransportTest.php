@@ -6,7 +6,7 @@ namespace MaciejSz\Nbp\Test\Integration;
 
 use donatj\MockWebServer\MockWebServer;
 use MaciejSz\Nbp\Shared\Infrastructure\Transport\FileContentsTransport;
-use MaciejSz\Nbp\Test\Fixtures\WebServer\MockWebServerFactory;
+use MaciejSz\Nbp\Test\Fixtures\WebServer\MockWebServerMother;
 use PHPUnit\Framework\TestCase;
 
 class FileContentsTransportTest extends TestCase
@@ -16,7 +16,7 @@ class FileContentsTransportTest extends TestCase
 
     public static function setUpBeforeClass(): void
     {
-        self::$server = (new MockWebServerFactory())->create();
+        self::$server = (new MockWebServerMother())->create();
         self::$server->start();
     }
 
