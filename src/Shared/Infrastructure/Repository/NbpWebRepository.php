@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace MaciejSz\Nbp\Shared\Infrastructure\Repository;
 
+use GuzzleHttp\Exception\ClientException;
 use MaciejSz\Nbp\CurrencyAverageRates\Infrastructure\Mapper\CurrencyAveragesTableMapper;
 use MaciejSz\Nbp\CurrencyTradingRates\Infrastructure\Mapper\CurrencyTradingTableMapper;
 use MaciejSz\Nbp\GoldRates\Infrastructure\Mapper\GoldRatesMapper;
 use MaciejSz\Nbp\Shared\Domain\Exception\InvalidDateException;
 use MaciejSz\Nbp\Shared\Infrastructure\Client\NbpClient;
 use MaciejSz\Nbp\Shared\Infrastructure\Client\NbpWebClient;
+use MaciejSz\Nbp\Shared\Infrastructure\Client\Request\CurrencyAveragesLastTableBRequest;
 use MaciejSz\Nbp\Shared\Infrastructure\Client\Request\CurrencyAveragesTableARequest;
 use MaciejSz\Nbp\Shared\Infrastructure\Client\Request\CurrencyAveragesTableBRequest;
 use MaciejSz\Nbp\Shared\Infrastructure\Client\Request\CurrencyTradingTableRequest;
@@ -77,10 +79,18 @@ final class NbpWebRepository implements NbpRepository
      */
     public function getCurrencyAveragesTableB(int $year, int $month): iterable
     {
-        $request = new CurrencyAveragesTableBRequest(...$this->getMonthRange($year, $month));
-        $results = $this->client->send($request);
-
-        yield from $this->hydrate($results, $this->currencyAveragesTableMapper);
+        try {
+            $request = new CurrencyAveragesTableBRequest(...$this->getMonthRange($year, $month));
+            $results = $this->client->send($request);
+            yield from $this->hydrate($results, $this->currencyAveragesTableMapper);
+        }
+        catch (ClientException $exception) {
+            if($exception->getCode() === 404) {
+                $request = new CurrencyAveragesLastTableBRequest();
+                $results = $this->client->send($request);
+                yield from $this->hydrate($results, $this->currencyAveragesTableMapper);
+            }
+        }
     }
 
     /**
