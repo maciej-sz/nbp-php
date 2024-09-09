@@ -31,7 +31,7 @@ class CachingTransportTest extends TestCase
         $cachePool
             ->expects(self::once())
             ->method('getItem')
-            ->with('/api/foo')
+            ->with(urlencode('/api/foo'))
             ->willReturn($cacheItem)
         ;
 
@@ -67,7 +67,7 @@ class CachingTransportTest extends TestCase
         $cachePool
             ->expects(self::once())
             ->method('getItem')
-            ->with('/api/foo')
+            ->with(urlencode('/api/foo'))
             ->willReturn($cacheItem)
         ;
 

@@ -63,7 +63,7 @@ class GoldRatesServiceWithCachingTest extends TestCase
         $cachePool
             ->expects(self::exactly(2))
             ->method('getItem')
-            ->with('/api/cenyzlota/2023-03-01/2023-03-31')
+            ->with(urlencode('/api/cenyzlota/2023-03-01/2023-03-31'))
             ->willReturn($cacheItem)
         ;
         $cachePool

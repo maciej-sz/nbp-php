@@ -13,6 +13,7 @@ use MaciejSz\Nbp\Shared\Infrastructure\Transport\TransportFactory;
 use PHPUnit\Framework\TestCase;
 use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
+use Symfony\Component\Cache\Adapter\ArrayAdapter;
 
 class CachingIntegrationTest extends TestCase
 {
@@ -58,7 +59,7 @@ class CachingIntegrationTest extends TestCase
         $cachePool
             ->expects(self::exactly(2))
             ->method('getItem')
-            ->with('/api/cenyzlota/2023-03-01/2023-03-31')
+            ->with(urlencode('/api/cenyzlota/2023-03-01/2023-03-31'))
             ->willReturn($cacheItem)
         ;
 
@@ -79,5 +80,37 @@ class CachingIntegrationTest extends TestCase
 
         self::assertSame(567.8, $service->fromDay('2023-03-04')->getValue());
         self::assertSame(567.8, $service->fromDay('2023-03-04')->getValue());
+    }
+
+    public function testWithConcreteCachingImplementation(): void
+    {
+        $mockRates = [
+            ['data' => '2023-03-04', 'cena' => 123.4],
+        ];
+
+        $cachePool = new ArrayAdapter();
+
+        $backendTransport = $this->createMock(Transport::class);
+        $backendTransport
+            ->expects(self::once())
+            ->method('get')
+            ->with('/api/cenyzlota/2023-03-01/2023-03-31')
+            ->willReturn($mockRates)
+        ;
+
+        $backendFactory = $this->createStub(TransportFactory::class);
+        $backendFactory->method('create')->willReturn($backendTransport);
+
+        $cachingTransportFactory = CachingTransportFactory::new(
+            $cachePool,
+            null,
+            $backendFactory
+        );
+        $client = NbpWebClient::new(null, $cachingTransportFactory);
+        $nbpRepository = NbpWebRepository::new($client);
+        $service = GoldRatesService::new($nbpRepository);
+
+        self::assertSame(123.4, $service->fromDay('2023-03-04')->getValue());
+        self::assertSame(123.4, $service->fromDay('2023-03-04')->getValue());
     }
 }
