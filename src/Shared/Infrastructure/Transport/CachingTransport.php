@@ -43,7 +43,7 @@ class CachingTransport implements Transport
     public function get(string $path): array
     {
         /** @var CacheItemInterface<array<array<mixed>>> $item */
-        $item = $this->cachePool->getItem($path);
+        $item = $this->cachePool->getItem(urlencode($path));
         if (!$item->isHit()) {
             $item->set($this->backend->get($path));
             $item->expiresAfter($this->lifetime);
