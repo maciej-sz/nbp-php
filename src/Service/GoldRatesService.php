@@ -25,10 +25,10 @@ class GoldRatesService
         $this->nbpRepository = $nbpRepository;
     }
 
-    public static function new(?NbpRepository $nbpRepository = null): self
+    public static function create(?NbpRepository $nbpRepository = null): self
     {
         if (null === $nbpRepository) {
-            $nbpRepository = NbpWebRepository::new();
+            $nbpRepository = NbpWebRepository::create();
         }
 
         return new self($nbpRepository);

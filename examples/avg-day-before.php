@@ -6,9 +6,9 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 use MaciejSz\Nbp\Service\CurrencyAverageRatesService;
 
-$currencyAverages = CurrencyAverageRatesService::new();
+$currencyAverages = CurrencyAverageRatesService::create();
 $eurRateFromBeforeJanuary2nd = $currencyAverages
-    ->fromDayBefore('2024-07-28')
+    ->fromDayBefore('2024-05-12')
     ->fromTable('A')
     ->getRate('EUR')
 ;

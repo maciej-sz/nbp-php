@@ -28,23 +28,29 @@
         }
     },
     "require": {
-        "php": ">=7.2||>=8.0",
+        "php": ">=8.0",
         "ext-json": "*"
     },
     "require-dev": {
-        "guzzlehttp/guzzle": "^6.3",
+        "guzzlehttp/guzzle": "^7.9",
         "phpunit/phpunit": "^9.6",
-        "qossmic/deptrac-shim": "^1.0",
+        "qossmic/deptrac": "^2.0",
         "friendsofphp/php-cs-fixer": "^3.16",
         "phpstan/phpstan": "^1.10",
-        "symfony/http-client": "^6.2",
         "donatj/mock-webserver": "^2.6",
-        "symfony/cache": "^6.2",
-        "cache/integration-tests": "dev-master"
+        "symfony/http-client": "^7.0",
+        "symfony/cache": "^7.0"
     },
     "suggest": {
         "psr/cache": "Allows local cache",
-        "symfony/http-foundation": "Symfony HTTP Transport layer"
+        "symfony/http-client": "Symfony HTTP Transport layer"
+    },
+    "extra": {
+        "symfony/cache-7": {
+            "require": {
+                "symfony/cache": "^7.0"
+            }
+        }
     },
     "scripts": {
         "test": "vendor/bin/phpunit -vv --testsuite unit,functional,integration",
@@ -59,6 +65,12 @@
         "pre-commit-checks": [
             "@analyse",
             "@test-all"
+        ],
+        "post-install-cmd": [
+            "@php php-version-deps-adjust.php"
+        ],
+        "post-update-cmd": [
+            "@php php-version-deps-adjust.php"
         ]
     }
 }

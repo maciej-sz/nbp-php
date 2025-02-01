@@ -27,10 +27,10 @@ class CachingTransportFactory implements TransportFactory
         $this->backendFactory = $backendFactory;
     }
 
-    public static function new(
+    public static function create(
         CacheItemPoolInterface $cachePool,
         ?\DateInterval $lifetime = null,
-        TransportFactory $backendFactory = null
+        ?TransportFactory $backendFactory = null
     ): self {
         if (null === $lifetime) {
             $lifetime = new \DateInterval(self::DEFAULT_LIFETIME_INTERVAL);
@@ -42,10 +42,10 @@ class CachingTransportFactory implements TransportFactory
         return new self($cachePool, $lifetime, $backendFactory);
     }
 
-    public function create(string $baseUri): Transport
+    public function make(string $baseUri): Transport
     {
-        $backend = $this->backendFactory->create($baseUri);
+        $backend = $this->backendFactory->make($baseUri);
 
-        return CachingTransport::new($backend, $this->cachePool, $this->lifetime);
+        return CachingTransport::create($backend, $this->cachePool, $this->lifetime);
     }
 }

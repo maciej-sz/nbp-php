@@ -6,7 +6,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 use MaciejSz\Nbp\Service\CurrencyAverageRatesService;
 
-$currencyAverages = CurrencyAverageRatesService::new();
+$currencyAverages = CurrencyAverageRatesService::create();
 
 $aTablesFromMarch = $currencyAverages->getMonthTablesA(2024, 8);
 

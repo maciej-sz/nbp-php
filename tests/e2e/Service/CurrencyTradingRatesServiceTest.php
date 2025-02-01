@@ -14,7 +14,7 @@ class CurrencyTradingRatesServiceTest extends TestCase
 {
     public function testGetMonthTables(): void
     {
-        $currencyTrading = CurrencyTradingRatesService::new();
+        $currencyTrading = CurrencyTradingRatesService::create();
         $tablesIterable = $currencyTrading->getMonthTables(2010, 2);
         $tables = is_array($tablesIterable)
             ? $tablesIterable
@@ -26,7 +26,7 @@ class CurrencyTradingRatesServiceTest extends TestCase
 
     public function testFromMonth(): void
     {
-        $currencyTrading = CurrencyTradingRatesService::new();
+        $currencyTrading = CurrencyTradingRatesService::create();
         $rates = $currencyTrading->fromMonth(2010, 2)->toArray();
 
         self::assertCount(280, $rates);
@@ -35,7 +35,7 @@ class CurrencyTradingRatesServiceTest extends TestCase
 
     public function testFromEffectiveDay(): void
     {
-        $currencyTrading = CurrencyTradingRatesService::new();
+        $currencyTrading = CurrencyTradingRatesService::create();
         $rate = $currencyTrading->fromEffectiveDay('2010-03-01')->getRate('USD');
 
         self::assertSame('2010-02-26', $rate->getTradingDate()->format('Y-m-d'));
@@ -49,13 +49,13 @@ class CurrencyTradingRatesServiceTest extends TestCase
         self::expectException(InvalidDateException::class);
         self::expectExceptionMessage('Rates table for effective date 2010-03-06 is not available');
 
-        $currencyTrading = CurrencyTradingRatesService::new();
+        $currencyTrading = CurrencyTradingRatesService::create();
         $currencyTrading->fromEffectiveDay('2010-03-06');
     }
 
     public function testFromTradingDay(): void
     {
-        $currencyTrading = CurrencyTradingRatesService::new();
+        $currencyTrading = CurrencyTradingRatesService::create();
         $rate = $currencyTrading->fromTradingDay('2010-04-01')->getRate('USD');
 
         self::assertSame('2010-04-01', $rate->getTradingDate()->format('Y-m-d'));
@@ -66,7 +66,7 @@ class CurrencyTradingRatesServiceTest extends TestCase
 
     public function testFromTradingDayFromNextMonth(): void
     {
-        $currencyTrading = CurrencyTradingRatesService::new();
+        $currencyTrading = CurrencyTradingRatesService::create();
         $rate = $currencyTrading->fromTradingDay('2010-04-30')->getRate('USD');
 
         self::assertSame('2010-04-30', $rate->getTradingDate()->format('Y-m-d'));
@@ -80,13 +80,13 @@ class CurrencyTradingRatesServiceTest extends TestCase
         self::expectException(InvalidDateException::class);
         self::expectExceptionMessage('Rates table for trading date 2010-05-15 is not available');
 
-        $currencyTrading = CurrencyTradingRatesService::new();
+        $currencyTrading = CurrencyTradingRatesService::create();
         $currencyTrading->fromTradingDay('2010-05-15');
     }
 
     public function testFullExample(): void
     {
-        $currencyAverages = CurrencyTradingRatesService::new();
+        $currencyAverages = CurrencyTradingRatesService::create();
         $rate = $currencyAverages->fromEffectiveDay('2022-12-30')->getRate('USD');
 
         self::assertEquals(4.3588, $rate->getBid());

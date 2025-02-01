@@ -11,9 +11,12 @@ use Symfony\Contracts\HttpClient\ResponseInterface;
 
 class SymfonyHttpTransportTest extends TestCase
 {
+    /**
+     * @requires PHP >= 8.1
+     */
     public function testDefaultInstance(): void
     {
-        $transport = SymfonyHttpTransport::new();
+        $transport = SymfonyHttpTransport::create();
         self::assertInstanceOf(SymfonyHttpTransport::class, $transport);
     }
 

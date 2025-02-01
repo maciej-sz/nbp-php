@@ -12,9 +12,9 @@ use Symfony\Component\Cache\Adapter\FilesystemAdapter as CachePoolAdapter;
 
 // 1) create repository backed by caching transport
 $cachePool = new CachePoolAdapter();
-$cachingTransportFactory = CachingTransportFactory::new($cachePool);
-$client = NbpWebClient::new(transportFactory: $cachingTransportFactory);
-$nbpRepository = NbpWebRepository::new($client);
+$cachingTransportFactory = CachingTransportFactory::create($cachePool);
+$client = NbpWebClient::create(transportFactory: $cachingTransportFactory);
+$nbpRepository = NbpWebRepository::create($client);
 
 // 2) create needed services using cache-backed repository:
 $goldRates = new GoldRatesService($nbpRepository);

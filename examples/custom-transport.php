@@ -11,7 +11,7 @@ use MaciejSz\Nbp\Shared\Infrastructure\Transport\Transport;
 use MaciejSz\Nbp\Shared\Infrastructure\Transport\TransportFactory;
 
 $customTransportFactory = new class() implements TransportFactory {
-    public function create(string $baseUri): Transport
+    public function make(string $baseUri): Transport
     {
         return new class() implements Transport {
             public function get(string $path): array
@@ -36,9 +36,9 @@ $customTransportFactory = new class() implements TransportFactory {
     }
 };
 
-$client = NbpWebClient::new(transportFactory: $customTransportFactory);
-$nbpRepository = NbpWebRepository::new($client);
-$goldRates = GoldRatesService::new($nbpRepository);
+$client = NbpWebClient::create(transportFactory: $customTransportFactory);
+$nbpRepository = NbpWebRepository::create($client);
+$goldRates = GoldRatesService::create($nbpRepository);
 
 $rate = $goldRates->fromDay('2022-01-03');
 

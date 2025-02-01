@@ -29,15 +29,15 @@ class CurrencyAverageRatesService_ForMissingTableBTest extends TestCase
         self::$server->start();
 
         $transportFactory = new class() implements TransportFactory {
-            public function create(string $baseUri): Transport
+            public function make(string $baseUri): Transport
             {
                 return new FileContentsTransport($baseUri);
             }
         };
 
-        $client = NbpWebClient::new(self::$server->getServerRoot(), $transportFactory);
-        $repository = NbpWebRepository::new($client);
-        self::$currencyRatesSvc = CurrencyAverageRatesService::new($repository);
+        $client = NbpWebClient::create(self::$server->getServerRoot(), $transportFactory);
+        $repository = NbpWebRepository::create($client);
+        self::$currencyRatesSvc = CurrencyAverageRatesService::create($repository);
     }
 
     public static function tearDownAfterClass(): void

@@ -23,7 +23,7 @@ class NbpWebRepositoryTest extends TestCase
 {
     public function testDefaultInstance(): void
     {
-        $instance = NbpWebRepository::new();
+        $instance = NbpWebRepository::create();
         self::assertInstanceOf(NbpWebRepository::class, $instance);
     }
 

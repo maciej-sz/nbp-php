@@ -19,7 +19,7 @@ class GuzzleTransport implements Transport
         $this->guzzleClient = $guzzleClient;
     }
 
-    public static function new(?Client $guzzleClient = null): self
+    public static function create(?Client $guzzleClient = null): self
     {
         if (null === $guzzleClient) {
             $guzzleClient = new Client([
@@ -42,9 +42,8 @@ class GuzzleTransport implements Transport
         /** @var ?array<array<mixed>> $data */
         $data = json_decode($response->getBody()->getContents(), true);
         if (null === $data) {
-            /** @var Uri $uri */
-            $uri = $this->guzzleClient->getConfig('base_uri');
-            $baseUri = rtrim($uri->__toString(), '/');
+            /** @var Uri $baseUri */
+            $baseUri = $this->guzzleClient->getConfig('base_uri');
             throw new TransportException("Cannot decode JSON data from {$baseUri}/{$path}");
         }
 

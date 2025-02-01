@@ -15,7 +15,7 @@ class CurrencyTradingRatesServiceTest extends TestCase
 {
     public function testDefaultInstance(): void
     {
-        $instance = CurrencyTradingRatesService::new();
+        $instance = CurrencyTradingRatesService::create();
         self::assertInstanceOf(CurrencyTradingRatesService::class, $instance);
     }
 

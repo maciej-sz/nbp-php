@@ -16,10 +16,13 @@ class HttpTransportFactoryTest extends TestCase
     public function testCreate(): void
     {
         $factory = new HttpTransportFactory();
-        $transport = $factory->create('https://dummy.restapiexample.com');
+        $transport = $factory->make('https://dummy.restapiexample.com');
         self::assertInstanceOf(Transport::class, $transport);
     }
 
+    /**
+     * @requires PHP >= 8.1
+     */
     public function testTryCreateSymfonyTransport(): void
     {
         $factory = new HttpTransportFactory();

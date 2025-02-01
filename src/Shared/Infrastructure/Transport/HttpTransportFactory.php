@@ -9,7 +9,7 @@ use Symfony\Component\HttpClient\HttpClient as SymfonyHttpClient;
 
 class HttpTransportFactory implements TransportFactory
 {
-    public function create(string $baseUri): Transport
+    public function make(string $baseUri): Transport
     {
         return $this->tryCreateSymfonyTransport($baseUri)
             ?? $this->tryCreateGuzzleTransport($baseUri)

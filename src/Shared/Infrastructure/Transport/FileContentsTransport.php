@@ -17,7 +17,7 @@ class FileContentsTransport implements Transport
         $this->baseUri = $baseUri;
     }
 
-    public static function new(string $baseUri = NbpWebClient::BASE_URL): self
+    public static function create(string $baseUri = NbpWebClient::BASE_URL): self
     {
         return new self($baseUri);
     }

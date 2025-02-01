@@ -10,7 +10,7 @@ class UnexpectedDataType extends \RuntimeException
         string $expectedType,
         string $actualType,
         int $code = 0,
-        \Throwable $previous = null
+        ?\Throwable $previous = null
     ) {
         parent::__construct("Expected {$expectedType}, got {$actualType}", $code, $previous);
     }

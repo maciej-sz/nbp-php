@@ -6,7 +6,7 @@ use MaciejSz\Nbp\Service\GoldRatesService;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-$goldRates = GoldRatesService::new();
+$goldRates = GoldRatesService::create();
 
 $goldRateFromJan2nd2014 = $goldRates->fromDay('2014-01-02');
 

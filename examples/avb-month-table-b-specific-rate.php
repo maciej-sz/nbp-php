@@ -7,7 +7,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 use MaciejSz\Nbp\Service\CurrencyAverageRatesService;
 use MaciejSz\Nbp\Shared\Domain\Exception\CurrencyCodeNotFoundException;
 
-$currencyAverages = CurrencyAverageRatesService::new();
+$currencyAverages = CurrencyAverageRatesService::create();
 
 $bTablesFromMarch = $currencyAverages->getMonthTablesB(2022, 3);
 

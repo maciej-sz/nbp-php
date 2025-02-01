@@ -28,7 +28,7 @@ class CachingTransport implements Transport
         $this->lifetime = $lifetime;
     }
 
-    public static function new(
+    public static function create(
         Transport $backend,
         CacheItemPoolInterface $cachePool,
         ?\DateInterval $lifetime = null

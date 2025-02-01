@@ -19,7 +19,7 @@ class GoldRatesServiceWithCachingTest extends TestCase
 {
     public function testGoldRatesWithCaching(): void
     {
-        $httpTransport = FileContentsTransport::new();
+        $httpTransport = FileContentsTransport::create();
         $proxyTransport = $this->createMock(Transport::class);
         $proxyTransport
             ->expects(self::once())
@@ -31,7 +31,7 @@ class GoldRatesServiceWithCachingTest extends TestCase
         ;
 
         $proxyTransportFactory = $this->createStub(TransportFactory::class);
-        $proxyTransportFactory->method('create')->willReturn($proxyTransport);
+        $proxyTransportFactory->method('make')->willReturn($proxyTransport);
 
         $cacheRegistry = new \ArrayObject();
         $cacheItem = $this->createMock(CacheItemInterface::class);
@@ -72,14 +72,14 @@ class GoldRatesServiceWithCachingTest extends TestCase
             ->with($cacheItem)
         ;
 
-        $cachingTransportFactory = CachingTransportFactory::new(
+        $cachingTransportFactory = CachingTransportFactory::create(
             $cachePool,
             new \DateInterval('PT1S'),
             $proxyTransportFactory
         );
-        $client = NbpWebClient::new(null, $cachingTransportFactory);
-        $nbpRepository = NbpWebRepository::new($client);
-        $goldRates = GoldRatesService::new($nbpRepository);
+        $client = NbpWebClient::create(null, $cachingTransportFactory);
+        $nbpRepository = NbpWebRepository::create($client);
+        $goldRates = GoldRatesService::create($nbpRepository);
 
         self::assertSame(259.79, $goldRates->fromDay('2023-03-03')->getValue());
         self::assertSame(259.79, $goldRates->fromDay('2023-03-03')->getValue());
