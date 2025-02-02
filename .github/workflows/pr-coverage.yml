@@ -6,6 +6,7 @@ on:
 
 env:
   PHP_VERSION: '8.3'
+  COMPOSER_NO_DEV: 0
 
 jobs:
   check-coverage:
@@ -47,7 +48,7 @@ jobs:
           ${{ runner.os }}-php-${{ env.PHP_VERSION }}-
 
     - name: Install dependencies
-      run: composer install --prefer-dist --no-progress --dev
+      run: composer install --prefer-dist --no-progress
 
     - name: Run test suites with coverage on PR branch
       run: |

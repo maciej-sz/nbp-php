@@ -38,8 +38,8 @@
         "friendsofphp/php-cs-fixer": "^3.16",
         "phpstan/phpstan": "^1.10",
         "donatj/mock-webserver": "^2.6",
-        "symfony/http-client": "^7.2",
-        "symfony/cache": "^7.2"
+        "symfony/http-client": "^6.4",
+        "symfony/cache": "^6.4"
     },
     "suggest": {
         "psr/cache": "Allows local cache",
