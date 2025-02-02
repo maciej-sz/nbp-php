@@ -38,13 +38,11 @@ jobs:
           ${{ runner.os }}-php-${{ matrix.php-version }}-
 
     - name: Adjust composer dependencies for older PHP versions
-      if: contains(matrix.php-version, '8.0, 8.1')
       run: |
         php php-version-deps-adjust.php
+        echo ${{ matrix.php-version }}
+        echo ${{ php-version }}
         composer update --no-progress --no-interaction
-
-    - name: Install dependencies
-      run: composer install --no-progress --no-interaction
 
     - name: Run test suites for older PHP versions
       if: contains(matrix.php-version, '8.0, 8.1, 8.2, 8.3')
