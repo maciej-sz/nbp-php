@@ -85,6 +85,7 @@ jobs:
         
         DESCRIPTION="Coverage: $COVERAGE_PR%. Change from main branch: $DIFF_DISPLAY% $EMOJI"
         
+        echo "COVERAGE_PERCENT=${COVERAGE_PR}" >> $GITHUB_ENV
         echo "COVERAGE_DESCRIPTION=${DESCRIPTION}" >> $GITHUB_ENV
         echo "COVERAGE_STATE=${STATE}" >> $GITHUB_ENV
 
@@ -100,3 +101,10 @@ jobs:
             "description": "${{ env.COVERAGE_DESCRIPTION }}",
             "target_url": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           }'
+
+    - name: Update Coverage percent info on the cloud KV storage
+      run: |
+        curl -X POST \
+          -H "Authorization: Bearer ${{ secrets.KVDB_WRITE_KEY }}" \
+          https://kvdb.io/${{ env.KVDB_WRITE_KEY }}/coverage \
+          -d '${{ env.COVERAGE_PERCENT }}'
