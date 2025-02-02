@@ -123,7 +123,7 @@ final class NbpWebRepository implements NbpRepository
 
     /**
      * @template T
-     * @param iterable<array<mixed>> $results
+     * @param iterable<array<array-key, mixed>> $results
      * @param TableMapper<T> $mapper
      * @return iterable<T>
      */

@@ -10,7 +10,7 @@ namespace MaciejSz\Nbp\Shared\Infrastructure\Mapper;
 interface TableMapper
 {
     /**
-     * @param array<mixed> $tableData
+     * @param array<array-key, mixed> $tableData
      * @return T
      */
     public function rawDataToDomainObject(array $tableData);

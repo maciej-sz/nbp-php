@@ -31,7 +31,7 @@ class CurrencyTradingRatesMapper
      *     no: string,
      *     tradingDate: string,
      *     effectiveDate: string,
-     *     rates: array<mixed>,
+     *     rates: array<array-key, mixed>,
      * } $tableData
      * @param array<
      *     array{
@@ -59,7 +59,7 @@ class CurrencyTradingRatesMapper
      *     no: string,
      *     tradingDate: string,
      *     effectiveDate: string,
-     *     rates: array<mixed>,
+     *     rates: array<array-key, mixed>,
      * } $tableData
      * @param array{
      *     currency: string,

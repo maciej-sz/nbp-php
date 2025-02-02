@@ -26,7 +26,7 @@ class CurrencyAverageRatesMapper
     }
 
     /**
-     * @param array{table: string, no: string, effectiveDate: string, rates: array<mixed>} $tableData
+     * @param array{table: string, no: string, effectiveDate: string, rates: array<array-key, mixed>} $tableData
      * @param array<array{currency: string, code: string, mid: float}> $rates
      * @return array<CurrencyAverageRate>
      */
@@ -41,7 +41,7 @@ class CurrencyAverageRatesMapper
     }
 
     /**
-     * @param array{table: string, no: string, effectiveDate: string, rates: array<mixed>} $tableData
+     * @param array{table: string, no: string, effectiveDate: string, rates: array<array-key, mixed>} $tableData
      * @param array{currency: string, code: string, mid: float} $rateData
      */
     public function rawDataToDomainObject(array $tableData, array $rateData): CurrencyAverageRate

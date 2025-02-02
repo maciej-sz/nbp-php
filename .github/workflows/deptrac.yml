@@ -1,4 +1,4 @@
-name: PHPStan
+name: Deptrac
 
 on:
   push:
@@ -10,7 +10,7 @@ env:
   PHP_VERSION: '8.3'
 
 jobs:
-  phpstan:
+  deptrac:
     runs-on: ubuntu-latest
 
     steps:
@@ -35,6 +35,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-${{ env.PHP_VERSION }}-
 
-      - name: Run PHPStan
+      - name: Run Deptrac
         run: |
-          vendor/bin/phpstan
+          vendor/bin/deptrac

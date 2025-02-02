@@ -42,7 +42,7 @@ class CachingTransport implements Transport
 
     public function get(string $path): array
     {
-        /** @var CacheItemInterface<array<array<mixed>>> $item */
+        /** @var CacheItemInterface<array<array<array-key, mixed>>> $item */
         $item = $this->cachePool->getItem($path);
         if (!$item->isHit()) {
             $item->set($this->backend->get($path));

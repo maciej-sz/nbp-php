@@ -8,13 +8,13 @@ use MaciejSz\Nbp\Shared\Domain\DateTimeBuilder;
 
 class ArrayDataAccess implements DataAccess
 {
-    /** @var array<mixed> */
+    /** @var array<array-key, mixed> */
     private $data;
     /** @var ?DateTimeBuilder */
     private $dateTimeBuilder;
 
     /**
-     * @param array<mixed> $data
+     * @param array<array-key, mixed> $data
      */
     public function __construct(array $data)
     {

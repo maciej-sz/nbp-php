@@ -39,7 +39,7 @@ class GuzzleTransport implements Transport
             ],
         ]);
 
-        /** @var ?array<array<mixed>> $data */
+        /** @var ?array<array<array-key, mixed>> $data */
         $data = json_decode($response->getBody()->getContents(), true);
         if (null === $data) {
             /** @var Uri $baseUri */
