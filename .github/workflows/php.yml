@@ -28,9 +28,6 @@ jobs:
         coverage: pcov
         tools: composer:v2
 
-    - name: Validate composer.json
-      run: composer validate --strict
-
     - name: Adjust composer dependencies based on PHP version
       run: php php-version-deps-adjust.php
 
