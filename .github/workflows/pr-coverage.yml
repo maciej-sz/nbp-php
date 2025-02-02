@@ -1,18 +1,12 @@
 name: PHP Tests
 
 on:
-  push:
-    branches: [ "master" ]
   pull_request:
     branches: [ "**" ]
 
 jobs:
   test:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        php-version: ['8.4']
 
     steps:
     - uses: actions/checkout@v3
@@ -20,38 +14,44 @@ jobs:
         ref: ${{ github.event.pull_request.head.sha }}
         token: ${{ secrets.GITHUB_TOKEN }}
 
+    - name: Indicate pending code coverage check
+      id: coverage-indicate
+      run: |
+        curl -X POST \
+          -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          -H "Accept: application/vnd.github.v3+json" \
+          https://api.github.com/repos/${{ github.repository }}/statuses/${{ github.event.pull_request.head.sha }} \
+          -d '{
+            "state": "pending",
+            "context": "Code Coverage",
+            "description": "Coverage: ?%",
+            "target_url": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          }'
+
     - name: Setup PHP
       uses: shivammathur/setup-php@v2
       with:
-        php-version: ${{ matrix.php-version }}
+        php-version: '8.4'
         extensions: mbstring, xml, json, xdebug, curl
         coverage: pcov
         tools: composer:v2
-
-    - name: Adjust composer dependencies for older PHP versions
-      run: php scripts/adjust-deps-for-older-php-versions.php
 
     - name: Cache Composer packages
       id: composer-cache
       uses: actions/cache@v3
       with:
         path: vendor
-        key: ${{ runner.os }}-php-${{ matrix.php-version }}-${{ hashFiles('**/composer.lock') }}
+        key: ${{ runner.os }}-php-${{ php-version }}-${{ hashFiles('**/composer.lock') }}
         restore-keys: |
-          ${{ runner.os }}-php-${{ matrix.php-version }}-
+          ${{ runner.os }}-php-${{ php-version }}-
 
-    - name: Run test suites for older PHP versions
-      if: matrix.php-version != '8.4'
-      run: composer run-script test-all
-
-    - name: Run test suites with coverage for latest PHP version
-      if: matrix.php-version == '8.4'
+    - name: Run test suites with coverage
       run: |
         mkdir -p var/coverage
         php -d xdebug.mode=coverage vendor/bin/phpunit --coverage-text --coverage-clover=var/coverage/clover.xml
 
-    - name: Extract Coverage and update GitHub status
-      if: matrix.php-version == '8.4' && success()
+    - name: Extract Coverage
+      if: success()
       id: coverage-gather
       run: |
         COVERAGE=$(php scripts/get-coverage.php var/coverage/clover.xml)
@@ -59,25 +59,10 @@ jobs:
         echo "COVERAGE_PERCENT=${COVERAGE}" >> $GITHUB_ENV
         echo "COVERAGE_STATUS=${STATUS}" >> $GITHUB_ENV
 
-    - name: Extract Coverage and update GitHub status
-      if: matrix.php-version == '8.4' && success()
+    - name: Update GitHub status with code coverage
+      if: success()
       id: coverage-send
-      run: |
-        HEADER_AUTH="Authorization: token ${{ secrets.GITHUB_TOKEN }}"
-        HEADER_ACCEPT="Accept: application/vnd.github.v3+json"
-        URL="https://api.github.com/repos/${{ github.repository }}/statuses/${{ github.event.pull_request.head.sha }}"
-        PAYLOAD='{
-            "state": "success",
-            "context": "PR Code Coverage Check",
-            "description": "Coverage: ${{ env.COVERAGE_PERCENT }}%",
-            "target_url": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          }' 
-        
-        echo "Sending"
-        echo $URL
-        echo $PAYLOAD
-        echo $COVERAGE
-        
+      run: |        
         curl -X POST \
           -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
           -H "Accept: application/vnd.github.v3+json" \
