@@ -28,12 +28,6 @@ jobs:
         coverage: pcov
         tools: composer:v2
 
-    - name: Adjust composer dependencies for older PHP versions
-      if: contains(matrix.php-version, '8.0, 8.1')
-      run: |
-        php php-version-deps-adjust.php
-        composer update --no-progress --no-interaction
-
     - name: Cache Composer packages
       id: composer-cache
       uses: actions/cache@v3
@@ -42,6 +36,12 @@ jobs:
         key: ${{ runner.os }}-php-${{ matrix.php-version }}-${{ hashFiles('**/composer.lock') }}
         restore-keys: |
           ${{ runner.os }}-php-${{ matrix.php-version }}-
+
+    - name: Adjust composer dependencies for older PHP versions
+      if: contains(matrix.php-version, '8.0, 8.1')
+      run: |
+        php php-version-deps-adjust.php
+        composer update --no-progress --no-interaction
 
     - name: Install dependencies
       run: composer install --no-progress --no-interaction
