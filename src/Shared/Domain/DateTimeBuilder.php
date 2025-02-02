@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace MaciejSz\Nbp\Shared\Domain;
 
-use MaciejSz\Nbp\Shared\Infrastructure\Validator\Validator;
+use MaciejSz\Nbp\Shared\Domain\Validator\Validator;
 
 class DateTimeBuilder
 {

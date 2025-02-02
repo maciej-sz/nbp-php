@@ -5,29 +5,30 @@ deptrac:
   layers:
     - name: Domain
       collectors:
-        - type: className
+        - type: classLike
           value: .*\\Domain\\.*
     - name: Infrastructure
       collectors:
         - type: bool
           must:
-            - type: className
+            - type: classLike
               value: .*\\Infrastructure\\.*
           must_not:
             - type: layer
-              layer: Repository
+              value: Repository
     - name: Repository
       collectors:
-        - type: className
+        - type: classLike
           value: .*\\Infrastructure\\Repository\\.*
     - name: Service
       collectors:
-        - type: className
+        - type: classLike
           value: .*\\Service\\.*
   ruleset:
     Service:
       - Infrastructure
       - Repository
+      - Domain
     Repository:
       - Domain
       - Infrastructure

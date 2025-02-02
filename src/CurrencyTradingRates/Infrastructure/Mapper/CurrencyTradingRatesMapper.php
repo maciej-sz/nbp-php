@@ -6,8 +6,8 @@ namespace MaciejSz\Nbp\CurrencyTradingRates\Infrastructure\Mapper;
 
 use MaciejSz\Nbp\CurrencyTradingRates\Domain\CurrencyTradingRate;
 use MaciejSz\Nbp\Shared\Infrastructure\Serializer\ArrayDataAccess;
-use MaciejSz\Nbp\Shared\Infrastructure\Validator\NbpNumericRateValidator;
-use MaciejSz\Nbp\Shared\Infrastructure\Validator\ThrowableValidator;
+use MaciejSz\Nbp\Shared\Domain\Validator\NbpNumericRateValidator;
+use MaciejSz\Nbp\Shared\Domain\Validator\ThrowableValidator;
 
 class CurrencyTradingRatesMapper
 {

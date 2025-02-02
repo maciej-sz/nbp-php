@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace MaciejSz\Nbp\Shared\Infrastructure\Validator;
+namespace MaciejSz\Nbp\Shared\Domain\Validator;
 
 /**
  * @template T

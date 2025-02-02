@@ -10,7 +10,7 @@ env:
   PHP_VERSION: '8.3'
 
 jobs:
-  cs-fixer:
+  phpstan:
     runs-on: ubuntu-latest
 
     steps:

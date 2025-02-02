@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace MaciejSz\Nbp\Test\Unit\Shared\Domain;
 
 use MaciejSz\Nbp\Shared\Domain\DateTimeBuilder;
-use MaciejSz\Nbp\Shared\Infrastructure\Validator\Validator;
+use MaciejSz\Nbp\Shared\Domain\Validator\Validator;
 use PHPUnit\Framework\TestCase;
 
 class DateBuilderTest extends TestCase

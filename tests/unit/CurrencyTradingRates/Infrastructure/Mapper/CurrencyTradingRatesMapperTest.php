@@ -6,8 +6,8 @@ namespace MaciejSz\Nbp\Test\Unit\CurrencyTradingRates\Infrastructure\Mapper;
 
 use MaciejSz\Nbp\CurrencyTradingRates\Domain\CurrencyTradingRate;
 use MaciejSz\Nbp\CurrencyTradingRates\Infrastructure\Mapper\CurrencyTradingRatesMapper;
-use MaciejSz\Nbp\Shared\Infrastructure\Validator\Exception\ValidationException;
-use MaciejSz\Nbp\Shared\Infrastructure\Validator\ThrowableValidator;
+use MaciejSz\Nbp\Shared\Domain\Validator\Exception\ValidationException;
+use MaciejSz\Nbp\Shared\Domain\Validator\ThrowableValidator;
 use MaciejSz\Nbp\Test\Fixtures\FixturesRepository;
 use PHPUnit\Framework\TestCase;
 
