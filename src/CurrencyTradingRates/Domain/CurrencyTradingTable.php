@@ -27,7 +27,7 @@ class CurrencyTradingTable
         string $tableNo,
         \DateTimeInterface $tradingDate,
         \DateTimeInterface $effectiveDate,
-        array $rates
+        array $rates,
     ) {
         $this->letter = $tableLetter;
         $this->no = $tableNo;

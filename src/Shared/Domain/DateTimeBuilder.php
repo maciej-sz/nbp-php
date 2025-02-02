@@ -20,7 +20,7 @@ class DateTimeBuilder
      */
     public function __construct(
         string $timezone = self::DEFAULT_TIMEZONE,
-        ?Validator $validator = null
+        ?Validator $validator = null,
     ) {
         $this->timezone = $timezone;
         $this->validator = $validator;

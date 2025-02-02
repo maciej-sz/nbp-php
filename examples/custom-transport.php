@@ -10,10 +10,10 @@ use MaciejSz\Nbp\Shared\Infrastructure\Repository\NbpWebRepository;
 use MaciejSz\Nbp\Shared\Infrastructure\Transport\Transport;
 use MaciejSz\Nbp\Shared\Infrastructure\Transport\TransportFactory;
 
-$customTransportFactory = new class() implements TransportFactory {
+$customTransportFactory = new class implements TransportFactory {
     public function make(string $baseUri): Transport
     {
-        return new class() implements Transport {
+        return new class implements Transport {
             public function get(string $path): array
             {
                 echo "Requesting resource: {$path}" . PHP_EOL;

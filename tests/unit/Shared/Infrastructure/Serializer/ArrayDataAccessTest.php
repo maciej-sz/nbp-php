@@ -34,7 +34,7 @@ class ArrayDataAccessTest extends TestCase
 
     public function testExtractStringObject(): void
     {
-        $dataAccess = new ArrayDataAccess(['foo' => new class() {
+        $dataAccess = new ArrayDataAccess(['foo' => new class {
             public function __toString()
             {
                 return __FUNCTION__;

@@ -35,7 +35,7 @@ final class NbpWebRepository implements NbpRepository
         NbpClient $client,
         ?CurrencyAveragesTableMapper $currencyAveragesTableMapper = null,
         ?CurrencyTradingTableMapper $currencyTradingTableMapper = null,
-        ?GoldRatesMapper $goldRatesMapper = null
+        ?GoldRatesMapper $goldRatesMapper = null,
     ) {
         if (null === $currencyAveragesTableMapper) {
             $currencyAveragesTableMapper = new CurrencyAveragesTableMapper();

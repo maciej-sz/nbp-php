@@ -19,7 +19,7 @@ class CurrencyAverageRate
         string $currencyName,
         string $currencyCode,
         float $value,
-        \DateTimeInterface $effectiveDate
+        \DateTimeInterface $effectiveDate,
     ) {
         $this->currencyName = $currencyName;
         $this->currencyCode = $currencyCode;

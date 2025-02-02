@@ -11,7 +11,7 @@ class ArrayDataAccess implements DataAccess
     /** @var array<mixed> */
     private $data;
     /** @var ?DateTimeBuilder */
-    private $dateTimeBuilder = null;
+    private $dateTimeBuilder;
 
     /**
      * @param array<mixed> $data

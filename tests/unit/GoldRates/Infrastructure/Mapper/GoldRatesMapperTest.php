@@ -27,7 +27,7 @@ class GoldRatesMapperTest extends TestCase
         self::expectException(ValidationException::class);
         self::expectExceptionMessage('Invalid value: 260.89');
 
-        $mockValidator = new class() implements ThrowableValidator {
+        $mockValidator = new class implements ThrowableValidator {
             public function validate($value): void
             {
                 assert(is_float($value));

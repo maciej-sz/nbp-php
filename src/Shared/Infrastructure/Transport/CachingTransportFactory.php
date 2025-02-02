@@ -20,7 +20,7 @@ class CachingTransportFactory implements TransportFactory
     public function __construct(
         CacheItemPoolInterface $cachePool,
         \DateInterval $lifetime,
-        TransportFactory $backendFactory
+        TransportFactory $backendFactory,
     ) {
         $this->cachePool = $cachePool;
         $this->lifetime = $lifetime;
@@ -30,7 +30,7 @@ class CachingTransportFactory implements TransportFactory
     public static function create(
         CacheItemPoolInterface $cachePool,
         ?\DateInterval $lifetime = null,
-        ?TransportFactory $backendFactory = null
+        ?TransportFactory $backendFactory = null,
     ): self {
         if (null === $lifetime) {
             $lifetime = new \DateInterval(self::DEFAULT_LIFETIME_INTERVAL);

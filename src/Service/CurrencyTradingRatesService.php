@@ -86,7 +86,7 @@ class CurrencyTradingRatesService
 
     private function findTableByTradingDate(
         \DateTimeInterface $tradingDate,
-        ?\DateTimeInterface $searchMonth = null
+        ?\DateTimeInterface $searchMonth = null,
     ): ?CurrencyTradingTable {
         if (null === $searchMonth) {
             $searchMonth = $tradingDate;
