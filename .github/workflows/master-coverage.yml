@@ -42,13 +42,13 @@ jobs:
       - name: Run test suites with coverage on main branch. Ignore test result for the coverage purpose.
         run: php -d xdebug.mode=coverage vendor/bin/phpunit --coverage-text --coverage-clover=var/coverage/clover-main.xml
 
-      - name: Extract coverage
+      - name: Extract coverage data
         run: |
           COVERAGE=$(php scripts/get-coverage.php var/coverage/clover-main.xml)
           COVERAGE_INT=${DIFF%%.*}
           
           if [ "COVERAGE_INT" -ge 90 ]; then
-            COLOR="green"
+            COLOR="#3fb911"
           elif [ "COVERAGE_INT" -ge 75 ]; then
             COLOR="yellow"
           elif [ "COVERAGE_INT" -ge 50 ]; then
@@ -60,7 +60,7 @@ jobs:
           echo "COVERAGE_PERCENT=${COVERAGE}" >> $GITHUB_ENV
           echo "COVERAGE_COLOR=${COLOR}" >> $GITHUB_ENV
 
-      - name: Update Coverage percent info on the cloud KV storage
+      - name: Update Coverage data info on the cloud KV storage
         run: |
           curl -X POST \
             -H "Authorization: Bearer ${{ secrets.KVDB_WRITE_KEY }}" \
