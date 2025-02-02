@@ -99,16 +99,16 @@ class CachingIntegrationTest extends TestCase
         ;
 
         $backendFactory = $this->createStub(TransportFactory::class);
-        $backendFactory->method('create')->willReturn($backendTransport);
+        $backendFactory->method('make')->willReturn($backendTransport);
 
-        $cachingTransportFactory = CachingTransportFactory::new(
+        $cachingTransportFactory = CachingTransportFactory::create(
             $cachePool,
             null,
             $backendFactory
         );
-        $client = NbpWebClient::new(null, $cachingTransportFactory);
-        $nbpRepository = NbpWebRepository::new($client);
-        $service = GoldRatesService::new($nbpRepository);
+        $client = NbpWebClient::create(null, $cachingTransportFactory);
+        $nbpRepository = NbpWebRepository::create($client);
+        $service = GoldRatesService::create($nbpRepository);
 
         self::assertSame(123.4, $service->fromDay('2023-03-04')->getValue());
         self::assertSame(123.4, $service->fromDay('2023-03-04')->getValue());
