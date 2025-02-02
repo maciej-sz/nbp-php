@@ -5,7 +5,7 @@ on:
     branches: [ "**" ]
 
 env:
-  PHP_VERSION: '8.4'
+  PHP_VERSION: '8.3'
 
 jobs:
   check-coverage:
