@@ -13,7 +13,6 @@ jobs:
       with:
         ref: ${{ github.event.pull_request.head.sha }}
         token: ${{ secrets.GITHUB_TOKEN }}
-        php-version: '8.4'
 
     - name: Indicate pending code coverage check
       id: coverage-indicate
@@ -32,7 +31,7 @@ jobs:
     - name: Setup PHP
       uses: shivammathur/setup-php@v2
       with:
-        php-version: ${{ php-version }}
+        php-version: '8.4'
         extensions: mbstring, xml, json, xdebug, curl
         coverage: pcov
         tools: composer:v2
