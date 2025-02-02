@@ -1,4 +1,4 @@
-name: PR Coverage
+name: PR Test Coverage
 
 on:
   pull_request:
@@ -25,7 +25,7 @@ jobs:
           https://api.github.com/repos/${{ github.repository }}/statuses/${{ github.event.pull_request.head.sha }} \
           -d '{
             "state": "pending",
-            "context": "Code Coverage",
+            "context": "Test Coverage",
             "description": "Coverage: ?%",
             "target_url": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           }'
@@ -92,7 +92,7 @@ jobs:
           https://api.github.com/repos/${{ github.repository }}/statuses/${{ github.event.pull_request.head.sha }} \
           -d '{
             "state": "${{ env.COVERAGE_STATE }}",
-            "context": "Code Coverage",
+            "context": "Test Coverage",
             "description": "${{ env.COVERAGE_DESCRIPTION }}",
             "target_url": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           }'

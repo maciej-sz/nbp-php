@@ -33,7 +33,7 @@ jobs:
         path: vendor
         key: ${{ runner.os }}-php-8.3-${{ hashFiles('**/composer.lock') }}
         restore-keys: |
-          ${{ runner.os }}-php-8.3-
+          ${{ runner.os }}-${{ env.PHP_VERSION }}-
 
     - name: Run PHP CS Fixer
       run: |
