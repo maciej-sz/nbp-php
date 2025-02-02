@@ -1,6 +1,8 @@
 name: PHP Tests
 
 on:
+  schedule:
+    - cron: 1 8 * * *
   push:
     branches: [ "master" ]
   pull_request:
@@ -15,7 +17,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-version: ['8.1', '8.2', '8.3', '8.4']
+        php-version: ['8.1', '8.2', '8.3', '8.4', '8.5']
 
     steps:
     - uses: actions/checkout@v3
@@ -48,3 +50,19 @@ jobs:
 
     - name: Run all test suites
       run: composer run-script test-all
+
+    - name: Update Coverage percent info on the cloud KV storage
+      if: success()
+      run: |
+        curl -X POST \
+          -H "Authorization: Bearer ${{ secrets.KVDB_WRITE_KEY }}" \
+          https://kvdb.io/${{ vars.KVDB_BUCKET }}/test-result-${{ matrix.php-version }} \
+          -d '{ "schemaVersion": 1, "label": "tests php ${{ matrix.php-version }}", "message": "passing", "color": "green" }'
+
+    - name: Update Coverage percent info on the cloud KV storage
+      if: failure()
+      run: |
+        curl -X POST \
+          -H "Authorization: Bearer ${{ secrets.KVDB_WRITE_KEY }}" \
+          https://kvdb.io/${{ vars.KVDB_BUCKET }}/test-result-${{ matrix.php-version }} \
+          -d '{ "schemaVersion": 1, "label": "tests php ${{ matrix.php-version }}", "message": "failing", "color": "red" }'
