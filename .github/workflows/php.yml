@@ -65,10 +65,10 @@ jobs:
       run: |
         HEADER_AUTH="Authorization: token ${{ secrets.GITHUB_TOKEN }}"
         HEADER_ACCEPT="Accept: application/vnd.github.v3+json"
-        URL="https://api.github.com/repos/${{ github.repository }}/statuses/${{ github.sha }}"
+        URL="https://api.github.com/repos/${{ github.repository }}/statuses/${{ github.event.pull_request.head.sha }}"
         PAYLOAD='{
             "state": "success",
-            "context": "Code Coverage",
+            "context": "PR Code Coverage Check",
             "description": "Coverage: ${{ env.COVERAGE_PERCENT }}%",
             "target_url": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           }' 
@@ -81,7 +81,7 @@ jobs:
         curl -X POST \
           -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
           -H "Accept: application/vnd.github.v3+json" \
-          https://api.github.com/repos/${{ github.repository }}/statuses/${{ github.sha }} \
+          https://api.github.com/repos/${{ github.repository }}/statuses/${{ github.event.pull_request.head.sha }} \
           -d '{
             "state": "success",
             "context": "Code Coverage",
