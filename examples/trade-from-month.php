@@ -6,7 +6,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 use MaciejSz\Nbp\Service\CurrencyTradingRatesService;
 
-$currencyTrading = CurrencyTradingRatesService::create();
+$currencyTrading = CurrencyTradingRatesService::new();
 
 $tradingRatesFromApril = $currencyTrading->fromMonth(2023, 4);
 

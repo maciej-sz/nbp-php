@@ -52,10 +52,10 @@ final class NbpWebRepository implements NbpRepository
         $this->goldRatesMapper = $goldRatesMapper;
     }
 
-    public static function create(?NbpClient $client = null): self
+    public static function new(?NbpClient $client = null): self
     {
         if (null === $client) {
-            $client = NbpWebClient::create();
+            $client = NbpWebClient::new();
         }
 
         return new self($client);

@@ -37,7 +37,7 @@ class CachingTransportTest extends TestCase
 
         $backend = $this->createMock(Transport::class);
 
-        $transportSut = CachingTransport::create($backend, $cachePool);
+        $transportSut = CachingTransport::new($backend, $cachePool);
         $fetchedItem = $transportSut->get('/api/foo');
         self::assertSame(['foo'], $fetchedItem);
     }
@@ -85,7 +85,7 @@ class CachingTransportTest extends TestCase
             ->willReturn(['uncached-foo'])
         ;
 
-        $transportSut = CachingTransport::create($backend, $cachePool);
+        $transportSut = CachingTransport::new($backend, $cachePool);
         $fetchedItem = $transportSut->get('/api/foo');
         self::assertSame(['cached-foo'], $fetchedItem);
     }

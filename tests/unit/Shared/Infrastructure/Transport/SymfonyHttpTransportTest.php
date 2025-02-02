@@ -16,7 +16,7 @@ class SymfonyHttpTransportTest extends TestCase
      */
     public function testDefaultInstance(): void
     {
-        $transport = SymfonyHttpTransport::create();
+        $transport = SymfonyHttpTransport::new();
         self::assertInstanceOf(SymfonyHttpTransport::class, $transport);
     }
 

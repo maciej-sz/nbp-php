@@ -16,7 +16,7 @@ class GuzzleTransportTest extends TestCase
 {
     public function testDefaultInstance(): void
     {
-        $transport = GuzzleTransport::create();
+        $transport = GuzzleTransport::new();
         self::assertInstanceOf(GuzzleTransport::class, $transport);
     }
 

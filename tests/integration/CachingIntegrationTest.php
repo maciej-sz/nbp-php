@@ -69,14 +69,14 @@ class CachingIntegrationTest extends TestCase
             ->with($cacheItem)
         ;
 
-        $cachingTransportFactory = CachingTransportFactory::create(
+        $cachingTransportFactory = CachingTransportFactory::new(
             $cachePool,
             null,
             $backendFactory
         );
-        $client = NbpWebClient::create(null, $cachingTransportFactory);
-        $nbpRepository = NbpWebRepository::create($client);
-        $service = GoldRatesService::create($nbpRepository);
+        $client = NbpWebClient::new(null, $cachingTransportFactory);
+        $nbpRepository = NbpWebRepository::new($client);
+        $service = GoldRatesService::new($nbpRepository);
 
         self::assertSame(567.8, $service->fromDay('2023-03-04')->getValue());
         self::assertSame(567.8, $service->fromDay('2023-03-04')->getValue());
@@ -101,14 +101,14 @@ class CachingIntegrationTest extends TestCase
         $backendFactory = $this->createStub(TransportFactory::class);
         $backendFactory->method('make')->willReturn($backendTransport);
 
-        $cachingTransportFactory = CachingTransportFactory::create(
+        $cachingTransportFactory = CachingTransportFactory::new(
             $cachePool,
             null,
             $backendFactory
         );
-        $client = NbpWebClient::create(null, $cachingTransportFactory);
-        $nbpRepository = NbpWebRepository::create($client);
-        $service = GoldRatesService::create($nbpRepository);
+        $client = NbpWebClient::new(null, $cachingTransportFactory);
+        $nbpRepository = NbpWebRepository::new($client);
+        $service = GoldRatesService::new($nbpRepository);
 
         self::assertSame(123.4, $service->fromDay('2023-03-04')->getValue());
         self::assertSame(123.4, $service->fromDay('2023-03-04')->getValue());

@@ -14,7 +14,7 @@ class GoldRatesServiceTest extends TestCase
 {
     public function testDefaultInstance(): void
     {
-        $service = GoldRatesService::create();
+        $service = GoldRatesService::new();
         self::assertInstanceOf(GoldRatesService::class, $service);
     }
 

@@ -35,9 +35,9 @@ class CurrencyAverageRatesService_ForMissingTableBTest extends TestCase
             }
         };
 
-        $client = NbpWebClient::create(self::$server->getServerRoot(), $transportFactory);
-        $repository = NbpWebRepository::create($client);
-        self::$currencyRatesSvc = CurrencyAverageRatesService::create($repository);
+        $client = NbpWebClient::new(self::$server->getServerRoot(), $transportFactory);
+        $repository = NbpWebRepository::new($client);
+        self::$currencyRatesSvc = CurrencyAverageRatesService::new($repository);
     }
 
     public static function tearDownAfterClass(): void

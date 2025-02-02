@@ -19,7 +19,7 @@ class GuzzleTransport implements Transport
         $this->guzzleClient = $guzzleClient;
     }
 
-    public static function create(?Client $guzzleClient = null): self
+    public static function new(?Client $guzzleClient = null): self
     {
         if (null === $guzzleClient) {
             $guzzleClient = new Client([

@@ -36,9 +36,9 @@ $customTransportFactory = new class implements TransportFactory {
     }
 };
 
-$client = NbpWebClient::create(transportFactory: $customTransportFactory);
-$nbpRepository = NbpWebRepository::create($client);
-$goldRates = GoldRatesService::create($nbpRepository);
+$client = NbpWebClient::new(transportFactory: $customTransportFactory);
+$nbpRepository = NbpWebRepository::new($client);
+$goldRates = GoldRatesService::new($nbpRepository);
 
 $rate = $goldRates->fromDay('2022-01-03');
 

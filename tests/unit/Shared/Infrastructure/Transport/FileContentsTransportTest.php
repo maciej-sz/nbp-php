@@ -13,7 +13,7 @@ class FileContentsTransportTest extends TestCase
 {
     public function testDefaultInstance(): void
     {
-        $transport = FileContentsTransport::create();
+        $transport = FileContentsTransport::new();
         self::assertInstanceOf(FileContentsTransport::class, $transport);
     }
 

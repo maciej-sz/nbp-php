@@ -14,14 +14,14 @@ class CachingTransportFactoryTest extends TestCase
     public function testDefaultInstance(): void
     {
         $cachePool = $this->createStub(CacheItemPoolInterface::class);
-        $factory = CachingTransportFactory::create($cachePool);
+        $factory = CachingTransportFactory::new($cachePool);
         self::assertInstanceOf(CachingTransportFactory::class, $factory);
     }
 
     public function testCreate(): void
     {
         $cachePool = $this->createStub(CacheItemPoolInterface::class);
-        $factory = CachingTransportFactory::create($cachePool);
+        $factory = CachingTransportFactory::new($cachePool);
         $transport = $factory->make('https://example.com');
         self::assertInstanceOf(CachingTransport::class, $transport);
     }
