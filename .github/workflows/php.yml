@@ -71,5 +71,6 @@ jobs:
         echo "Sending"
         echo $URL
         echo $PAYLOAD
+        echo $COVERAGE
         
-        curl -X POST -H $HEADER_AUTH -H $HEADER_ACCEPT $URL -d $PAYLOAD
+        curl -X POST -H $HEADER_AUTH -H $HEADER_ACCEPT $URL -d '$PAYLOAD'
