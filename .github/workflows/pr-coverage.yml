@@ -18,7 +18,6 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Indicate pending code coverage check
-      id: coverage-indicate
       run: |
         curl -X POST \
           -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
@@ -40,7 +39,6 @@ jobs:
         tools: composer:v2
 
     - name: Cache Composer packages
-      id: composer-cache
       uses: actions/cache@v3
       with:
         path: vendor
@@ -48,31 +46,53 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-php-${{ env.PHP_VERSION }}-
 
-    - name: Run test suites with coverage
+    - name: Run test suites with coverage on PR branch
       run: |
         mkdir -p var/coverage
-        php -d xdebug.mode=coverage vendor/bin/phpunit --coverage-text --coverage-clover=var/coverage/clover.xml
+        php -d xdebug.mode=coverage vendor/bin/phpunit --coverage-text --coverage-clover=var/coverage/clover-pr.xml
 
-    - name: Extract Coverage
+    - name: Checkout main branch
       if: success()
-      id: coverage-gather
       run: |
-        COVERAGE=$(php scripts/get-coverage.php var/coverage/clover.xml)
-        STATUS=$(if [ "$COVERAGE" -ge "95" ]; then echo "success"; else echo "failure"; fi)
-        echo "COVERAGE_PERCENT=${COVERAGE}" >> $GITHUB_ENV
-        echo "COVERAGE_STATUS=${STATUS}" >> $GITHUB_ENV
+        git fetch origin master
+        git checkout master
+
+    - name: Run test suites with coverage on main branch
+      if: success()
+      run: |
+        mkdir -p var/coverage
+        php -d xdebug.mode=coverage vendor/bin/phpunit --coverage-text --coverage-clover=var/coverage/clover-main.xml
+
+    - name: Extract coverage
+      if: success()
+      run: |
+        COVERAGE_PR=$(php scripts/get-coverage.php var/coverage/clover-pr.xml)
+        COVERAGE_MAIN=$(php scripts/get-coverage.php var/coverage/clover-main.xml)
+        DIFF=$(echo "$COVERAGE_PR - $COVERAGE_MAIN" | bc)
+        DIFF_DISPLAY=$DIFF
+        if [ $(echo "$DIFF >= 0" | bc) -eq 1 ]; then
+            STATE="success"
+            EMOJI="✅"
+            DIFF_DISPLAY="+$DIFF"
+        else
+            STATE="failure"
+            EMOJI="❌"
+        fi
+        
+        DESCRIPTION="Coverage: $COVERAGE_PR%. Change from main branch: $DIFF_DISPLAY% $EMOJI"
+        
+        echo "COVERAGE_DESCRIPTION=${DESCRIPTION}" >> $GITHUB_ENV
+        echo "COVERAGE_STATE=${STATE}" >> $GITHUB_ENV
 
     - name: Update GitHub status with code coverage
-      if: success()
-      id: coverage-send
       run: |        
         curl -X POST \
           -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
           -H "Accept: application/vnd.github.v3+json" \
           https://api.github.com/repos/${{ github.repository }}/statuses/${{ github.event.pull_request.head.sha }} \
           -d '{
-            "state": "success",
+            "state": "${{ env.COVERAGE_STATE }}",
             "context": "Code Coverage",
-            "description": "Coverage: ${{ env.COVERAGE_PERCENT }}%",
+            "description": "${{ env.COVERAGE_DESCRIPTION }}",
             "target_url": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           }'
