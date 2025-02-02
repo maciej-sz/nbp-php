@@ -40,8 +40,8 @@ jobs:
     - name: Adjust composer dependencies for older PHP versions
       run: |
         php php-version-deps-adjust.php
-        echo ${{ matrix.php-version }}
-        echo ${{ php-version }}
+        echo "${{ matrix.php-version }}"
+        echo "${{ php-version }}"
         composer update --no-progress --no-interaction
 
     - name: Run test suites for older PHP versions
