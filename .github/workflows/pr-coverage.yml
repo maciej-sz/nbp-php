@@ -46,6 +46,9 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-php-${{ env.PHP_VERSION }}-
 
+    - name: Install dependencies
+      run: composer install --prefer-dist --no-progress --dev
+
     - name: Run test suites with coverage on PR branch
       run: |
         cp scripts/get-coverage.php var/coverage/

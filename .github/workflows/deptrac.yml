@@ -35,6 +35,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-${{ env.PHP_VERSION }}-
 
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress --dev
+
       - name: Run Deptrac
         run: |
           vendor/bin/deptrac
