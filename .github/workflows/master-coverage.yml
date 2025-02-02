@@ -5,6 +5,8 @@ on:
     - cron: 0 8 * * *
   push:
     branches: [ "master" ]
+  workflow_dispatch:
+    inputs: {}
 
 env:
   PHP_VERSION: '8.3'

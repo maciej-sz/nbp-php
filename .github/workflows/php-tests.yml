@@ -7,6 +7,8 @@ on:
     branches: [ "master" ]
   pull_request:
     branches: [ "**" ]
+  workflow_dispatch:
+    inputs: {}
 
 env:
   COMPOSER_NO_DEV: 0
