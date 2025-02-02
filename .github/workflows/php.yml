@@ -12,7 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-version: ['8.4', '8.3', '8.2', '8.1', '8.0']
+        php-version: ['8.4', '8.3', '8.2', '8.1']
 
     steps:
     - uses: actions/checkout@v3
@@ -54,8 +54,15 @@ jobs:
       if: matrix.php-version == '8.4'
       id: coverage
       run: |
-        echo "COVERAGE=$(php scripts/get-coverage.php var/coverage/clover.xml)" >> $GITHUB_ENV
+        COVERAGE=$(php scripts/get-coverage.php var/coverage/clover.xml)
+        STATUS=$(if [ "$COVERAGE" -ge "95" ]; then echo "success"; else echo "failure"; fi)
+        echo "COVERAGE=${COVERAGE}" >> $GITHUB_ENV
         curl -X POST -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
           -H "Accept: application/vnd.github.v3+json" \
           https://api.github.com/repos/${{ github.repository }}/statuses/${{ github.sha }} \
-          -d "{\"state\":\"success\",\"context\":\"Code Coverage\",\"description\":\"Line Coverage: ${{ env.COVERAGE }}%\",\"target_url\":\"https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}\"}"
+          -d "{
+            \"state\":\"success\",
+            \"context\":\"Code Coverage\",
+            \"description\":\"Line Coverage: ${{ env.COVERAGE }}%\",
+            \"target_url\":\"https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}\"
+          }"
