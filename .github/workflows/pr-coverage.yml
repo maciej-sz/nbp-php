@@ -48,7 +48,7 @@ jobs:
 
     - name: Run test suites with coverage on PR branch
       run: |
-        mkdir -p var/coverage
+        cp scripts/get-coverage.php var/coverage/
         php -d xdebug.mode=coverage vendor/bin/phpunit --coverage-text --coverage-clover=var/coverage/clover-pr.xml
 
     - name: Checkout main branch
@@ -57,17 +57,15 @@ jobs:
         git fetch origin master
         git checkout master
 
-    - name: Run test suites with coverage on main branch
+    - name: Run test suites with coverage on main branch. Ignore test result for the coverage purpose.
       if: success()
-      run: |
-        mkdir -p var/coverage
-        php -d xdebug.mode=coverage vendor/bin/phpunit --coverage-text --coverage-clover=var/coverage/clover-main.xml || true
+      run: php -d xdebug.mode=coverage vendor/bin/phpunit --coverage-text --coverage-clover=var/coverage/clover-main.xml || true
 
     - name: Extract coverage
       if: success()
       run: |
-        COVERAGE_PR=$(php scripts/get-coverage.php var/coverage/clover-pr.xml)
-        COVERAGE_MAIN=$(php scripts/get-coverage.php var/coverage/clover-main.xml)
+        COVERAGE_PR=$(php var/coverage/get-coverage.php var/coverage/clover-pr.xml)
+        COVERAGE_MAIN=$(php var/coverage/get-coverage.php var/coverage/clover-main.xml)
         DIFF=$(echo "$COVERAGE_PR - $COVERAGE_MAIN" | bc)
         DIFF_DISPLAY=$DIFF
         if [ $(echo "$DIFF >= 0" | bc) -eq 1 ]; then
