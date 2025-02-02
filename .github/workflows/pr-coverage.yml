@@ -106,5 +106,5 @@ jobs:
       run: |
         curl -X POST \
           -H "Authorization: Bearer ${{ secrets.KVDB_WRITE_KEY }}" \
-          https://kvdb.io/${{ env.KVDB_WRITE_KEY }}/coverage \
+          https://kvdb.io/${{ vars.KVDB_WRITE_KEY }}/coverage \
           -d '${{ env.COVERAGE_PERCENT }}'
