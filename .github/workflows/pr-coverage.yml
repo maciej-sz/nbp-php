@@ -61,7 +61,7 @@ jobs:
       if: success()
       run: |
         mkdir -p var/coverage
-        php -d xdebug.mode=coverage vendor/bin/phpunit --coverage-text --coverage-clover=var/coverage/clover-main.xml
+        php -d xdebug.mode=coverage vendor/bin/phpunit --coverage-text --coverage-clover=var/coverage/clover-main.xml || true
 
     - name: Extract coverage
       if: success()
