@@ -68,10 +68,12 @@ jobs:
         COVERAGE_MAIN=$(php var/coverage/get-coverage.php var/coverage/clover-main.xml)
         DIFF=$(echo "$COVERAGE_PR - $COVERAGE_MAIN" | bc)
         DIFF_DISPLAY=$DIFF
+        if [ $(echo "$DIFF > 0" | bc) -eq 1 ]; then
+            DIFF_DISPLAY="+$DIFF"
+        fi
         if [ $(echo "$DIFF >= 0" | bc) -eq 1 ]; then
             STATE="success"
             EMOJI="✅"
-            DIFF_DISPLAY="+$DIFF"
         else
             STATE="failure"
             EMOJI="❌"
