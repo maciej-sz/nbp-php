@@ -25,8 +25,11 @@ jobs:
       with:
         php-version: ${{ matrix.php-version }}
         extensions: mbstring, xml, json, xdebug, curl
-        coverage: none
+        coverage: pcov
         tools: composer:v2
+
+    - name: Adjust composer dependencies based on PHP version
+      run: php php-version-deps-adjust.php
 
     - name: Validate composer.json
       run: composer validate --strict
@@ -43,5 +46,7 @@ jobs:
     - name: Install dependencies
       run: composer install --prefer-dist --no-progress
 
-    - name: Run test suite
-      run: composer run-script test-coverage
+    - name: Run test suite with coverage
+      run: |
+        composer run-script test-coverage
+        codecov -f var/coverage/html-report/index.html
