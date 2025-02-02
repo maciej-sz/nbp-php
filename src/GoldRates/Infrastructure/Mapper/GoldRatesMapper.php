@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace MaciejSz\Nbp\GoldRates\Infrastructure\Mapper;
 
 use MaciejSz\Nbp\GoldRates\Domain\GoldRate;
-use MaciejSz\Nbp\Shared\Infrastructure\Mapper\TableMapper;
-use MaciejSz\Nbp\Shared\Infrastructure\Serializer\ArrayDataAccess;
 use MaciejSz\Nbp\Shared\Domain\Validator\NbpNumericRateValidator;
 use MaciejSz\Nbp\Shared\Domain\Validator\ThrowableValidator;
+use MaciejSz\Nbp\Shared\Infrastructure\Mapper\TableMapper;
+use MaciejSz\Nbp\Shared\Infrastructure\Serializer\ArrayDataAccess;
 
 /**
  * @implements TableMapper<GoldRate>
