@@ -28,11 +28,11 @@ jobs:
         coverage: pcov
         tools: composer:v2
 
-    - name: Adjust composer dependencies based on PHP version
-      run: php php-version-deps-adjust.php
-
     - name: Validate composer.json
       run: composer validate --strict
+
+    - name: Adjust composer dependencies based on PHP version
+      run: php php-version-deps-adjust.php
 
     - name: Cache Composer packages
       id: composer-cache
