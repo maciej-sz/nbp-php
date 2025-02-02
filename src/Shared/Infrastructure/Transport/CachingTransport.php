@@ -21,7 +21,7 @@ class CachingTransport implements Transport
     public function __construct(
         Transport $backend,
         CacheItemPoolInterface $cachePool,
-        \DateInterval $lifetime
+        \DateInterval $lifetime,
     ) {
         $this->backend = $backend;
         $this->cachePool = $cachePool;
@@ -31,7 +31,7 @@ class CachingTransport implements Transport
     public static function new(
         Transport $backend,
         CacheItemPoolInterface $cachePool,
-        ?\DateInterval $lifetime = null
+        ?\DateInterval $lifetime = null,
     ): self {
         return new self(
             $backend,
@@ -42,7 +42,7 @@ class CachingTransport implements Transport
 
     public function get(string $path): array
     {
-        /** @var CacheItemInterface<array<array<mixed>>> $item */
+        /** @var CacheItemInterface<array<array<array-key, mixed>>> $item */
         $item = $this->cachePool->getItem(urlencode($path));
         if (!$item->isHit()) {
             $item->set($this->backend->get($path));

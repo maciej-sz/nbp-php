@@ -7,7 +7,7 @@ namespace MaciejSz\Nbp\Shared\Infrastructure\Transport;
 interface Transport
 {
     /**
-     * @return array<array<mixed>>
+     * @return array<array<array-key, mixed>>
      */
     public function get(string $path): array;
 }

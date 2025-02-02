@@ -33,7 +33,7 @@ class FileContentsTransport implements Transport
             int $errno,
             string $errstr,
             string $errfile,
-            int $errline
+            int $errline,
         ) use (&$errorMessage): bool {
             $errorMessage = $errstr;
 
@@ -53,7 +53,7 @@ class FileContentsTransport implements Transport
             }
             throw new TransportException("Cannot get contents from {$uri}", $code);
         }
-        /** @var ?array<array<mixed>> $data */
+        /** @var ?array<array<array-key, mixed>> $data */
         $data = json_decode($contents, true);
         if (null === $data) {
             throw new TransportException("Cannot decode JSON data from {$uri}");

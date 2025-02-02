@@ -6,5 +6,5 @@ namespace MaciejSz\Nbp\Shared\Infrastructure\Transport;
 
 interface TransportFactory
 {
-    public function create(string $baseUri): Transport;
+    public function make(string $baseUri): Transport;
 }

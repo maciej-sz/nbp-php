@@ -27,7 +27,7 @@ class CurrencyAveragesTable
         string $letter,
         string $no,
         \DateTimeInterface $effectiveDate,
-        array $rates
+        array $rates,
     ) {
         $this->letter = $letter;
         $this->no = $no;

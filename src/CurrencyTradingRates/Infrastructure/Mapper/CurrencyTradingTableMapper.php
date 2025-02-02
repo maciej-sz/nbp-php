@@ -30,7 +30,7 @@ class CurrencyTradingTableMapper implements TableMapper
      *     no: string,
      *     tradingDate: string,
      *     effectiveDate: string,
-     *     rates: array<mixed>,
+     *     rates: array<array-key, mixed>,
      * } $tableData
      */
     public function rawDataToDomainObject(array $tableData): CurrencyTradingTable

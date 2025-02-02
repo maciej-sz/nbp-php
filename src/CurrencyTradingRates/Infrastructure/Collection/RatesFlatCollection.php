@@ -70,7 +70,7 @@ final class RatesFlatCollection implements \IteratorAggregate
 
     private function fulfillsConditions(
         CurrencyTradingTable $table,
-        CurrencyTradingRate $rate
+        CurrencyTradingRate $rate,
     ): bool {
         foreach ($this->conditions as $predicate) {
             if (!$predicate($table, $rate)) {

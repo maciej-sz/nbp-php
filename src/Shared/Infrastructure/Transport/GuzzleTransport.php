@@ -39,12 +39,11 @@ class GuzzleTransport implements Transport
             ],
         ]);
 
-        /** @var ?array<array<mixed>> $data */
+        /** @var ?array<array<array-key, mixed>> $data */
         $data = json_decode($response->getBody()->getContents(), true);
         if (null === $data) {
-            /** @var Uri $uri */
-            $uri = $this->guzzleClient->getConfig('base_uri');
-            $baseUri = rtrim($uri->__toString(), '/');
+            /** @var Uri $baseUri */
+            $baseUri = $this->guzzleClient->getConfig('base_uri');
             throw new TransportException("Cannot decode JSON data from {$baseUri}/{$path}");
         }
 

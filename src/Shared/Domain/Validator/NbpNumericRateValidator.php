@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace MaciejSz\Nbp\Shared\Infrastructure\Validator;
+namespace MaciejSz\Nbp\Shared\Domain\Validator;
 
-use MaciejSz\Nbp\Shared\Infrastructure\Validator\Exception\ValidationException;
+use MaciejSz\Nbp\Shared\Domain\Validator\Exception\ValidationException;
 
 /**
  * @implements Validator<mixed>

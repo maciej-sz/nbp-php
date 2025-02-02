@@ -1,0 +1,98 @@
+name: PR Test Coverage
+
+on:
+  pull_request:
+    branches: [ "**" ]
+
+env:
+  PHP_VERSION: '8.3'
+
+jobs:
+  check-coverage:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        ref: ${{ github.event.pull_request.head.sha }}
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Indicate pending code coverage check
+      run: |
+        curl -X POST \
+          -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          -H "Accept: application/vnd.github.v3+json" \
+          https://api.github.com/repos/${{ github.repository }}/statuses/${{ github.event.pull_request.head.sha }} \
+          -d '{
+            "state": "pending",
+            "context": "Test Coverage",
+            "description": "Coverage: ?%",
+            "target_url": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          }'
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ env.PHP_VERSION }}
+        extensions: mbstring, xml, json, xdebug, curl
+        coverage: pcov
+        tools: composer:v2
+
+    - name: Cache Composer packages
+      uses: actions/cache@v3
+      with:
+        path: vendor
+        key: ${{ runner.os }}-php-${{ env.PHP_VERSION }}-${{ hashFiles('**/composer.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-php-${{ env.PHP_VERSION }}-
+
+    - name: Run test suites with coverage on PR branch
+      run: |
+        cp scripts/get-coverage.php var/coverage/
+        php -d xdebug.mode=coverage vendor/bin/phpunit --coverage-text --coverage-clover=var/coverage/clover-pr.xml
+
+    - name: Checkout main branch
+      if: success()
+      run: |
+        git fetch origin master
+        git checkout master
+
+    - name: Run test suites with coverage on main branch. Ignore test result for the coverage purpose.
+      if: success()
+      run: php -d xdebug.mode=coverage vendor/bin/phpunit --coverage-text --coverage-clover=var/coverage/clover-main.xml || true
+
+    - name: Extract coverage
+      if: success()
+      run: |
+        COVERAGE_PR=$(php var/coverage/get-coverage.php var/coverage/clover-pr.xml)
+        COVERAGE_MAIN=$(php var/coverage/get-coverage.php var/coverage/clover-main.xml)
+        DIFF=$(echo "$COVERAGE_PR - $COVERAGE_MAIN" | bc)
+        DIFF_DISPLAY=$DIFF
+        if [ $(echo "$DIFF > 0" | bc) -eq 1 ]; then
+            DIFF_DISPLAY="+$DIFF"
+        fi
+        if [ $(echo "$DIFF >= 0" | bc) -eq 1 ]; then
+            STATE="success"
+            EMOJI="✅"
+        else
+            STATE="failure"
+            EMOJI="❌"
+        fi
+        
+        DESCRIPTION="Coverage: $COVERAGE_PR%. Change from main branch: $DIFF_DISPLAY% $EMOJI"
+        
+        echo "COVERAGE_DESCRIPTION=${DESCRIPTION}" >> $GITHUB_ENV
+        echo "COVERAGE_STATE=${STATE}" >> $GITHUB_ENV
+
+    - name: Update GitHub status with code coverage
+      run: |        
+        curl -X POST \
+          -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          -H "Accept: application/vnd.github.v3+json" \
+          https://api.github.com/repos/${{ github.repository }}/statuses/${{ github.event.pull_request.head.sha }} \
+          -d '{
+            "state": "${{ env.COVERAGE_STATE }}",
+            "context": "Test Coverage",
+            "description": "${{ env.COVERAGE_DESCRIPTION }}",
+            "target_url": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          }'

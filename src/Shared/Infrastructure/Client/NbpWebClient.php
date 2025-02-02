@@ -26,11 +26,11 @@ final class NbpWebClient implements NbpClient
 
     public static function new(
         ?string $baseUri = null,
-        ?TransportFactory $transportFactory = null
+        ?TransportFactory $transportFactory = null,
     ): self {
         $baseUri = $baseUri ?: self::BASE_URL;
         $transportFactory = $transportFactory ?: new HttpTransportFactory();
-        $transport = $transportFactory->create($baseUri);
+        $transport = $transportFactory->make($baseUri);
 
         return new self($transport);
     }

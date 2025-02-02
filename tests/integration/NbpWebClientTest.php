@@ -31,8 +31,8 @@ class NbpWebClientTest extends TestCase
 
     public function testCurrencyTablesUsingTransportFactory(): void
     {
-        $factory = new class() implements TransportFactory {
-            public function create(string $baseUri = NbpWebClient::BASE_URL): Transport
+        $factory = new class implements TransportFactory {
+            public function make(string $baseUri = NbpWebClient::BASE_URL): Transport
             {
                 return new FileContentsTransport($baseUri);
             }

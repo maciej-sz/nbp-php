@@ -28,8 +28,8 @@ class CurrencyAverageRatesService_ForMissingTableBTest extends TestCase
         self::$server = (new MockWebServerMother())->create202408WithOnlyTableA();
         self::$server->start();
 
-        $transportFactory = new class() implements TransportFactory {
-            public function create(string $baseUri): Transport
+        $transportFactory = new class implements TransportFactory {
+            public function make(string $baseUri): Transport
             {
                 return new FileContentsTransport($baseUri);
             }

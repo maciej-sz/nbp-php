@@ -37,7 +37,7 @@ class GuzzleTransportTest extends TestCase
         ;
 
         $clientMockBuilder = $this->getMockBuilder(Client::class);
-        $clientMockBuilder->addMethods(['get']);
+        $clientMockBuilder->onlyMethods(['get']);
         $client = $clientMockBuilder->getMock();
         $client
             ->expects(self::once())
@@ -66,7 +66,7 @@ class GuzzleTransportTest extends TestCase
         ;
 
         $clientMockBuilder = $this->getMockBuilder(Client::class);
-        $clientMockBuilder->onlyMethods(['getConfig'])->addMethods(['get']);
+        $clientMockBuilder->onlyMethods(['getConfig', 'get']);
         $client = $clientMockBuilder->getMock();
         $client
             ->expects(self::once())
@@ -78,7 +78,7 @@ class GuzzleTransportTest extends TestCase
         $uri
             ->expects(self::once())
             ->method('__toString')
-            ->willReturn('https://www.example.com/')
+            ->willReturn('https://www.example.com')
         ;
 
         $client

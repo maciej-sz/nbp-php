@@ -35,7 +35,7 @@ final class NbpWebRepository implements NbpRepository
         NbpClient $client,
         ?CurrencyAveragesTableMapper $currencyAveragesTableMapper = null,
         ?CurrencyTradingTableMapper $currencyTradingTableMapper = null,
-        ?GoldRatesMapper $goldRatesMapper = null
+        ?GoldRatesMapper $goldRatesMapper = null,
     ) {
         if (null === $currencyAveragesTableMapper) {
             $currencyAveragesTableMapper = new CurrencyAveragesTableMapper();
@@ -123,7 +123,7 @@ final class NbpWebRepository implements NbpRepository
 
     /**
      * @template T
-     * @param iterable<array<mixed>> $results
+     * @param iterable<array<array-key, mixed>> $results
      * @param TableMapper<T> $mapper
      * @return iterable<T>
      */

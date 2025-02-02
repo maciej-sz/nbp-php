@@ -25,7 +25,7 @@ class CurrencyAveragesTableMapper implements TableMapper
     }
 
     /**
-     * @param array{table: string, no: string, effectiveDate: string, rates: array<mixed>} $tableData
+     * @param array{table: string, no: string, effectiveDate: string, rates: array<array-key, mixed>} $tableData
      */
     public function rawDataToDomainObject(array $tableData): CurrencyAveragesTable
     {

@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace MaciejSz\Nbp\Test\Unit\GoldRates\Infrastructure\Mapper;
 
 use MaciejSz\Nbp\GoldRates\Infrastructure\Mapper\GoldRatesMapper;
-use MaciejSz\Nbp\Shared\Infrastructure\Validator\Exception\ValidationException;
-use MaciejSz\Nbp\Shared\Infrastructure\Validator\ThrowableValidator;
+use MaciejSz\Nbp\Shared\Domain\Validator\Exception\ValidationException;
+use MaciejSz\Nbp\Shared\Domain\Validator\ThrowableValidator;
 use MaciejSz\Nbp\Test\Fixtures\FixturesRepository;
 use PHPUnit\Framework\TestCase;
 
@@ -27,7 +27,7 @@ class GoldRatesMapperTest extends TestCase
         self::expectException(ValidationException::class);
         self::expectExceptionMessage('Invalid value: 260.89');
 
-        $mockValidator = new class() implements ThrowableValidator {
+        $mockValidator = new class implements ThrowableValidator {
             public function validate($value): void
             {
                 assert(is_float($value));

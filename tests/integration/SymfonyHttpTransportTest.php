@@ -28,7 +28,9 @@ class SymfonyHttpTransportTest extends TestCase
 
     public function testMakeRequest(): void
     {
-        $httpClient = HttpClient::createForBaseUri(self::$server->getServerRoot());
+        $server = self::$server;
+        $serverRoot = $server->getServerRoot();
+        $httpClient = HttpClient::createForBaseUri($serverRoot);
         $transport = new SymfonyHttpTransport($httpClient);
         /** @var array<array{no: string}> $result */
         $result = $transport->get('/api/exchangerates/tables/A/2023-03-01/2023-03-02');

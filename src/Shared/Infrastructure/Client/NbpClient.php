@@ -9,7 +9,7 @@ use MaciejSz\Nbp\Shared\Infrastructure\Client\Request\NbpClientRequest;
 interface NbpClient
 {
     /**
-     * @return array<array<mixed>>
+     * @return array<array<array-key, mixed>>
      */
     public function send(NbpClientRequest $request): array;
 }

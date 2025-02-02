@@ -5,7 +5,9 @@
     <php>
         <ini name="display_errors" value="1"/>
         <ini name="error_reporting" value="-1"/>
+        <ini name="xdebug.mode" value="coverage"/>
         <server name="SHELL_VERBOSITY" value="-1"/>
+        <server name="XDEBUG_MODE" value="coverage"/>
     </php>
 
     <testsuites>
@@ -16,7 +18,7 @@
             <directory>tests/functional</directory>
         </testsuite>
         <testsuite name="integration">
-            <directory>tests/integration</directory>
+            <directory phpVersion="8.1.0" phpVersionOperator=">=">tests/integration</directory>
         </testsuite>
         <testsuite name="e2e">
             <directory>tests/e2e</directory>

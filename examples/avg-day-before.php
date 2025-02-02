@@ -8,7 +8,7 @@ use MaciejSz\Nbp\Service\CurrencyAverageRatesService;
 
 $currencyAverages = CurrencyAverageRatesService::new();
 $eurRateFromBeforeJanuary2nd = $currencyAverages
-    ->fromDayBefore('2024-07-28')
+    ->fromDayBefore('2024-05-12')
     ->fromTable('A')
     ->getRate('EUR')
 ;

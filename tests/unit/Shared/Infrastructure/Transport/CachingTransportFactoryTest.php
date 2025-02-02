@@ -22,7 +22,7 @@ class CachingTransportFactoryTest extends TestCase
     {
         $cachePool = $this->createStub(CacheItemPoolInterface::class);
         $factory = CachingTransportFactory::new($cachePool);
-        $transport = $factory->create('https://example.com');
+        $transport = $factory->make('https://example.com');
         self::assertInstanceOf(CachingTransport::class, $transport);
     }
 }

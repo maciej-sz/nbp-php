@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace MaciejSz\Nbp\Test\Unit\Shared\Infrastructure\Validator;
 
-use MaciejSz\Nbp\Shared\Infrastructure\Validator\Exception\ValidationException;
-use MaciejSz\Nbp\Shared\Infrastructure\Validator\NbpDateStringValidator;
+use MaciejSz\Nbp\Shared\Domain\Validator\Exception\ValidationException;
+use MaciejSz\Nbp\Shared\Domain\Validator\NbpDateStringValidator;
 use PHPUnit\Framework\TestCase;
 
 class DateStringValidatorTest extends TestCase

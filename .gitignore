@@ -1,5 +1,6 @@
 vendor/
 var/
+!var/coverage/.gitkeep
 .idea
 tests/php-unit/reports/
 .phpunit.result.cache

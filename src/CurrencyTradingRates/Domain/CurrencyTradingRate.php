@@ -25,7 +25,7 @@ class CurrencyTradingRate
         float $bid,
         float $ask,
         \DateTimeInterface $tradingDate,
-        \DateTimeInterface $effectiveDate
+        \DateTimeInterface $effectiveDate,
     ) {
         $this->currencyName = $currencyName;
         $this->currencyCode = $currencyCode;

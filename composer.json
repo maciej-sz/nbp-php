@@ -28,33 +28,35 @@
         }
     },
     "require": {
-        "php": ">=7.2||>=8.0",
+        "php": ">=8.1",
         "ext-json": "*"
     },
     "require-dev": {
-        "guzzlehttp/guzzle": "^6.3",
+        "guzzlehttp/guzzle": "^7.9",
         "phpunit/phpunit": "^9.6",
-        "qossmic/deptrac-shim": "^1.0",
+        "qossmic/deptrac": "^2.0",
         "friendsofphp/php-cs-fixer": "^3.16",
         "phpstan/phpstan": "^1.10",
-        "symfony/http-client": "^6.2",
         "donatj/mock-webserver": "^2.6",
-        "symfony/cache": "^6.2",
-        "cache/integration-tests": "dev-master"
+        "symfony/http-client": "^7.2",
+        "symfony/cache": "^7.2"
     },
     "suggest": {
         "psr/cache": "Allows local cache",
-        "symfony/http-foundation": "Symfony HTTP Transport layer"
+        "symfony/http-client": "Symfony HTTP Transport layer"
     },
     "scripts": {
         "test": "vendor/bin/phpunit -vv --testsuite unit,functional,integration",
         "test-all": "vendor/bin/phpunit -vv --testsuite unit,functional,integration,e2e",
-        "test-coverage": "php -d xdebug.mode=coverage vendor/bin/phpunit --coverage-html var/coverage/html-report -vv --testsuite unit,functional,integration",
-        "cs-check": "vendor/bin/php-cs-fixer --config=./.php-cs-fixer.dist.php fix --dry-run --diff --allow-risky=yes",
-        "phpstan-analyse": "vendor/bin/phpstan",
+        "test-coverage": "php -d xdebug.mode=coverage vendor/bin/phpunit --coverage-html var/coverage/html-report -vv --testsuite unit,functional,integration,e2e",
+        "cs-check": "vendor/bin/php-cs-fixer check --config=./.php-cs-fixer.dist.php --diff --allow-risky=yes",
+        "cs-fix": "vendor/bin/php-cs-fixer fix --config=./.php-cs-fixer.dist.php --diff --allow-risky=yes",
+        "phpstan": "vendor/bin/phpstan",
+        "deptrac": "vendor/bin/deptrac",
         "analyse": [
             "@cs-check",
-            "@phpstan-analyse"
+            "@phpstan",
+            "@deptrac"
         ],
         "pre-commit-checks": [
             "@analyse",

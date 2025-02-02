@@ -6,8 +6,8 @@ namespace MaciejSz\Nbp\Test\Unit\CurrencyAverageRates\Infrastructure\Mapper;
 
 use MaciejSz\Nbp\CurrencyAverageRates\Domain\CurrencyAverageRate;
 use MaciejSz\Nbp\CurrencyAverageRates\Infrastructure\Mapper\CurrencyAverageRatesMapper;
-use MaciejSz\Nbp\Shared\Infrastructure\Validator\Exception\ValidationException;
-use MaciejSz\Nbp\Shared\Infrastructure\Validator\ThrowableValidator;
+use MaciejSz\Nbp\Shared\Domain\Validator\Exception\ValidationException;
+use MaciejSz\Nbp\Shared\Domain\Validator\ThrowableValidator;
 use MaciejSz\Nbp\Test\Fixtures\FixturesRepository;
 use PHPUnit\Framework\TestCase;
 
@@ -43,7 +43,7 @@ class CurrencyAverageRatesMapperTest extends TestCase
         $this->expectException(ValidationException::class);
         $this->expectExceptionMessage('Invalid rate: 4.4');
 
-        $mockValidator = new class() implements ThrowableValidator {
+        $mockValidator = new class implements ThrowableValidator {
             public function validate($value): void
             {
                 assert(is_float($value));

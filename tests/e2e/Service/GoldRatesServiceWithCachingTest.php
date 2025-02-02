@@ -31,7 +31,7 @@ class GoldRatesServiceWithCachingTest extends TestCase
         ;
 
         $proxyTransportFactory = $this->createStub(TransportFactory::class);
-        $proxyTransportFactory->method('create')->willReturn($proxyTransport);
+        $proxyTransportFactory->method('make')->willReturn($proxyTransport);
 
         $cacheRegistry = new \ArrayObject();
         $cacheItem = $this->createMock(CacheItemInterface::class);

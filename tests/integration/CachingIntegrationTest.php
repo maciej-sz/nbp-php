@@ -34,7 +34,7 @@ class CachingIntegrationTest extends TestCase
         ;
 
         $backendFactory = $this->createStub(TransportFactory::class);
-        $backendFactory->method('create')->willReturn($backendTransport);
+        $backendFactory->method('make')->willReturn($backendTransport);
 
         $cacheItem = $this->createMock(CacheItemInterface::class);
         $cacheItem
@@ -99,7 +99,7 @@ class CachingIntegrationTest extends TestCase
         ;
 
         $backendFactory = $this->createStub(TransportFactory::class);
-        $backendFactory->method('create')->willReturn($backendTransport);
+        $backendFactory->method('make')->willReturn($backendTransport);
 
         $cachingTransportFactory = CachingTransportFactory::new(
             $cachePool,
