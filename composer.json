@@ -28,7 +28,7 @@
         }
     },
     "require": {
-        "php": ">=8.0",
+        "php": ">=8.1",
         "ext-json": "*"
     },
     "require-dev": {
@@ -38,19 +38,12 @@
         "friendsofphp/php-cs-fixer": "^3.16",
         "phpstan/phpstan": "^1.10",
         "donatj/mock-webserver": "^2.6",
-        "symfony/http-client": "^7.0",
-        "symfony/cache": "^7.0"
+        "symfony/http-client": "^7.2",
+        "symfony/cache": "^7.2"
     },
     "suggest": {
         "psr/cache": "Allows local cache",
         "symfony/http-client": "Symfony HTTP Transport layer"
-    },
-    "extra": {
-        "symfony/cache-7": {
-            "require": {
-                "symfony/cache": "^7.0"
-            }
-        }
     },
     "scripts": {
         "test": "vendor/bin/phpunit -vv --testsuite unit,functional,integration",
@@ -65,12 +58,6 @@
         "pre-commit-checks": [
             "@analyse",
             "@test-all"
-        ],
-        "post-install-cmd": [
-            "@php php-version-deps-adjust.php"
-        ],
-        "post-update-cmd": [
-            "@php php-version-deps-adjust.php"
         ]
     }
 }

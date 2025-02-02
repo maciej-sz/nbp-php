@@ -28,6 +28,9 @@ jobs:
         coverage: pcov
         tools: composer:v2
 
+    - name: Adjust composer dependencies for older PHP versions
+      run: php scripts/adjust-deps-for-older-php-versions.php
+
     - name: Cache Composer packages
       id: composer-cache
       uses: actions/cache@v3
@@ -37,29 +40,21 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-php-${{ matrix.php-version }}-
 
-    - name: Adjust composer dependencies for older PHP versions
-      run: |
-        php php-version-deps-adjust.php
-        composer update --no-progress --no-interaction
-
     - name: Run test suites for older PHP versions
-      if: contains(matrix.php-version, '8.0, 8.1, 8.2, 8.3')
+      if: matrix.php-version != '8.4'
       run: composer run-script test-all
 
     - name: Run test suites with coverage for latest PHP version
       if: matrix.php-version == '8.4'
       run: |
         mkdir -p var/coverage
-        php -d xdebug.mode=coverage vendor/bin/phpunit --coverage-text --coverage-clover=var/coverage/clover.xml | tee var/coverage/coverage.txt
+        php -d xdebug.mode=coverage vendor/bin/phpunit --coverage-text --coverage-clover=var/coverage/clover.xml
 
-    - name: Extract Line Coverage
+    - name: Extract Coverage and update GitHub status
       if: matrix.php-version == '8.4'
       id: coverage
-      run: echo "COVERAGE=$(grep -oP '(?<=Lines:\s+)[\d\.]+' coverage.txt | tail -1)" >> $GITHUB_ENV
-
-    - name: Update GitHub Status
-      if: matrix.php-version == '8.4'
       run: |
+        echo "COVERAGE=$(php scripts/get-coverage.php var/coverage/clover.xml)" >> $GITHUB_ENV
         curl -X POST -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
           -H "Accept: application/vnd.github.v3+json" \
           https://api.github.com/repos/${{ github.repository }}/statuses/${{ github.sha }} \
