@@ -1,10 +1,17 @@
 name: PHP Tests
 
 on:
+  schedule:
+    - cron: 1 8 * * *
   push:
     branches: [ "master" ]
   pull_request:
     branches: [ "**" ]
+  workflow_dispatch:
+    inputs: {}
+
+env:
+  COMPOSER_NO_DEV: 0
 
 jobs:
   test:
@@ -12,12 +19,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-version: ['8.1', '8.2', '8.3', '8.4']
+        php-version: ['8.1', '8.2', '8.3', '8.4', '8.5']
 
     steps:
     - uses: actions/checkout@v3
       with:
-        ref: ${{ github.event.pull_request.head.sha }}
+        ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || 'master' }}
         token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Setup PHP
@@ -28,9 +35,6 @@ jobs:
         coverage: pcov
         tools: composer:v2
 
-    - name: Adjust composer dependencies for older PHP versions
-      run: php scripts/adjust-deps-for-older-php-versions.php
-
     - name: Cache Composer packages
       id: composer-cache
       uses: actions/cache@v3
@@ -40,5 +44,27 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-php-${{ matrix.php-version }}-
 
+    - name: Adjust composer dependencies for older PHP versions
+      run: php scripts/adjust-deps-for-older-php-versions.php
+
+    - name: Install dependencies
+      run: composer install --prefer-dist --no-progress
+
     - name: Run all test suites
       run: composer run-script test-all
+
+    - name: Update successful test result on the KV storage
+      if: success()
+      run: |
+        curl -X POST \
+          -H "Authorization: Bearer ${{ secrets.KVDB_WRITE_KEY }}" \
+          https://kvdb.io/${{ vars.KVDB_BUCKET }}/test-result-${{ matrix.php-version }} \
+          -d '{ "schemaVersion": 1, "label": "tests php ${{ matrix.php-version }}", "message": "passing", "color": "#3fb911" }'
+
+    - name: Update unsuccessful test result on the KV storage
+      if: failure()
+      run: |
+        curl -X POST \
+          -H "Authorization: Bearer ${{ secrets.KVDB_WRITE_KEY }}" \
+          https://kvdb.io/${{ vars.KVDB_BUCKET }}/test-result-${{ matrix.php-version }} \
+          -d '{ "schemaVersion": 1, "label": "tests php ${{ matrix.php-version }}", "message": "failing", "color": "red" }'

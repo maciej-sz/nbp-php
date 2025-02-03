@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 if (PHP_VERSION_ID < 80300) {
     exec(
-        'composer require'
+        'composer update'
         . ' --dev'
         . ' --with-all-dependencies'
         . ' --no-interaction'
         . ' --no-progress'
-        . ' symfony/cache:^6.4'
-        . ' symfony/http-client:^6.4'
+        . ' --prefer-lowest'
     );
 }

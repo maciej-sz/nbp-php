@@ -1,0 +1,70 @@
+name: Master Test Coverage
+
+on:
+  schedule:
+    - cron: 0 8 * * *
+  push:
+    branches: [ "master" ]
+  workflow_dispatch:
+    inputs: {}
+
+env:
+  PHP_VERSION: '8.3'
+  COMPOSER_NO_DEV: 0
+
+jobs:
+  check-coverage:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || 'master' }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ env.PHP_VERSION }}
+          extensions: mbstring, xml, json
+          tools: composer:v2
+
+      - name: Cache Composer packages
+        id: composer-cache
+        uses: actions/cache@v3
+        with:
+          path: vendor
+          key: ${{ runner.os }}-php-8.3-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ env.PHP_VERSION }}-
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress
+
+      - name: Run test suites with coverage on main branch. Ignore test result for the coverage purpose.
+        run: php -d xdebug.mode=coverage vendor/bin/phpunit --coverage-text --coverage-clover=var/coverage/clover-main.xml
+
+      - name: Extract coverage data
+        run: |
+          COVERAGE=$(php scripts/get-coverage.php var/coverage/clover-main.xml)
+          COVERAGE_INT=${DIFF%%.*}
+          
+          if [ "COVERAGE_INT" -ge 90 ]; then
+            COLOR="#3fb911"
+          elif [ "COVERAGE_INT" -ge 75 ]; then
+            COLOR="yellow"
+          elif [ "COVERAGE_INT" -ge 50 ]; then
+            COLOR="orange"
+          else
+            COLOR="red"
+          fi
+          
+          echo "COVERAGE_PERCENT=${COVERAGE}" >> $GITHUB_ENV
+          echo "COVERAGE_COLOR=${COLOR}" >> $GITHUB_ENV
+
+      - name: Update Coverage data info on the cloud KV storage
+        run: |
+          curl -X POST \
+            -H "Authorization: Bearer ${{ secrets.KVDB_WRITE_KEY }}" \
+            https://kvdb.io/${{ vars.KVDB_BUCKET }}/coverage \
+            -d '{ "schemaVersion": 1, "label": "test coverage", "message": "${{ env.COVERAGE_PERCENT }}", "color": "${{ env.COVERAGE_COLOR }}" }'

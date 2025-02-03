@@ -8,6 +8,7 @@ on:
 
 env:
   PHP_VERSION: '8.3'
+  COMPOSER_NO_DEV: 0
 
 jobs:
   cs-fixer:
@@ -24,7 +25,7 @@ jobs:
       with:
         php-version: ${{ env.PHP_VERSION }}
         extensions: mbstring, xml, json
-        tools: composer:v2
+        tools: composer:v2, php-cs-fixer
 
     - name: Cache Composer packages
       id: composer-cache
@@ -34,6 +35,9 @@ jobs:
         key: ${{ runner.os }}-php-8.3-${{ hashFiles('**/composer.lock') }}
         restore-keys: |
           ${{ runner.os }}-${{ env.PHP_VERSION }}-
+
+    - name: Install dependencies
+      run: composer install --prefer-dist --no-progress
 
     - name: Run PHP CS Fixer
       run: |

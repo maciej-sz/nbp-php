@@ -8,6 +8,7 @@ on:
 
 env:
   PHP_VERSION: '8.3'
+  COMPOSER_NO_DEV: 0
 
 jobs:
   deptrac:
@@ -34,6 +35,9 @@ jobs:
           key: ${{ runner.os }}-php-8.3-${{ hashFiles('**/composer.lock') }}
           restore-keys: |
             ${{ runner.os }}-${{ env.PHP_VERSION }}-
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress
 
       - name: Run Deptrac
         run: |

@@ -6,6 +6,7 @@ on:
 
 env:
   PHP_VERSION: '8.3'
+  COMPOSER_NO_DEV: 0
 
 jobs:
   check-coverage:
@@ -46,6 +47,9 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-php-${{ env.PHP_VERSION }}-
 
+    - name: Install dependencies
+      run: composer install --prefer-dist --no-progress
+
     - name: Run test suites with coverage on PR branch
       run: |
         cp scripts/get-coverage.php var/coverage/
@@ -81,6 +85,7 @@ jobs:
         
         DESCRIPTION="Coverage: $COVERAGE_PR%. Change from main branch: $DIFF_DISPLAY% $EMOJI"
         
+        echo "COVERAGE_PERCENT=${COVERAGE_PR}" >> $GITHUB_ENV
         echo "COVERAGE_DESCRIPTION=${DESCRIPTION}" >> $GITHUB_ENV
         echo "COVERAGE_STATE=${STATE}" >> $GITHUB_ENV
 

@@ -2,11 +2,15 @@
 
 API for accessing Polish National Bank (NBP - Narodowy Bank Polski) currency and commodities exchange rates.
 
-[![Latest Version on Packagist][ico-version]][link-packagist]
-[![Build Status][ico-circleci]][link-circleci]
-[![Build Status][ico-coverage]][link-coverage]
-[![No dependencies][ico-no-deps]][link-packagist]
-[![MIT License][ico-license]][link-license]
+[![Latest Version on Packagist][badge-version]][link-packagist]
+[![No dependencies][badge-no-deps]][link-packagist]
+[![Tests Coverage][badge-coverage]][link-coverage]
+[![PHP 8.1 Test Result][badge-test-result-8.1]][link-php-tests]
+[![PHP 8.2 Test Result][badge-test-result-8.2]][link-php-tests]
+[![PHP 8.3 Test Result][badge-test-result-8.3]][link-php-tests]
+[![PHP 8.4 Test Result][badge-test-result-8.4]][link-php-tests]
+[![PHP 8.5 Test Result][badge-test-result-8.5]][link-php-tests]
+[![MIT License][badge-license]][link-license]
 
 
 
@@ -475,13 +479,19 @@ connections to the NBP API.
 It is also equipped with a convenient factories which pick the most appropriate
 implementation depending on installed libraries and configuration.
 
-[ico-version]:https://img.shields.io/packagist/v/maciej-sz/nbp-php.svg?style=shield
-[ico-circleci]:https://circleci.com/gh/maciej-sz/nbp-php/tree/master.svg?style=shield
-[ico-coverage]:https://img.shields.io/badge/coverage-99%25-brightgreen
-[ico-no-deps]:https://img.shields.io/badge/dependencies-none-brightgreen.svg?style=shield
-[ico-license]:https://img.shields.io/badge/license-MIT-blue.svg?style=shield
+[badge-version]:https://img.shields.io/packagist/v/maciej-sz/nbp-php.svg?style=shield
+[badge-no-deps]:https://img.shields.io/badge/dependencies-none-brightgreen.svg?style=shield
+[badge-license]:https://img.shields.io/badge/license-MIT-blue.svg?style=shield
+
+[badge-test-result-8.1]:https://img.shields.io/endpoint?url=https%3A%2F%2Fkvdb.io%2FD3K2NKbwMybr3iyV82qEdX%2Ftest-result-8.1
+[badge-test-result-8.2]:https://img.shields.io/endpoint?url=https%3A%2F%2Fkvdb.io%2FD3K2NKbwMybr3iyV82qEdX%2Ftest-result-8.2
+[badge-test-result-8.3]:https://img.shields.io/endpoint?url=https%3A%2F%2Fkvdb.io%2FD3K2NKbwMybr3iyV82qEdX%2Ftest-result-8.3
+[badge-test-result-8.4]:https://img.shields.io/endpoint?url=https%3A%2F%2Fkvdb.io%2FD3K2NKbwMybr3iyV82qEdX%2Ftest-result-8.4
+[badge-test-result-8.5]:https://img.shields.io/endpoint?url=https%3A%2F%2Fkvdb.io%2FD3K2NKbwMybr3iyV82qEdX%2Ftest-result-8.5
+
+[badge-coverage]:https://img.shields.io/endpoint?url=https%3A%2F%2Fkvdb.io%2FD3K2NKbwMybr3iyV82qEdX%2Fcoverage
 
 [link-packagist]:https://packagist.org/packages/maciej-sz/nbp-php
-[link-circleci]:https://circleci.com/gh/maciej-sz/nbp-php/
-[link-coverage]:https://output.circle-artifacts.com/output/job/3c10e60b-e05d-4a55-808e-12cf4aded9bd/artifacts/0/var/coverage/html-report/index.html
 [link-license]:https://github.com/maciej-sz/nbp-php/blob/master/LICENSE
+[link-php-tests]:https://github.com/maciej-sz/nbp-php/actions/workflows/php-tests.yml
+[link-coverage]:https://github.com/maciej-sz/nbp-php/actions/workflows/pr-coverage.yml
