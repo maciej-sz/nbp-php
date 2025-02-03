@@ -483,13 +483,13 @@ implementation depending on installed libraries and configuration.
 [badge-no-deps]:https://img.shields.io/badge/dependencies-none-brightgreen.svg?style=shield
 [badge-license]:https://img.shields.io/badge/license-MIT-blue.svg?style=shield
 
-[badge-test-result-8.1]:https://img.shields.io/endpoint?url=https%3A%2F%2Fkvdb.io%2FD3K2NKbwMybr3iyV82qEdX%2Ftest-result-8.1
-[badge-test-result-8.2]:https://img.shields.io/endpoint?url=https%3A%2F%2Fkvdb.io%2FD3K2NKbwMybr3iyV82qEdX%2Ftest-result-8.2
-[badge-test-result-8.3]:https://img.shields.io/endpoint?url=https%3A%2F%2Fkvdb.io%2FD3K2NKbwMybr3iyV82qEdX%2Ftest-result-8.3
-[badge-test-result-8.4]:https://img.shields.io/endpoint?url=https%3A%2F%2Fkvdb.io%2FD3K2NKbwMybr3iyV82qEdX%2Ftest-result-8.4
-[badge-test-result-8.5]:https://img.shields.io/endpoint?url=https%3A%2F%2Fkvdb.io%2FD3K2NKbwMybr3iyV82qEdX%2Ftest-result-8.5
+[badge-test-result-8.1]:https://img.shields.io/endpoint?url=https%3A%2F%2Fkvdb.io%2F96S9JomzUfJKGdkpUQHBkD%2Ftest-result-8.1
+[badge-test-result-8.2]:https://img.shields.io/endpoint?url=https%3A%2F%2Fkvdb.io%2F96S9JomzUfJKGdkpUQHBkD%2Ftest-result-8.2
+[badge-test-result-8.3]:https://img.shields.io/endpoint?url=https%3A%2F%2Fkvdb.io%2F96S9JomzUfJKGdkpUQHBkD%2Ftest-result-8.3
+[badge-test-result-8.4]:https://img.shields.io/endpoint?url=https%3A%2F%2Fkvdb.io%2F96S9JomzUfJKGdkpUQHBkD%2Ftest-result-8.4
+[badge-test-result-8.5]:https://img.shields.io/endpoint?url=https%3A%2F%2Fkvdb.io%2F96S9JomzUfJKGdkpUQHBkD%2Ftest-result-8.5
 
-[badge-coverage]:https://img.shields.io/endpoint?url=https%3A%2F%2Fkvdb.io%2FD3K2NKbwMybr3iyV82qEdX%2Fcoverage
+[badge-coverage]:https://img.shields.io/endpoint?url=https%3A%2F%2Fkvdb.io%2F96S9JomzUfJKGdkpUQHBkD%2Fcoverage
 
 [link-packagist]:https://packagist.org/packages/maciej-sz/nbp-php
 [link-license]:https://github.com/maciej-sz/nbp-php/blob/master/LICENSE

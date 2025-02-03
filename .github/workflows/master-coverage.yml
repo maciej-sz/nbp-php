@@ -67,4 +67,4 @@ jobs:
           curl -X POST \
             -H "Authorization: Bearer ${{ secrets.KVDB_WRITE_KEY }}" \
             https://kvdb.io/${{ vars.KVDB_BUCKET }}/coverage \
-            -d '{ "schemaVersion": 1, "label": "test coverage", "message": "${{ env.COVERAGE_PERCENT }}", "color": "${{ env.COVERAGE_COLOR }}" }'
+            -d '{ "schemaVersion": 1, "label": "test coverage", "message": "${{ env.COVERAGE_PERCENT }}%", "color": "${{ env.COVERAGE_COLOR }}" }'
