@@ -49,15 +49,15 @@ jobs:
           COVERAGE=$(php scripts/get-coverage.php var/coverage/clover-main.xml)
           COVERAGE_INT=${COVERAGE%%.*}
           
-          if [ "COVERAGE_INT" -ge 90 ]; then
-            COLOR="#3fb911"
-          elif [ "COVERAGE_INT" -ge 75 ]; then
-            COLOR="yellow"
-          elif [ "COVERAGE_INT" -ge 50 ]; then
-            COLOR="orange"
-          else
-            COLOR="red"
-          fi
+            if [ "$COVERAGE_INT" -ge 90 ]; then
+              COLOR="#3fb911"
+            elif [ "$COVERAGE_INT" -ge 75 ]; then
+              COLOR="yellow"
+            elif [ "$COVERAGE_INT" -ge 50 ]; then
+              COLOR="orange"
+            else
+              COLOR="red"
+            fi
           
           echo "COVERAGE_PERCENT=${COVERAGE}" >> $GITHUB_ENV
           echo "COVERAGE_COLOR=${COLOR}" >> $GITHUB_ENV
