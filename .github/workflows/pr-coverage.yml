@@ -101,10 +101,3 @@ jobs:
             "description": "${{ env.COVERAGE_DESCRIPTION }}",
             "target_url": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           }'
-
-    - name: Update Coverage percent info on the cloud KV storage
-      run: |
-        curl -X POST \
-          -H "Authorization: Bearer ${{ secrets.KVDB_WRITE_KEY }}" \
-          https://kvdb.io/${{ vars.KVDB_BUCKET }}/coverage \
-          -d '${{ env.COVERAGE_PERCENT }}'
