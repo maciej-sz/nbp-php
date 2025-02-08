@@ -1,10 +1,10 @@
 ## CurrencyAverageRatesService
 
-This service provides API for accessing the average rates published in NBP tables.
+This service provides an API for accessing the average rates published in NBP tables.
 
 ### `fromMonth` method
 
-Returns flat collection of rates from all NBP tables at given month
+Returns a flat collection of rates from all NBP tables for a given month
 
 <details>
 <summary>Example</summary>
@@ -33,7 +33,7 @@ AUD rate from 2023-01-02 is 2.976700
 
 ### `fromDay` method
 
-Returns a dictionary with NBP tables from given day.
+Returns a dictionary of NBP tables for a given day.
 
 <details>
 <summary>Example</summary>
@@ -54,8 +54,8 @@ echo $eurRateFromApril4th->getValue(); // 4.6785
 This method returns rates corresponding to the previous business day to the one provided as the argument.
 
 This can be useful in some bookkeeping applications when there is a legislatory need to calculate
-transfer prices. The legislation requires for the prices to be calculated using
-currency rate applied in the business day before the actual transfer date.
+transfer prices. The legislation requires for the prices to be calculated
+using a currency rate applied in the business day before the actual transfer date.
 
 <details>
 <summary>Example</summary>
@@ -186,7 +186,7 @@ In table `B` there can be multiple currencies with the same code.
 It is also possible, that a specific currency is present in table from one day,
 but is not present in table from the next day.
 
-In such case you should not use the `getRate($rate)` method but rather
+In such case, you should not use the `getRate($rate)` method but rather
 iterate over all currencies returned by `getRates()`.
 
 ## Currency trading rates service
@@ -195,7 +195,7 @@ This service is used to get buy and sell currency rates from NBP tables.
 
 ### `fromMonth` method
 
-Returns trading rates from entire month.
+Returns trading rates from the entire month.
 
 <details>
 <summary>Example</summary>
@@ -227,7 +227,7 @@ EUR rate from 2023-04-03 effective day traded on 2023-03-31 ask price is 4.7208,
 
 ### `fromEffectiveDay` method
 
-Return rates from effective date.
+Returns rates from the effective date.
 
 <details>
 <summary>Example</summary>
@@ -253,7 +253,7 @@ GBP rate from 2023-04-04 effective day traded on 2023-04-03 ask price is 5.3691,
 
 ### `fromTradingDay` method
 
-Return rates from trading date.
+Returns rates from the trading date.
 
 <details>
 <summary>Example</summary>
@@ -283,7 +283,7 @@ This service is used to get gold commodity rates from NBP tables.
 
 ### `fromMonth` method
 
-Gets all rates from specific month.
+Gets all rates for a specific month.
 
 <details>
 <summary>Example</summary>
@@ -311,7 +311,7 @@ Gold rate from 2013-01-04 is 167.430000
 
 ### `fromDay` method
 
-Returns a gold rate from specific date.
+Returns a gold rate for a specific date.
 
 <details>
 <summary>Example</summary>
@@ -334,7 +334,7 @@ Gold rate from 2014-01-02 is 116.350000
 
 ### `fromDayBefore` method
 
-Returns a gold rate from before a specific date.
+Returns a gold rate for the business day preceding a specific date.
 
 <details>
 <summary>Example</summary>
