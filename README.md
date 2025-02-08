@@ -15,7 +15,9 @@ API for accessing Polish National Bank (NBP - Narodowy Bank Polski) currency and
 
 ## Installing via composer
 
-```composer require maciej-sz/nbp-php```
+```bash
+composer require maciej-sz/nbp-php
+```
 
 
 ## Usage

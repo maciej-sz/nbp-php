@@ -1,6 +1,6 @@
 ## CurrencyAverageRatesService
 
-This service provides API for accessing average rates published in NBP tables.
+This service provides API for accessing the average rates published in NBP tables.
 
 ### `fromMonth` method
 
@@ -51,11 +51,11 @@ echo $eurRateFromApril4th->getValue(); // 4.6785
 
 ### `fromDayBefore` method
 
-Returns a dictionary with NBP tables from day before given day. This method can be useful
-in some bookkeeping applications when there is a legislatory need to calculate
+This method returns rates corresponding to the previous business day to the one provided as the argument.
+
+This can be useful in some bookkeeping applications when there is a legislatory need to calculate
 transfer prices. The legislation requires for the prices to be calculated using
-currency rate applied in the business day before the actual transfer date. Which is
-exactly what this method exposes.
+currency rate applied in the business day before the actual transfer date.
 
 <details>
 <summary>Example</summary>
@@ -82,9 +82,10 @@ EUR rate from 2022-12-30 is 4.689900
 
 ### `getMonthTablesA` method
 
-Returns the `A` table iterator from a specific month. Rates here are grouped into tables,
-which represent the actual data structure provided by NBP. To get the rates there needs
-to be second iteration:
+Returns the `A` table iterator from a specific month.
+
+Rates here are grouped into tables, which represent the actual data structure provided by NBP.
+To get the actual rates, a second iteration is required:
 
 <details>
 <summary>Example: getting all currency rates</summary>
@@ -178,7 +179,7 @@ tugrik (Mongolia) rate from table 013/B/NBP/2022 is 0.001417
 
 </details>
 
-##### Warning about missing currencies in table "B"
+#### Warning about missing currencies in table "B"
 
 In table `B` there can be multiple currencies with the same code.
 
